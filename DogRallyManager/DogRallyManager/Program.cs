@@ -1,7 +1,16 @@
+using DogRallyManager.DbContexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+// The connection string is to be found in the appsettings.Development.json file
+builder.Services.AddDbContext<UserDemoContext>(
+    dbContextOptions => dbContextOptions.UseSqlite(
+        builder.Configuration["ConnectionStrings:DogRallySQLiteConnectionString"]));
 
 var app = builder.Build();
 
