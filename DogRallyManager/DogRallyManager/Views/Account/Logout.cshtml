@@ -1,0 +1,25 @@
+﻿@{
+}
+
+<form id="logoutForm" method="post" action="/Logout">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <p>Are you sure you wish to logout?</p>
+                <p>
+                    <button class="btn btn-link" type="button" onclick="submitForm('yes')">Yes</button>
+                    <button class="btn btn-link ml-5" type="button" onclick="submitForm('no')">No</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function submitForm(choice) {
+        // Construct the URL based on the choice
+        var url = '/Account/Logout?choice=' + choice;
+        // Navigate to the URL
+        window.location.href = url;
+    }
+</script>

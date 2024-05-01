@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@model DogRallyManager.ViewModels.RegisterUserVM
+@{
+}@{
+    ViewData["Title"] = "Register"; 
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rally Dog Manager - @ViewData["Title"]</title>
+    <title>Rally Dog Manager - Register</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <style>
 
@@ -14,7 +21,7 @@
             background-color: #c3e7e7;
         }
 
-        .login-container {
+        .register-container {
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -25,14 +32,14 @@
             margin-top: 50px;
         }
 
-            .login-container h2 {
+            .register-container h2 {
                 text-align: center;
                 margin-bottom: 20px;
             }
 
-            .login-container input[type="text"],
-            .login-container input[type="password"],
-            .login-container input[type="submit"] {
+            .register-container input[type="email"],
+            .register-container input[type="password"],
+            .register-container input[type="submit"] {
                 width: 100%;
                 padding: 10px;
                 margin-bottom: 10px;
@@ -40,7 +47,7 @@
                 box-sizing: border-box;
             }
 
-            .login-container input[type="submit"] {
+            .register-container input[type="submit"] {
                 background-color: #4CAF50;
                 color: white;
                 border: none;
@@ -48,7 +55,7 @@
                 transition: background-color 0.3s;
             }
 
-                .login-container input[type="submit"]:hover {
+                .register-container input[type="submit"]:hover {
                     background-color: #45a049;
                 }
 
@@ -74,38 +81,24 @@
             .new-user-button:hover {
                 background-color: darkblue;
             }
-        
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* Adjust as needed */
-        }
-
-        .image-container img {
-            width: 200px; /* Adjust as needed */
-            height: auto;
-            transition: transform 0.3s ease;
-            transform: scale(1.8)
-        }
-
-        .image-container img:hover {
-            transform: scale(2.5);
-            content: url(images/SåErDerBil.png) /* Scale up on hover */
-        }
-
     </style>
 </head>
 <body>
-
     <div class="container">
-      
-        <div class="center">
-            <div class="image-container">
-                <a href="/account">
-                    <img src="@Url.Content("~/Images/Puck.png")" alt="Image" />
-                </a>
-            </div>
+        <!-- REGISTER FORM -->
+        <div class="register-container">
+            <h2>Før du er helt Rally, skal du lige oprettes.</h2>
+            <form method="post">
+                <input type="text" placeholder="Username" asp-for="UserName" required />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+                <input type="email" placeholder="E-mail" asp-for="Email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <input type="password" placeholder="Kodeord"  asp-for="Password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <input type="password" placeholder="Bekræft kodeord" asp-for="ConfirmPassword" required />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <input type="submit" asp-action="RegisterUser" value="Opret mig!" />
+            </form>
         </div>
     </div>
 
