@@ -1,4 +1,6 @@
 using DogRallyManager.DbContexts;
+using DogRallyManager.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
+
+
 // The connection string is to be found in the appsettings.Development.json file
-builder.Services.AddDbContext<UserDemoContext>(
+builder.Services.AddDbContext<AuthUserDbContext>(
     dbContextOptions => dbContextOptions.UseSqlite(
-        builder.Configuration["ConnectionStrings:DogRallySQLiteConnectionString"]));
+        builder.Configuration.GetConnectionString("DogRallySQLiteConnectionString")));
+
+// Sets up identity on our custom classes that extends IdentityUser and IdentityRole classes. 
+// So far these classes have just been made to make the class names more app-specific-appropriate.
+builder.Services.AddIdentity<RallyUser, RallyUserRole>().AddEntityFrameworkStores<AuthUserDbContext>();
+
+// Any request made for a resource that the client is not authorized for it directed to the login-page.
+builder.Services.ConfigureApplicationCookie(
+    config => config.LoginPath = "/Login");
 
 var app = builder.Build();
 
@@ -28,6 +40,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+// @@@[FYT 3]
+app.UseAuthentication();
+
 
 app.MapControllerRoute(
     name: "default",

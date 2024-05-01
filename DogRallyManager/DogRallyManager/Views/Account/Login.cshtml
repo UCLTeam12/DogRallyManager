@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@model DogRallyManager.ViewModels.LoginUserVM
+@{
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -74,38 +81,28 @@
             .new-user-button:hover {
                 background-color: darkblue;
             }
-        
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* Adjust as needed */
-        }
-
-        .image-container img {
-            width: 200px; /* Adjust as needed */
-            height: auto;
-            transition: transform 0.3s ease;
-            transform: scale(1.8)
-        }
-
-        .image-container img:hover {
-            transform: scale(2.5);
-            content: url(images/SåErDerBil.png) /* Scale up on hover */
-        }
-
     </style>
 </head>
 <body>
-
     <div class="container">
-      
-        <div class="center">
-            <div class="image-container">
-                <a href="/account">
-                    <img src="@Url.Content("~/Images/Puck.png")" alt="Image" />
-                </a>
-            </div>
+        <!-- LOG-IN FORM -->
+        <div class="login-container">
+            <h2>Rally Dog Manager</h2>
+            <form method="post">
+                <input type="text" placeholder="Email" asp-for="Email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <input type="password" placeholder="Password" asp-for="Password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <label>
+                    Remember me
+                    <input type="checkbox" asp-for="RememberMe" />
+                </label>
+                <input type="submit" asp-action="Login" value="Log In" />
+
+                <div class="new-user-link">
+                    New user? <a href="/account/register" style="color: blue;">Create one.</a>
+                </div>
+            </form>
         </div>
     </div>
 
