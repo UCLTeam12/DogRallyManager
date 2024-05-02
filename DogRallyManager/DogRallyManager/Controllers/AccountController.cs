@@ -32,6 +32,7 @@ namespace DogRallyManager.Controllers
         }
         public IActionResult Index()
         {
+
             return View("login");
         }
         public async Task<IActionResult> Logout(string choice)
