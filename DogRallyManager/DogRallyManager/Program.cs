@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+// This line is added to compare changes in a pull request for testing purposes.
+
 // The connection string is to be found in the appsettings.Development.json file
 builder.Services.AddDbContext<AuthUserDbContext>(
     dbContextOptions => dbContextOptions.UseSqlite(
