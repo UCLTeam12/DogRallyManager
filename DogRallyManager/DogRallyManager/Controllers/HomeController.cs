@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using DogRallyManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DogRallyManager.Controllers;
 
@@ -18,6 +19,8 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize]
+    [HttpGet("/privacy")]
     public IActionResult Privacy()
     {
         return View();

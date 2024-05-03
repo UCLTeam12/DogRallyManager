@@ -1,19 +1,12 @@
 ﻿using DogRallyManager.Entities;
 using DogRallyManager.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DogRallyManager.Controllers
 {
-    //private readonly SignInManager<RallyUser> _signInManager;
 
-    //[BindProperty]
-    //public LoginUserVM LoginUserVM { get; set; }
-
-    //public LoginModel(SignInManager<RallyUser> signInManager)
-    //{
-    //    _signInManager = signInManager;
-    //}
     public class AccountController : Controller
     {
         private readonly SignInManager<RallyUser> _signInManager;
@@ -30,11 +23,22 @@ namespace DogRallyManager.Controllers
             _userManager = userManager;
 
         }
-        public IActionResult Index()
+        // POSSIBLE TO-DO:
+        // Concider changing name of Index method to login, and returning view(). 
+        // This will require a rerouting on paths 
+        public async Task<IActionResult> Index()
         {
-
-            return View("login");
+            await OnPostLogoutAsync();
+            return View("Login");
         }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(RegisterUserVM);
+        }
+
+
         public async Task<IActionResult> Logout(string choice)
         {
             if (choice == "yes")
@@ -52,11 +56,11 @@ namespace DogRallyManager.Controllers
             }
         }
 
-        //[HttpGet]
-        //public  IActionResult Login()
-        //{
-        //    return View("Login");
-        //}
+        [Authorize]
+        public IActionResult YourPage()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> OnPostLogoutAsync()
@@ -64,14 +68,14 @@ namespace DogRallyManager.Controllers
             // ASP NET will handle all the signout functions for us
             await _signInManager.SignOutAsync();
 
-            return RedirectToPage("Login");
+            return RedirectToAction("Login");
 
         }
 
         [HttpPost]
         public IActionResult OnPostDontLogout()
         {
-            return View("YourPage");
+            return RedirectToAction("YourPage");
         }
 
         [HttpPost]
@@ -84,21 +88,16 @@ namespace DogRallyManager.Controllers
 
                 if (identityResult.Succeeded)
                 {
-                    return View("YourPage");
+                    return RedirectToAction("YourPage");
                 }
 
                 ModelState.AddModelError("", "Username or Password is incorrect.");
             }
 
-            return View(LoginUserVM); // Return the Login view
+            return View(); // Return the Login view
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View(RegisterUserVM);
-        }
-
+        
 
         [HttpPost]
         public async Task<IActionResult> RegisterUser(RegisterUserVM RegisterUserVM)

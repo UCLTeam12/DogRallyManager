@@ -19,7 +19,7 @@ builder.Services.AddIdentity<RallyUser, RallyUserRole>().AddEntityFrameworkStore
 
 // Any request made for a resource that the client is not authorized for it directed to the login-page.
 builder.Services.ConfigureApplicationCookie(
-    config => config.LoginPath = "/Login");
+    config => config.LoginPath = "/account");
 
 var app = builder.Build();
 
@@ -36,9 +36,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 // @@@[FYT 3]
 app.UseAuthentication();
+app.UseAuthorization();
+
+
 
 
 app.MapControllerRoute(
