@@ -6,10 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
-
-
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 // The connection string is to be found in the appsettings.Development.json file
 builder.Services.AddDbContext<AuthUserDbContext>(
