@@ -30,11 +30,12 @@ html {
 }
 
     body {
-        /* margin-bottom: 60px; */
+        width: 100%;
+        min-height: 100vh;
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        background-color: #c3e7e7;
+        background-color: rgb(240, 240, 240);
     }
 
         header {
@@ -57,31 +58,40 @@ html {
 
     /* body */
 
-        /* header */
+#drm-logo-loading {
+    width: 534px;
+    height: 240px;
 
-        /* main */
+    margin: calc(50vh - 200px) auto 0px auto;
 
-        /* footer */
+    background-image: url("../Images/drm-dog-logo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 
-    .login-container {
-        background-color: white;
-        border-radius: 5px;
+/* LOG IN PAGE */
+
+    #login-form {
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(200, 200, 200);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 400px;
-        width: 100%;
-        margin: auto;
-        margin-top: 50px;
+        padding: 40px;
+        width: 540px;
+        margin: calc(50vh - 260px) auto;
     }
 
-        .login-container h2 {
+        .login-form h2 {
+            width: 100%;
+            display: block;
             text-align: center;
-            margin-bottom: 20px;
+            margin: 20px 0px 20px 0px;
+            background-color: blue;
         }
 
-        .login-container input[type="text"],
-        .login-container input[type="password"],
-        .login-container input[type="submit"] {
+        .login-form input[type="text"],
+        .login-form input[type="password"],
+        .login-form input[type="submit"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -89,7 +99,7 @@ html {
             box-sizing: border-box;
         }
 
-        .login-container input[type="submit"] {
+        .login-form input[type="submit"] {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -97,7 +107,7 @@ html {
             transition: background-color 0.3s;
         }
 
-            .login-container input[type="submit"]:hover {
+            .login-form input[type="submit"]:hover {
                 background-color: #45a049;
             }
 
