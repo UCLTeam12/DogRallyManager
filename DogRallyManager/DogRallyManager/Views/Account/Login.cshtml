@@ -89,8 +89,8 @@
         <div class="login-container">
             <h2>Rally Dog Manager</h2>
             <form method="post">
+                <span asp-validation-for="UserName" class="text-danger">@ViewBag.UserNameError </span>
                 <input type="text" placeholder="Username" asp-for="UserName" required />
-                <span asp-validation-for="UserName" class="text-danger"></span>
                 <input type="password" placeholder="Password" asp-for="Password" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
                 <label>
