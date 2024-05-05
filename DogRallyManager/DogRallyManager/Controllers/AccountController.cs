@@ -10,6 +10,8 @@ public class AccountController : Controller
 {
     private readonly SignInManager<RallyUser> _signInManager;
     private readonly UserManager<RallyUser> _userManager;
+
+    // POSSIBLE TO-DO: Concider if we want to use ASP NET DI instead of newing up like this.
     public RegisterUserVM RegisterUserVM = new();
     public LoginUserVM LoginUserVM = new();
 
@@ -34,7 +36,7 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Register()
     {
-        return View(RegisterUserVM);
+        return View();
     }
     
     public async Task<IActionResult> Logout(string choice)
@@ -89,14 +91,17 @@ public class AccountController : Controller
 
             ModelState.AddModelError("", "Username or Password is incorrect.");
 
+            ViewBag.UserNameError = "Wrong association of credentials.";
+            
             if (LoginUserVM.UserName.Contains("@"))
             {
                 ModelState.AddModelError("",
                     "It seems like you've entered an email address. Please use your username");
+                ViewBag.UserNameError = "Dit rally navn, ikke din e-mail addresse.";
             }
         }
 
-        return View(); // Return the Login view
+        return View(LoginUserVM); // Return the Login view
     }
 
     [HttpPost]
@@ -119,14 +124,26 @@ public class AccountController : Controller
                 return View("Login");
             }
 
-            // If errors in above print descriptions
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error.Description);
+                if (error.Description.Contains("username", StringComparison.OrdinalIgnoreCase))
+                {
+                    ModelState.AddModelError(nameof(RegisterUserVM.UserName), error.Description);
+                }
+                else if (error.Description.Contains("email", StringComparison.OrdinalIgnoreCase))
+                {
+                    ModelState.AddModelError(nameof(RegisterUserVM.Email), error.Description);
+                }
+                else if (error.Description.Contains("password", StringComparison.OrdinalIgnoreCase))
+                {
+                    ModelState.AddModelError(nameof(RegisterUserVM.Password),
+                        "Password must contain: One non alphanumeric character, be atleast 9 characters long and contain atleast one uppercase and one lowercase letter.");
+                }
+                // Add similar checks for other properties
             }
         }
 
-        // her kan vi lave en fejl-view side og printe nogle beskeder ud, eventuelt
-        return RedirectToAction("Index", "Home");
+        // Returnerer objektet og viser behæftede fejl som opstod objekt-relateret i forbindelse med registrering.
+        return View("register", RegisterUserVM);
     }
 }
