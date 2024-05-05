@@ -36,7 +36,7 @@ public class AccountController : Controller
     {
         return View(RegisterUserVM);
     }
-
+    
     public async Task<IActionResult> Logout(string choice)
     {
         if (choice == "yes")
@@ -49,10 +49,8 @@ public class AccountController : Controller
         {
             return OnPostDontLogout();
         }
-        else
-        {
-            return View("Logout");
-        }
+
+        return View("Logout");
     }
 
     [Authorize]
@@ -82,7 +80,7 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var identityResult = await _signInManager.PasswordSignInAsync(
-                LoginUserVM.Email, LoginUserVM.Password, LoginUserVM.RememberMe, false);
+                LoginUserVM.UserName, LoginUserVM.Password, LoginUserVM.RememberMe, false);
 
             if (identityResult.Succeeded)
             {
@@ -90,6 +88,12 @@ public class AccountController : Controller
             }
 
             ModelState.AddModelError("", "Username or Password is incorrect.");
+
+            if (LoginUserVM.UserName.Contains("@"))
+            {
+                ModelState.AddModelError("",
+                    "It seems like you've entered an email address. Please use your username");
+            }
         }
 
         return View(); // Return the Login view
