@@ -118,8 +118,7 @@ html {
         }
 
         #login-form input[type="text"]:focus,
-        #login-form input[type="text"]:focus,
-        {
+        #login-form input[type="text"]:focus {
             border: 1px solid black; /* Not working */
         }
 
