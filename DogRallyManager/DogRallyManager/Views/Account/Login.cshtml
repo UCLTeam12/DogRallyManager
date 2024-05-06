@@ -18,19 +18,19 @@
         <form id="login-form" method="post">
             <div id="drm-logo-login-form"></div>
 
-            <input type="text" placeholder="Email" asp-for="UserName" required />
+            <input type="text" placeholder="Username" asp-for="UserName" required />
             <span asp-validation-for="UserName" class="text-danger"></span>
             <input type="password" placeholder="Password" asp-for="Password" required />
             <span asp-validation-for="Password" class="text-danger"></span>
             
-            <label>
+            <label id="remember-me">
                 Remember me <input type="checkbox" asp-for="RememberMe" />
             </label>
             
             <input type="submit" asp-action="Login" value="Log In" />
 
-            <p>Don't have an account yet?</p>
-            <a href="/account/register" style="color: blue;">Sign up</a>
+            <p id="no-account">Don't have an account yet?</p>
+            <a href="/account/register" style="color: blue;"><p id="sign-up">Sign up</p></a>
         </form>
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>

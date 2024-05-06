@@ -30,9 +30,6 @@ p {
 /********************/
 
 html {
-    width: 100%;
-    min-height: 100vh;
-
     font-size: 14px;
     font-family: Arial, sans-serif;
 
@@ -40,8 +37,6 @@ html {
 }
 
     body {
-        width: 100%;
-        min-height: 100vh;
         margin: 0px;
         padding: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -50,6 +45,18 @@ html {
         header {
 
         }
+
+            .nav-item {
+                margin-right: 10px;
+            }
+
+            .nav-link {
+                color: white;
+            }
+
+            .nav-link:hover {
+                color: #f0f0f0;
+            }
 
         main {
 
@@ -104,10 +111,14 @@ html {
         #login-form input[type="submit"] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             border: 1px solid rgb(200, 200, 200);
             border-radius: 3px;
             box-sizing: border-box;
+        }
+
+        #remember-me {
+            margin: 12px 0px;
         }
 
         #login-form input[type="submit"] {
@@ -118,60 +129,16 @@ html {
             transition: background-color 0.3s;
         }
 
-            #login-form input[type="submit"]:hover {
-                background-color: #45a049;
-            }
-
-    .new-user-link {
-        text-align: center;
-        margin-top: 10px;
-        font-size: 12px;
-        color: blue;
-    }
-
-    .new-user-button {
-        width: 100%;
-        background-color: blue;
-        color: white;
-        border: none;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-        .new-user-button:hover {
-            background-color: darkblue;
+        #login-form input[type="submit"]:hover {
+            background-color: #45a049;
         }
 
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .image-container img {
-        width: 200px;
-        height: auto;
-        transition: transform 0.3s ease;
-        transform: scale(1.8)
-    }
-
-        .image-container img:hover {
-            transform: scale(2.5);
-            content: url(images/SÂErDerBil.png)
+        #no-account {
+            width: 100%;
+            text-align: center;
         }
 
-    .nav-item {
-        margin-right: 10px;
-    }
-
-    .nav-link {
-        color: white;
-    }
-
-        .nav-link:hover {
-            color: #f0f0f0;
+        #sign-up{
+            width: 100%;
+            text-align: center;
         }
