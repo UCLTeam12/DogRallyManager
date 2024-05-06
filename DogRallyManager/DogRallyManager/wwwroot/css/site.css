@@ -117,6 +117,12 @@ html {
             box-sizing: border-box;
         }
 
+        #login-form input[type="text"]:focus,
+        #login-form input[type="text"]:focus,
+        {
+            border: 1px solid black; /* Not working */
+        }
+
         #remember-me {
             margin: 12px 0px;
         }
@@ -141,4 +147,10 @@ html {
         #sign-up{
             width: 100%;
             text-align: center;
+        }
+
+        #sign-up:hover {
+            width: 100%;
+            text-align: center;
+            color: darkblue;
         }
