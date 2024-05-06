@@ -3,6 +3,12 @@
 
 * {
     /* If we are using frameworks like Bootstrap, avoid using global reset rules to ensure styling does as expected. - Nicolai */
+    padding: 0px; /* Breaking my own rules, temporarily. */
+    margin: 0px;
+}
+
+p {
+    margin: 0px; /* I know. */
 }
 
 /********************/
@@ -25,21 +31,32 @@
 
 html {
     font-size: 14px;
-    position: relative;
-    min-height: 100%;
+    font-family: Arial, sans-serif;
+
+    background-color: rgb(240, 240, 240)
 }
 
     body {
-        /* margin-bottom: 60px; */
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background-color: #c3e7e7;
+        margin: 0px;
+        padding: 0px;
+        background-color: rgba(0, 0, 0, 0);
     }
 
         header {
 
         }
+
+            .nav-item {
+                margin-right: 10px;
+            }
+
+            .nav-link {
+                color: white;
+            }
+
+            .nav-link:hover {
+                color: #f0f0f0;
+            }
 
         main {
 
@@ -49,47 +66,68 @@ html {
 
         }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
 /* HOME PAGE/INDEX */
 
     /* body */
 
-        /* header */
+#drm-logo-loading {
+    width: 534px;
+    height: 240px;
 
-        /* main */
+    margin: calc(50vh - 200px) auto 0px auto;
 
-        /* footer */
+    background-image: url("../Images/drm-dog-logo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 
-    .login-container {
-        background-color: white;
-        border-radius: 5px;
+/* LOG IN PAGE */
+
+    #login-form {
+        width: 480px;
+        height: 540px;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(200, 200, 200);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 400px;
-        width: 100%;
-        margin: auto;
-        margin-top: 50px;
+        padding: 40px;
+        margin: calc(50vh - 260px) auto 0px auto;
     }
 
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
+        .form-logo {
+            width: 268px;
+            height: 120px;
+            
+            margin: 20px auto 60px auto;
+            background-image: url(../Images/drm-dog-logo.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+
         }
 
-        .login-container input[type="text"],
-        .login-container input[type="password"],
-        .login-container input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 3px;
-            box-sizing: border-box;
+    input[type="text"],
+    input[type="password"],
+    input[type="submit"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid rgb(200, 200, 200);
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+
+        #login-form input[type="text"]:focus,
+        #login-form input[type="text"]:focus {
+            border: 1px solid black; /* Not working */
         }
 
-        .login-container input[type="submit"] {
+        #remember-me {
+            margin: 12px 0px;
+        }
+
+        input[type="submit"] {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -97,60 +135,38 @@ html {
             transition: background-color 0.3s;
         }
 
-            .login-container input[type="submit"]:hover {
-                background-color: #45a049;
-            }
-
-    .new-user-link {
-        text-align: center;
-        margin-top: 10px;
-        font-size: 12px;
-        color: blue;
-    }
-
-    .new-user-button {
-        width: 100%;
-        background-color: blue;
-        color: white;
-        border: none;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-        .new-user-button:hover {
-            background-color: darkblue;
+        input[type="submit"]:hover {
+            background-color: #45a049;
         }
 
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .image-container img {
-        width: 200px;
-        height: auto;
-        transition: transform 0.3s ease;
-        transform: scale(1.8)
-    }
-
-        .image-container img:hover {
-            transform: scale(2.5);
-            content: url(images/SÂErDerBil.png)
+        #no-account {
+            width: 100%;
+            text-align: center;
         }
 
-    .nav-item {
-        margin-right: 10px;
+        #sign-up{
+            width: 100%;
+            text-align: center;
+        }
+
+        #sign-up:hover {
+            width: 100%;
+            text-align: center;
+            color: darkblue;
+        }
+
+/* LOG IN PAGE */
+
+    #register-form {
+        width: 480px;
+        min-height: 620px;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(200, 200, 200);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 40px 40px 24px 40px;
+        margin: calc(50vh - 310px) auto 0px auto;
     }
 
-    .nav-link {
-        color: white;
-    }
-
-        .nav-link:hover {
-            color: #f0f0f0;
+        #register-form input[type="submit"] {
+            margin: 24px 0px 20px 0px;
         }

@@ -1,49 +1,40 @@
 ﻿@model DogRallyManager.ViewModels.LoginUserVM
-@{
-}
+
 @{
     ViewData["Title"] = "Index";
 }
 
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rally Dog Manager - @ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <div class="container">
-        <!-- LOG-IN FORM -->
-        <div class="login-container">
-            <h2>Rally Dog Manager</h2>
-            <form method="post">
-                <input type="text" placeholder="Email" asp-for="UserName" required />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-                <input type="password" placeholder="Password" asp-for="Password" required />
-                <span asp-validation-for="Password" class="text-danger"></span>
-                <label>
-                    Remember me
-                    <input type="checkbox" asp-for="RememberMe" />
-                </label>
-                <input type="submit" asp-action="Login" value="Log In" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Rally Dog Manager - @ViewData["Title"]</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </head>
+    <body>      
+        <form id="login-form" method="post">
+            <div class="form-logo"></div>
 
-                <div class="new-user-link">
-                    New user? <a href="/account/register" style="color: blue;">Create one.</a>
-                </div>
-            </form>
-        </div>
-    </div>
+            <input type="text" placeholder="Username" asp-for="UserName" required />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+            <input type="password" placeholder="Password" asp-for="Password" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            
+            <label id="remember-me">
+                Remember me <input type="checkbox" asp-for="RememberMe" />
+            </label>
+            
+            <input type="submit" asp-action="Login" value="Log In" />
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-        </div>
-    </footer>
+            <p id="no-account">Don't have an account yet?</p>
+            <a href="/account/register" style="color: blue;"><p id="sign-up">Sign up</p></a>
+        </form>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</body>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </body>
 </html>

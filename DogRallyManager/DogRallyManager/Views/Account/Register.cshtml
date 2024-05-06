@@ -1,115 +1,39 @@
 ﻿@model DogRallyManager.ViewModels.RegisterUserVM
+
 @{
-}@{
     ViewData["Title"] = "Register"; 
 }
 
-
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rally Dog Manager - Register</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <style>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Rally Dog Manager - Register</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </head>
+    <body>      
+        <form id="register-form" method="post">
+            <div class="form-logo"></div>
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #c3e7e7;
-        }
+            <input type="text" placeholder="Username" asp-for="UserName" required />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+            <input type="email" placeholder="E-mail" asp-for="Email" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <input type="password" placeholder="Password"  asp-for="Password" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <input type="password" placeholder="Confirm password" asp-for="ConfirmPassword" required />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 
-        .register-container {
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 400px;
-            width: 100%;
-            margin: auto;
-            margin-top: 50px;
-        }
+            <input type="submit" asp-action="RegisterUser" value="Sign Up" />
 
-            .register-container h2 {
-                text-align: center;
-                margin-bottom: 20px;
-            }
+            <a href="/account" style="color: blue;"><p id="sign-up">Cancel</p></a>
+        </form>
 
-            .register-container input[type="text"],
-            .register-container input[type="email"],
-            .register-container input[type="password"],
-            .register-container input[type="submit"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 10px;
-                border-radius: 3px;
-                box-sizing: border-box;
-            }
-
-            .register-container input[type="submit"] {
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-
-                .register-container input[type="submit"]:hover {
-                    background-color: #45a049;
-                }
-
-        .new-user-link {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 12px;
-            color: blue;
-        }
-
-        .new-user-button {
-            width: 100%;
-            background-color: blue;
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-            .new-user-button:hover {
-                background-color: darkblue;
-            }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- REGISTER FORM -->
-        <div class="register-container">
-            <h2>Før du er helt Rally, skal du lige oprettes.</h2>
-            <form method="post">
-                <input type="text" placeholder="Username" asp-for="UserName" required />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-                <input type="email" placeholder="E-mail" asp-for="Email" required />
-                <span asp-validation-for="Email" class="text-danger"></span>
-                <input type="password" placeholder="Kodeord"  asp-for="Password" required />
-                <span asp-validation-for="Password" class="text-danger"></span>
-                <input type="password" placeholder="Bekræft kodeord" asp-for="ConfirmPassword" required />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                <input type="submit" asp-action="RegisterUser" value="Opret mig!" />
-            </form>
-        </div>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</body>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </body>
 </html>
