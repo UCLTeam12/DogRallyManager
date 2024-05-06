@@ -16,7 +16,7 @@
     </head>
     <body>      
         <form id="login-form" method="post">
-            <h2>Dog Rally Manager</h2>
+            <div id="drm-logo-login-form"></div>
 
             <input type="text" placeholder="Email" asp-for="UserName" required />
             <span asp-validation-for="UserName" class="text-danger"></span>
@@ -26,7 +26,7 @@
             <label>
                 Remember me <input type="checkbox" asp-for="RememberMe" />
             </label>
-
+            
             <input type="submit" asp-action="Login" value="Log In" />
 
             <p>Don't have an account yet?</p>
