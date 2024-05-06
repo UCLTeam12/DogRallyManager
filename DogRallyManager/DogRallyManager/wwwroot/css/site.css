@@ -94,7 +94,7 @@ html {
         margin: calc(50vh - 260px) auto 0px auto;
     }
 
-        #drm-logo-login-form {
+        .form-logo {
             width: 268px;
             height: 120px;
             
@@ -106,16 +106,17 @@ html {
 
         }
 
-        #login-form input[type="text"],
-        #login-form input[type="password"],
-        #login-form input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid rgb(200, 200, 200);
-            border-radius: 3px;
-            box-sizing: border-box;
-        }
+    input[type="text"],
+    input[type="password"],
+    input[type="submit"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid rgb(200, 200, 200);
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
 
         #login-form input[type="text"]:focus,
         #login-form input[type="text"]:focus {
@@ -126,7 +127,7 @@ html {
             margin: 12px 0px;
         }
 
-        #login-form input[type="submit"] {
+        input[type="submit"] {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -134,7 +135,7 @@ html {
             transition: background-color 0.3s;
         }
 
-        #login-form input[type="submit"]:hover {
+        input[type="submit"]:hover {
             background-color: #45a049;
         }
 
@@ -152,4 +153,20 @@ html {
             width: 100%;
             text-align: center;
             color: darkblue;
+        }
+
+/* LOG IN PAGE */
+
+    #register-form {
+        width: 480px;
+        min-height: 620px;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(200, 200, 200);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 40px 40px 24px 40px;
+        margin: calc(50vh - 310px) auto 0px auto;
+    }
+
+        #register-form input[type="submit"] {
+            margin: 24px 0px 20px 0px;
         }
