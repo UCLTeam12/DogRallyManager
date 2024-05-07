@@ -62,6 +62,48 @@ html {
 
         }
 
+            /* General styling of forms. */
+
+            .form-logo {
+                width: 268px;
+                height: 120px;
+                margin: 20px auto 60px auto;
+                background-image: url(../Images/drm-dog-logo.png);
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            input[type="submit"],
+            input[type="email"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid rgb(200, 200, 200);
+                border-radius: 3px;
+                box-sizing: border-box;
+            }
+
+            input[type="text"]:focus,
+            input[type="password"]:focus,
+            input[type="email"]:focus {
+                border: 1px solid black; /* It is not working. Is it determined by the browser? */
+            }
+
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
         footer {
 
         }
@@ -70,103 +112,103 @@ html {
 
     /* body */
 
-#drm-logo-loading {
-    width: 534px;
-    height: 240px;
+        #drm-logo-loading {
+            width: 534px;
+            height: 240px;
 
-    margin: calc(50vh - 200px) auto 0px auto;
+            margin: calc(50vh - 200px) auto 0px auto;
 
-    background-image: url("../Images/drm-dog-logo.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-/* LOG IN PAGE */
-
-    #login-form {
-        width: 480px;
-        height: 540px;
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgb(200, 200, 200);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 40px;
-        margin: calc(50vh - 260px) auto 0px auto;
-    }
-
-        .form-logo {
-            width: 268px;
-            height: 120px;
-            
-            margin: 20px auto 60px auto;
-            background-image: url(../Images/drm-dog-logo.png);
+            background-image: url("../Images/drm-dog-logo.png");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-
         }
 
-    input[type="text"],
-    input[type="password"],
-    input[type="submit"],
-    input[type="email"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid rgb(200, 200, 200);
-        border-radius: 3px;
-        box-sizing: border-box;
-    }
+        #chase {
+            display: flex;
+            justify-content: center;
 
-        #login-form input[type="text"]:focus,
-        #login-form input[type="text"]:focus {
-            border: 1px solid black; /* Not working */
+            padding: 40px;
         }
 
-        #remember-me {
-            margin: 12px 0px;
-        }
+            #chase p {
+                padding-right: 2px;
+                font-weight: 500;
+            }
 
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+            @keyframes dots {
+                from {opacity: 0;}
+                to {opacity: 1;}
+            }
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+            #dot-one {
+                opacity: 0;
+                animation-name: dots;
+                animation-delay: 1s;
+                animation-duration: 0.1s;
+                animation-fill-mode: forwards;
+            }
 
-        #no-account {
-            width: 100%;
-            text-align: center;
-        }
+            #dot-two {
+                opacity: 0;
+                animation-name: dots;
+                animation-delay: 2s;
+                animation-duration: 0.1s;
+                animation-fill-mode: forwards;
+            }
 
-        #sign-up{
-            width: 100%;
-            text-align: center;
-        }
-
-        #sign-up:hover {
-            width: 100%;
-            text-align: center;
-            color: darkblue;
-        }
+            #dot-three {
+                opacity: 0;
+                animation-name: dots;
+                animation-delay: 3s;
+                animation-duration: 0.1s;
+                animation-fill-mode: forwards;
+            }
 
 /* LOG IN PAGE */
 
-    #register-form {
-        width: 480px;
-        min-height: 620px;
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgb(200, 200, 200);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 40px 40px 24px 40px;
-        margin: calc(50vh - 310px) auto 0px auto;
-    }
-
-        #register-form input[type="submit"] {
-            margin: 24px 0px 20px 0px;
+        #login-form {
+            width: 480px;
+            height: 540px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(200, 200, 200);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: calc(50vh - 260px) auto 0px auto;
         }
+
+            #remember-me {
+                margin: 12px 0px;
+            }
+
+            #no-account {
+                width: 100%;
+                text-align: center;
+            }
+
+            #sign-up{
+                width: 100%;
+                text-align: center;
+            }
+
+            #sign-up:hover {
+                width: 100%;
+                text-align: center;
+                color: darkblue;
+            }
+
+/* LOG IN PAGE */
+
+        #register-form {
+            width: 480px;
+            min-height: 620px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(200, 200, 200);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px 40px 24px 40px;
+            margin: calc(50vh - 310px) auto 0px auto;
+        }
+
+            #register-form input[type="submit"] {
+                margin: 24px 0px 20px 0px;
+            }
