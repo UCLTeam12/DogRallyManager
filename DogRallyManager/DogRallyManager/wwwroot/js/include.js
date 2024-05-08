@@ -1,7 +1,5 @@
 
-async IncludeCSHTML(file) {
-    response = await fetch(file);
-    text = await reponse.text()
-
-    return text;
+async function IncludeHTML(file) {
+    const response = await fetch(file);
+    return response.text();
 }
