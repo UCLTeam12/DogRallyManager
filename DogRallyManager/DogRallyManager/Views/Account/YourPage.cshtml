@@ -32,7 +32,8 @@
         </div>
     </nav>
 
-@* <script src="~/js/include.js">document.write(IncludeHTML('/Components/Chat.cshtml'));</script> *@
+<script src="~/js/include.js"></script>
+<script>IncludeHTML('/Components/Chat').then(response => document.write(response));</script>
 
     <!-- Include Bootstrap JS files -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
