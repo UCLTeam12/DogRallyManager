@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Your Page";
 }
 
 <!DOCTYPE html>
@@ -9,40 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <style>
-        /* Custom CSS styles */
-        .navbar-teal {
-            background-color: #008080; /* Teal color */
-            color: white;
-        }
-
-            .navbar-teal .navbar-brand {
-                color: white;
-            }
-
-            .navbar-teal .navbar-nav .nav-link {
-                color: white;
-            }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #c3e7e7;
-        }
-
-        .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 56px); /* Adjust for navbar height */
-        }
-
-            .image-container img {
-                max-width: 150%;
-                max-height: 150%;
-            }
-    </style>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/chat.css" />
 </head>
 <body>
 
@@ -64,9 +32,7 @@
         </div>
     </nav>
 
-    <div class="image-container">
-        <img src="@Url.Content("~/Images/MajesticDogPosture.jpg")" alt="Image" />
-    </div>
+    <script src="~/js/include.js">document.write(IncludeHTML('/Components/Chat.cshtml'));</script>
 
     <!-- Include Bootstrap JS files -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
