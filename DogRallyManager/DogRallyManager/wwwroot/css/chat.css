@@ -1,7 +1,57 @@
-﻿body {
+﻿
+#chat {
 
 }
 
-    #chat-h2 {
-        color: black;
+.chat-minimized {
+    width: 64px;
+    height: 64px;
+
+    border-radius: 24px 24px;
+
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+
+    background-color: blue;
+    background-image: url("/images/speech-bubble.png");
+    background-repeat: no-repeat;
+    background-size: 75% 75%;
+    background-position: center;
+
+    cursor: pointer;
+
+    overflow: hidden;
+}
+
+    .chat-minimized #chat-history {
+        display: none;
     }
+
+    .chat-minimized #chat-write {
+        display: none !important;
+    }
+
+    .chat-minimized #chat-send {
+        display: none;
+    }
+
+.chat-expanded {
+
+}
+
+    .chat-expanded #chat-history {
+
+    }
+
+    .chat-expanded #chat-write {
+
+    }
+
+    .chat-expanded #chat-send {
+
+    }
+
+.chat-offline {
+
+}
