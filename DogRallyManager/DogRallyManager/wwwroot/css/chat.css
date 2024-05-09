@@ -24,12 +24,45 @@
     overflow: hidden;
 }
 
+    #chat-notifications {
+        padding: 0px 2px 0px 2px;
+        text-align: center;
+    }
+
+    /* If chat has not been opened since messages have been received, set class 
+        of #chat-notifications to .chat-unread and the content of #unread-amount 
+        to number of messages received since the last time the chat was expanded. */
+
+    .chat-minimized .chat-unread {
+        min-width: 18px;
+        height: 18px;
+
+        position: fixed;
+
+        right: 64px;
+        bottom: 64px;
+
+        border-radius: 50% 50%;
+        background-color: red;
+
+        font-size: 0.8em;
+        font-weight: bold;
+        color: rgb(255, 255, 255);
+    }
+
+    .chat-minimized .chat-read {
+        width: 12px;
+        height: 12px;
+        background-color: red;
+        color: rgb(255, 255, 255);
+    }
+
     .chat-minimized #chat-history {
         display: none;
     }
 
     .chat-minimized #chat-write {
-        display: none !important;
+        display: none;
     }
 
     .chat-minimized #chat-send {
@@ -39,6 +72,10 @@
 .chat-expanded {
 
 }
+
+    .chat-expanded #chat-notifications {
+        display: none;
+    }
 
     .chat-expanded #chat-history {
 
