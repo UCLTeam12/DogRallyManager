@@ -93,5 +93,33 @@
     }
 
 .chat-offline {
+    width: 64px;
+    height: 64px;
+    border-radius: 24px 24px;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    background-color: grey;
+    background-image: url("/images/speech-bubble.png");
+    background-repeat: no-repeat;
+    background-size: 75% 75%;
+    background-position: center;
+    cursor: pointer;
+    overflow: hidden;
+}
 
+.chat-offline #chat-notifications {
+    display: none;
+}
+
+.chat-offline #chat-history {
+    display: none;
+}
+
+.chat-offline #chat-write {
+    display: none;
+}
+
+.chat-offline #chat-send {
+    display: none;
 }
