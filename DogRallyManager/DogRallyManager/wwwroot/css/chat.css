@@ -3,6 +3,9 @@
 
 }
 
+/* Create a function that toggles the class #chat between .chat-minimized and 
+    .chat-expanded to show and hide the chat-window. */
+
 .chat-minimized {
     width: 64px;
     height: 64px;
