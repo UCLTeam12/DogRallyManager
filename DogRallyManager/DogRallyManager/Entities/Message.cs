@@ -13,10 +13,10 @@ namespace DogRallyManager.Entities
         [MaxLength(750)]
         public string MessageBody { get; set; }
 
-        [ForeignKey("UserId")]
+        [ForeignKey("UserSenderId")]
         public RallyUser Sender { get; set; }
 
-        [ForeignKey("ChatRoomId")]
+        //[ForeignKey("ChatRoomId")]
         public ChatRoom RecipientChatRoom { get; set; }
     }
 }

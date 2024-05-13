@@ -4,13 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DogRallyManager.DbContexts
 {
-    public class AuthUserDbContext : IdentityDbContext
+    public class DogRallyDbContext : IdentityDbContext
     {
         public DbSet<RallyUser> RallyUsers { get; set; } 
 
         public DbSet<RallyUserRole> RallyUserRoles { get; set; }
+        public DbSet<ChatRoom> ChatRooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
-        public AuthUserDbContext(DbContextOptions<AuthUserDbContext> options) : base(options)
+        public DogRallyDbContext(DbContextOptions<DogRallyDbContext> options) : base(options)
         {
             
         }

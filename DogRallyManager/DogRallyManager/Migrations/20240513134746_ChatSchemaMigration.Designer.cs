@@ -11,14 +11,70 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DogRallyManager.Migrations
 {
     [DbContext(typeof(DogRallyDbContext))]
-    [Migration("20240501165701_TestMigrationRallyUser")]
-    partial class TestMigrationRallyUser
+    [Migration("20240513134746_ChatSchemaMigration")]
+    partial class ChatSchemaMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+
+            modelBuilder.Entity("ChatRoomRallyUser", b =>
+                {
+                    b.Property<string>("ParticipatingUsersId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ParticipatingUsersId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatRoomRallyUser");
+                });
+
+            modelBuilder.Entity("DogRallyManager.Entities.ChatRoom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RoomName")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChatRooms");
+                });
+
+            modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MessageBody")
+                        .IsRequired()
+                        .HasMaxLength(750)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RecipientChatRoomId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserSenderId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientChatRoomId");
+
+                    b.HasIndex("UserSenderId");
+
+                    b.ToTable("Messages");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -244,6 +300,38 @@ namespace DogRallyManager.Migrations
                     b.HasDiscriminator().HasValue("RallyUser");
                 });
 
+            modelBuilder.Entity("ChatRoomRallyUser", b =>
+                {
+                    b.HasOne("DogRallyManager.Entities.RallyUser", null)
+                        .WithMany()
+                        .HasForeignKey("ParticipatingUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DogRallyManager.Entities.ChatRoom", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
+                {
+                    b.HasOne("DogRallyManager.Entities.ChatRoom", "RecipientChatRoom")
+                        .WithMany("Messages")
+                        .HasForeignKey("RecipientChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DogRallyManager.Entities.RallyUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("UserSenderId");
+
+                    b.Navigation("RecipientChatRoom");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -293,6 +381,11 @@ namespace DogRallyManager.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DogRallyManager.Entities.ChatRoom", b =>
+                {
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }
