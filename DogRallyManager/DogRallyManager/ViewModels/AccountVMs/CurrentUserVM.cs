@@ -1,4 +1,4 @@
-﻿namespace DogRallyManager.ViewModels
+﻿namespace DogRallyManager.ViewModels.AccountVMs
 {
     public class CurrentUserVM
     {

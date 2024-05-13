@@ -1,5 +1,5 @@
 ﻿using DogRallyManager.Entities;
-using DogRallyManager.ViewModels;
+using DogRallyManager.ViewModels.AccountVMs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

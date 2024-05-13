@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DogRallyManager.ViewModels
+namespace DogRallyManager.ViewModels.AccountVMs
 {
     public class LoginUserVM
     {
