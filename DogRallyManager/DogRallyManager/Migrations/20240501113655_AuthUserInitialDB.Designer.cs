@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DogRallyManager.Migrations
 {
-    [DbContext(typeof(AuthUserDbContext))]
+    [DbContext(typeof(DogRallyDbContext))]
     [Migration("20240501113655_AuthUserInitialDB")]
     partial class AuthUserInitialDB
     {
