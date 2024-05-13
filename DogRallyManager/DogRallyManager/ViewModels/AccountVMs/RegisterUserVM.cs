@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DogRallyManager.ViewModels
+namespace DogRallyManager.ViewModels.AccountVMs
 {
     public class RegisterUserVM
     {
         [Required]
         [DataType(DataType.Text)]
-        public string UserName { get; set;} = string.Empty;
+        public string UserName { get; set; } = string.Empty;
 
 
         [Required]
