@@ -1,4 +1,7 @@
-﻿@{
+﻿@using DogRallyManager.ViewModels.ChatVMs
+@model IEnumerable<ChatRoomVM>
+
+@{
     ViewData["Title"] = "Simple Chat";
 }
 
@@ -31,9 +34,9 @@
     <div id="chat-container">
         <h1>Simple Chat</h1>
         <ul id="messages">
-            @foreach (var message in ViewBag.Messages)
+            @foreach (var chatRoom in Model)
             {
-                <li>@message.Content</li>
+                <li>@chatRoom.ChatRoomName</li>
             }
         </ul>
         <input type="text" id="message-input" />

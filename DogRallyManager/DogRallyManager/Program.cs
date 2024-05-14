@@ -17,6 +17,7 @@ builder.Services.AddDbContext<DogRallyDbContext>(
 
 // Adding AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Adding dataservice
 builder.Services.AddTransient<IDataService, DemoDataService>();
 // Adding messagecreation service
