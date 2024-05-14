@@ -1,19 +1,19 @@
-using DogRallyManager.Database.Models.Signs;
+using DogRallyManager.DbContexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DogRallyManager.Controllers;
 
-public class SignController(ISignService signService) : Controller
+public class SignController(DogRallyDbContext dbContext) : Controller
 {
-    public IActionResult Index()
-    {
-        var signs = signService.GetAllSigns();
-        return View(signs);
-    }
+    public record BoardData(int signId, int newX, int newY);
 
-    public IActionResult MoveSign(int signId, int newX, int newY)
+    [HttpPost]
+    public IActionResult MoveSign(BoardData boardData)
     {
-        signService.MoveSigns(signId, newX, newY);
-        return RedirectToAction("Index");
+        var sign = dbContext.Signs.Find(boardData.signId);
+        sign.PositionY = boardData.newY;
+        sign.PositionX = boardData.newX;
+        dbContext.SaveChanges();
+        return Ok();
     }
 }
