@@ -6,6 +6,8 @@
 
         public string Message { get; set; }
 
+        public int ChatRoomId { get; set; }
+
         public DateTime SentAt { get; set; } = DateTime.UtcNow;
 
     }

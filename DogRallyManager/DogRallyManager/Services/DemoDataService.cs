@@ -1,20 +1,40 @@
 ﻿using DogRallyManager.DbContexts;
 using DogRallyManager.Entities;
+using DogRallyManager.ViewModels.ChatVMs;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DogRallyManager.Services
 {
     public class DemoDataService : IDataService
     {
         private readonly DogRallyDbContext _dogRallyDbContext;
+        private readonly UserManager<RallyUser> _userManager;
 
-        public DemoDataService(DogRallyDbContext dogRallyDbContext)
+        public DemoDataService(DogRallyDbContext dogRallyDbContext, UserManager<RallyUser> userManager)
         {
+            _userManager = userManager;
             _dogRallyDbContext = dogRallyDbContext;
         }
+        public async Task<List<ChatRoom>> GetAssociatedChatRoomsAsync(string userId)
+       {
+            var user = await _dogRallyDbContext.RallyUsers
+            .Include(u => u.AssociatedChatRooms)
+            .FirstOrDefaultAsync(u => u.Id == userId);
 
-        public async Task<List<Message>> GetAllMessagesAsync()
+            if (user != null)
+            {
+            // Return the list of associated chat rooms if the user is found
+                return user.AssociatedChatRooms.ToList();
+            }
+            else
+            {
+                return new List<ChatRoom>();
+            }
+    }
+    public async Task<List<Message>> GetAllMessagesAsync()
         {
-            return _dogRallyDbContext.Messages.ToList();
+            return await _dogRallyDbContext.Messages.ToListAsync();
         }
 
         public async Task AddMessageAsync(Message message)
