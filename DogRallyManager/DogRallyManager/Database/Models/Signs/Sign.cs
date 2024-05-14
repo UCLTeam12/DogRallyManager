@@ -39,7 +39,7 @@ public class SignsConfigureration: IEntityTypeConfiguration<Sign>
 public interface ISignService
 {
     IEnumerable<Sign> GetAllSigns();
-    void MoveSigns(int signId, int newXn, int newY);
+    void MoveSigns(int signId, int newX, int newY);
 }
 
 public class SignService(DogRallyDbContext dbContext) : ISignService
