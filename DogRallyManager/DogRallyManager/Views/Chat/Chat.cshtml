@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Simple Chat";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        #chat-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #messages {
+            list-style-type: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+            #messages li {
+                margin-bottom: 5px;
+            }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>Simple Chat</h1>
+        <ul id="messages">
+            @foreach (var message in ViewBag.Messages)
+            {
+                <li>@message.Content</li>
+            }
+        </ul>
+        <input type="text" id="message-input" />
+        <button id="send-button">Send</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#send-button").click(function () {
+                var message = $("#message-input").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Chat/SendMessage",
+                    data: { content: message },
+                    success: function () {
+                        $("#message-input").val('');
+                        fetchMessages();
+                    }
+                });
+            });
+
+            function fetchMessages() {
+                $.get("/Chat/GetMessages", function (data) {
+                    $("#messages").empty();
+                    $.each(data, function (index, message) {
+                        $("#messages").append("<li>" + message.content + "</li>");
+                    });
+                });
+            }
+
+            fetchMessages();
+        });
+    </script>
+</body>
+</html>
