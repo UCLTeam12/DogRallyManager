@@ -18,5 +18,10 @@ namespace DogRallyManager.DbContexts
             
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new SignsConfigureration());
+        }
     }
 }

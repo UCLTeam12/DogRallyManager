@@ -1,3 +1,7 @@
+using DogRallyManager.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 namespace DogRallyManager.Database.Models.Signs;
 
 public class Sign
@@ -6,6 +10,30 @@ public class Sign
     public string SignType { get; set; } = null!;
     public int PositionX { get; set; }
     public int PositionY { get; set; }
+}
+
+public class SignsConfigureration: IEntityTypeConfiguration<Sign>
+{
+    public void Configure(EntityTypeBuilder<Sign> builder)
+    {
+        builder.HasData(new List<Sign>()
+        {
+            new Sign()
+            {
+                PositionX = 50,
+                PositionY = 50,
+                Id = 1,
+                SignType = "exercise-1.png"
+            },
+            new Sign()
+            {
+                PositionX = 100,
+                PositionY = 100,
+                Id = 2,
+                SignType = "exercise-2.png"
+            }
+        });
+    }
 }
 
 public interface ISignService
