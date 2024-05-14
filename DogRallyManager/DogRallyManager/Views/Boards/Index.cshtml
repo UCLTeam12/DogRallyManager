@@ -1,0 +1,96 @@
+﻿@model BoardModel
+@{
+    ViewData["Title"] = "Board";
+}
+
+<body>
+<link rel="stylesheet" href="/css/Board.css">
+<div class="container text-center">
+    <div class="row">
+        <div class="col-2">
+            @foreach (var sign in Model.Signs)
+            {
+                <div
+                    style="position: absolute;top: @string.Format("{0}px", sign.PositionY);left: @string.Format("{0}px", sign.PositionX);z-index: 9"
+                    class="sign" 
+                    id="@string.Format("sign-{0}",sign.Id)"
+                    data-sign-id="@sign.Id">
+                    <img src="Images/Signs/@sign.SignType"/>
+                </div>
+            }
+            <table>
+                @for (var y = 0; y < 8; y++)
+                {
+                    <tr>
+                        @for (var x = 0; x < 8; x++)
+                        {
+                            var signPiece = Model.Signs.FirstOrDefault(p => p.PositionX == x && p.PositionY == y);
+                            <td>
+                                @if (signPiece != null)
+                                {
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-8">
+            <img src="Images/DogRallyBackground.jpg"/>
+        </div>
+        <div class="col-2">col-2</div>
+    </div>
+</div>
+
+<script>
+    function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.id + "header")) {
+            /* if present, the header is where you move the DIV from:*/
+            document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+        } else {
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+        }
+
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+            $.post('/Sign/MoveSign', { signId: elmnt.dataset["signId"], newX: elmnt.style.left.replace("px",""), newY: elmnt.style.top.replace("px","") }, function () {
+            });
+        }
+    }
+</script>
+    @foreach(var sign in Model.Signs){
+        <script>
+    dragElement(document.getElementById(`sign-@sign.Id`));
+    </script>
+        
+    }
+    
+</body>
