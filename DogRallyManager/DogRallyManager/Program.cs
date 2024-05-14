@@ -14,6 +14,8 @@ builder.Services.AddDbContext<DogRallyDbContext>(
     dbContextOptions => dbContextOptions.UseSqlite(
         builder.Configuration.GetConnectionString("DogRallySQLiteConnectionString")));
 
+// Adding AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Sets up identity on our custom classes that extends IdentityUser and IdentityRole classes. 
 // So far these classes have just been made to make the class names more app-specific-appropriate.

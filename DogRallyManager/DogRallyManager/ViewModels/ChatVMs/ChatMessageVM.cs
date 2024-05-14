@@ -6,7 +6,7 @@
 
         public string Message { get; set; }
 
-        public DateTime SentAt { get; set; } = DateTime.Now;
+        public DateTime SentAt { get; set; } = DateTime.UtcNow;
 
     }
 }

@@ -1,4 +1,6 @@
 ﻿
+using DogRallyManager.Entities;
+
 namespace DogRallyManager.Services
 {
     public interface IDataService
