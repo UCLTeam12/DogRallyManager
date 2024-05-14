@@ -7,5 +7,7 @@ namespace DogRallyManager.Services
     {
         Task AddMessageAsync(Message message);
         Task<List<Message>> GetAllMessagesAsync();
+        Task<List<ChatRoom>> GetAssociatedChatRoomsAsync(string userId);
+
     }
 }
