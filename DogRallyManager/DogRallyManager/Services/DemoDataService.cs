@@ -1,4 +1,5 @@
 ﻿using DogRallyManager.DbContexts;
+using DogRallyManager.Entities;
 
 namespace DogRallyManager.Services
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DogRallyManager.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,8 @@ public class ChatController : Controller
     [HttpPost]
     public IActionResult SendMessage(string content)
     {
-        _messages.Add(new Message { Content = content, Timestamp = DateTime.UtcNow });
+
+        _messages.Add(new Message { Author = User.Identity.Name, MessageBody = content, TimeStamp = DateTime.UtcNow });
         return Ok();
     }
 
@@ -25,10 +27,4 @@ public class ChatController : Controller
     {
         return Json(_messages);
     }
-}
-
-public class Message
-{
-    public string Content { get; set; }
-    public DateTime Timestamp { get; set; }
 }
