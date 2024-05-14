@@ -17,22 +17,23 @@ namespace DogRallyManager.Services
             _dogRallyDbContext = dogRallyDbContext;
         }
         public async Task<List<ChatRoom>> GetAssociatedChatRoomsAsync(string userId)
-       {
+        {
             var user = await _dogRallyDbContext.RallyUsers
-            .Include(u => u.AssociatedChatRooms)
-            .FirstOrDefaultAsync(u => u.Id == userId);
+                .Include(u => u.AssociatedChatRooms)
+                .ThenInclude(c => c.Messages)     
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user != null)
             {
-            // Return the list of associated chat rooms if the user is found
+                // Return the list of associated chat rooms
                 return user.AssociatedChatRooms.ToList();
             }
             else
             {
                 return new List<ChatRoom>();
             }
-    }
-    public async Task<List<Message>> GetAllMessagesAsync()
+        }
+        public async Task<List<Message>> GetAllMessagesAsync()
         {
             return await _dogRallyDbContext.Messages.ToListAsync();
         }

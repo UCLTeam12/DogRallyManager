@@ -31,14 +31,23 @@ namespace DogRallyManager.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Gets the Id of the User.Identity object via userManager.
             var user = await _userManager.GetUserAsync(User);
-           
-            var participatingChatRoomsEntities = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
+            var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
 
-            //_mapper.Map<IEnumerable<PointOfInterestDto>>(pointsOfInterestForCity));
-            var participatingChatRoomsVM = _mapper.Map<IEnumerable<ChatRoomVM>>(participatingChatRoomsEntities);
-            return View("Chat", participatingChatRoomsVM);
+            // Map entities to view models
+            var chatRoomsVM = _mapper.Map<IEnumerable<ChatRoomVM>>(chatRoomsEntities);
+
+            // Combine messages from all chat rooms
+            var allMessagesEntities = chatRoomsEntities.SelectMany(room => room.Messages);
+            var allMessagesVM = _mapper.Map<IEnumerable<ChatMessageVM>>(allMessagesEntities);
+
+            var viewModel = new ChatViewModel
+            {
+                ChatRooms = chatRoomsVM,
+                ChatMessages = allMessagesVM
+            };
+
+            return View("Chat", viewModel);
         }
         // Example action method to handle message sending
         [HttpPost]
