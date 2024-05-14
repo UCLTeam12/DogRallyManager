@@ -32,6 +32,27 @@ namespace DogRallyManager.Migrations
                     b.ToTable("ChatRoomRallyUser");
                 });
 
+            modelBuilder.Entity("DogRallyManager.Database.Models.Signs.Sign", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PositionX")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PositionY")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SignType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Signs");
+                });
+
             modelBuilder.Entity("DogRallyManager.Entities.ChatRoom", b =>
                 {
                     b.Property<int>("Id")
