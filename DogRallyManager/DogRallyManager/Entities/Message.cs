@@ -21,6 +21,5 @@ namespace DogRallyManager.Entities
 
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
-
     }
 }
