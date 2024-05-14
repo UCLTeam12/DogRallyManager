@@ -41,3 +41,16 @@ public interface ISignService
     IEnumerable<Sign> GetAllSigns();
     void MoveSigns(int signId, int newXn, int newY);
 }
+
+public class SignService(DogRallyDbContext dbContext) : ISignService
+{
+    public IEnumerable<Sign> GetAllSigns()
+    {
+        return dbContext.Signs.ToList();
+    }
+
+    public void MoveSigns(int signId, int newX, int newY)
+    {
+        throw new NotImplementedException();
+    }
+}
