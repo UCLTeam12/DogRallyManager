@@ -24,6 +24,36 @@
                 padding: 10px;
                 border-radius: 5px;
             }
+
+        /* CSS styles for the chat room container */
+        .chat-room-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* CSS styles for the chat room header */
+        .chat-room-header {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* CSS styles for the message container */
+        .message-container {
+            height: 200px;
+            overflow-y: auto; /* Enable scrolling */
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* CSS styles for the message input */
+        .message-input {
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -36,7 +66,31 @@
                 <li>@chatRoom.Id</li>
             }
         </ul>
+
+        @foreach (var chatRoom in Model)
+        {
+            <div class="chat-room-container" id="chat-room-@chatRoom.Id">
+                <div class="chat-room-header">
+                    <h2>Welcome to Chatroom with Id @chatRoom.Id</h2>
+                    <p>There are you and @chatRoom..Count other users in this room.</p>
+                </div>
+                <div class="message-container" id="message-container-@chatRoom.Id">
+                    <!-- Display messages here -->
+                    @foreach (var message in chatRoom.ChatMessages)
+                    {
+                        <div>@message.Sender.UserName: @message.MessageBody</div>
+                    }
+                </div>
+                <div>
+                    <!-- Input box for typing messages -->
+                    <input type="text" class="message-input" id="message-input-@chatRoom.Id" />
+                    <!-- Button to submit messages -->
+                    <button onclick="sendMessage('@chatRoom.Id')">Send</button>
+                </div>
+            </div>
+        }
     </div>
+  
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
