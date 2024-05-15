@@ -37,6 +37,7 @@
             {
                 @foreach (var chatMessage in Model.First().ChatMessages)
                 {
+                    
                     <li>@chatMessage.MessageBody</li>
                 }
             }
@@ -50,7 +51,48 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script>
+
+
+        $(document).ready(function () {
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7204/chatHub")
+                .build();
+
+            connection.start().catch((err) => {
+                return console.error(err.toString());
+            });
+
+            // Handle click event on send button
+            $("#send-button").click(function () {
+                var message = $("#message-input").val();
+                connection.invoke("SendMessage", "John", message) // Assuming "John" is the user's name
+                    .catch(err => console.error(err));
+            });
+
+            // Handle incoming message event from SignalR hub
+            connection.on("ReceiveMessage", (user, message) => {
+                $("#messages").append("<li>" + user + ": " + message + "</li>");
+            });
+        });
+    </script>
+        @* // $(document).ready(function () {
+        //     $("#send-button").click(function () {
+        //         var message = $("#message-input").val();
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "/Chat/SendMessage",
+        //             data: { messageBody: message },
+        //             success: function () {
+        //                 $("#message-input").val('');
+        //                 // Redirect to the index page after successful message sending.
+        //                 window.location.href = '/Chat'; // Redirect to the index page
+        //             }
+        //         });
+        //     });
+        // }); *@
+        @*
         $(document).ready(function () {
             $("#send-button").click(function () {
                 var message = $("#message-input").val();
@@ -60,24 +102,32 @@
                     data: { messageBody: message },
                     success: function () {
                         $("#message-input").val('');
-                        fetchMessages();
-                        // Reload the index page after successful message sending.
-                        window.location.href = '/Chat'; // Redirect to the index page
+                        fetchMessages(function () {
+                            // Redirect to the index page after successful message sending.
+                            window.location.href = '/Chat'; 
+                        });
                     }
                 });
             });
 
-            function fetchMessages() {
+            // Function to fetch messages for a specific chatroom
+            function fetchMessages(callback) {
                 $.get("/Chat/GetMessages", function (data) {
                     $("#messages").empty();
                     $.each(data, function (index, message) {
                         $("#messages").append("<li>" + message.content + "</li>");
                     });
+                    // Execute callback after messages are fetched and displayed
+                    if (typeof callback === "function") {
+                        callback();
+                    }
                 });
             }
 
             fetchMessages(); // Initial fetch on page load
-        });
+        }); *@
+     @*    // }); *@
     </script>
+  @*   <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script> *@
 </body>
 </html>
