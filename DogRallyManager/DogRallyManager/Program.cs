@@ -29,7 +29,10 @@ builder.Services.AddIdentity<RallyUser, RallyUserRole>().AddEntityFrameworkStore
 builder.Services.ConfigureApplicationCookie(
     config => config.LoginPath = "/account");
 
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
