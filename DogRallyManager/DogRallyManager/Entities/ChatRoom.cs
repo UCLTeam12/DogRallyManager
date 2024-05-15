@@ -13,6 +13,8 @@ namespace DogRallyManager.Entities
         public string? RoomName { get; set; }
         public ICollection<Message> ChatMessages { get; set; } = new List<Message>();
 
+        public int NumberOfAssociatedUsers { get; set; }
+
         [ForeignKey("UserId")]
         public ICollection<RallyUser> ParticipatingUsers { get; set; } = new List<RallyUser>();
     }

@@ -127,7 +127,8 @@ public class AccountController : Controller
                 await _signInManager.SignInAsync(user, false);
 
                 // If the account has succesfully been created, it is also associated with
-                // the general chatroom, where all are a part of, until they choose to leave it.
+                // the general chatroom, where all are a part of, unt
+                // il they choose to leave it.
                 await _dataService.AddUserToChatRoomAsync(user.UserName, 1);
                 return View("Login");
             }
@@ -151,7 +152,7 @@ public class AccountController : Controller
             }
         }
 
-        // Returnerer objektet og viser behæftede fejl som opstod objekt-relateret i forbindelse med registrering.
+        // Returnerer objektet og viser eventuelle behæftede fejl som opstod objekt-relateret i forbindelse med registrering.
         return View("register", RegisterUserVM);
     }
 }
