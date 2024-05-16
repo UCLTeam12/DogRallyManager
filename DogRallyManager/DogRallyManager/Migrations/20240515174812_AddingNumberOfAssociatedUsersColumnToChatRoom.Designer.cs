@@ -3,6 +3,7 @@ using System;
 using DogRallyManager.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DogRallyManager.Migrations
 {
     [DbContext(typeof(DogRallyDbContext))]
-    partial class AuthUserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240515174812_AddingNumberOfAssociatedUsersColumnToChatRoom")]
+    partial class AddingNumberOfAssociatedUsersColumnToChatRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -29,51 +32,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChatRoomRallyUser", (string)null);
-                });
-
-            modelBuilder.Entity("DogRallyManager.Database.Models.Signs.Sign", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PositionX")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PositionY")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SignType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Signs", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            PositionX = 50,
-                            PositionY = 50,
-                            SignType = "exercise-1.png"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            PositionX = 100,
-                            PositionY = 100,
-                            SignType = "exercise-2.png"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            PositionX = 150,
-                            PositionY = 150,
-                            SignType = "exercise-3.png"
-                        });
+                    b.ToTable("ChatRoomRallyUser");
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.ChatRoom", b =>
@@ -91,7 +50,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatRooms", (string)null);
+                    b.ToTable("ChatRooms");
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
@@ -120,7 +79,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserSenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
