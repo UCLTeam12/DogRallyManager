@@ -29,7 +29,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChatRoomRallyUser");
+                    b.ToTable("ChatRoomRallyUser", (string)null);
                 });
 
             modelBuilder.Entity("DogRallyManager.Database.Models.Signs.Sign", b =>
@@ -50,7 +50,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Signs");
+                    b.ToTable("Signs", (string)null);
 
                     b.HasData(
                         new
@@ -66,6 +66,13 @@ namespace DogRallyManager.Migrations
                             PositionX = 100,
                             PositionY = 100,
                             SignType = "exercise-2.png"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PositionX = 150,
+                            PositionY = 150,
+                            SignType = "exercise-3.png"
                         });
                 });
 
@@ -81,7 +88,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatRooms");
+                    b.ToTable("ChatRooms", (string)null);
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
@@ -107,7 +114,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserSenderId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
