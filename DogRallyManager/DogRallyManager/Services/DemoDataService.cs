@@ -20,7 +20,7 @@ namespace DogRallyManager.Services
         {
             var user = await _dogRallyDbContext.RallyUsers
                 .Include(u => u.AssociatedChatRooms)
-                .ThenInclude(c => c.Messages)     
+                .ThenInclude(c => c.ChatMessages)     
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user != null)
@@ -44,5 +44,10 @@ namespace DogRallyManager.Services
             await _dogRallyDbContext.SaveChangesAsync();
         }
 
+        public async Task AddChatRoomAsync(ChatRoom chatRoom)
+        {
+            _dogRallyDbContext.ChatRooms.Add(chatRoom);
+            await _dogRallyDbContext.SaveChangesAsync();
+        }
     }
 }
