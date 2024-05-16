@@ -29,12 +29,18 @@ namespace DogRallyManager.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
+            
             var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
+
+            if (chatRoomsEntities == null)
+            {
+
+            }
 
             var chatRoomsVM = _mapper.Map<IEnumerable<ChatRoomVM>>(chatRoomsEntities);
 
 
-            return View("Chat", chatRoomsVM);
+            return View(chatRoomsVM);
         }
 
         [HttpPost]
@@ -59,7 +65,7 @@ namespace DogRallyManager.Controllers
                 MessageBody = messageBody,
                 Sender = user,
                 TimeStamp = DateTime.UtcNow,
-                ChatRoomId = chatRoomVMToReturn.ChatId
+                ChatRoomId = chatRoomVMToReturn.Id
             };
 
             chatRoomVMToReturn.ChatMessages.Add(newMessage);

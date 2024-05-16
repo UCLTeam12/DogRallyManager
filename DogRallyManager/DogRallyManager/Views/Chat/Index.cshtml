@@ -1,0 +1,53 @@
+﻿@using DogRallyManager.ViewModels.ChatVMs
+@model IEnumerable<DogRallyManager.ViewModels.ChatVMs.ChatRoomVM>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <style>
+        #chat-container {
+            width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .chatroom-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .chatroom-list li {
+                margin-bottom: 10px;
+                cursor: pointer;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 5px;
+            }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>Chat!</h1>
+        <p>Below is a list of the chatrooms you are participating in. Click one of them to open the chat.</p>
+        <ul class="chatroom-list">
+            @foreach (var chatRoom in Model)
+            {
+                <li>@chatRoom.Id</li>
+            }
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.chatroom-list li').click(function () {
+                var chatRoomName = $(this).text();
+                // Redirect to chat room page with the selected chat room
+                window.location.href = '/Chat/ChatRoom?id=' + encodeURIComponent(chatRoomName);
+            });
+        });
+    </script>
+</body>
+</html>

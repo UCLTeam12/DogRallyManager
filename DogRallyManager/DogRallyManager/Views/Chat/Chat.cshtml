@@ -37,6 +37,26 @@
             {
                 @foreach (var chatMessage in Model.First().ChatMessages)
                 {
+                    <li>@chatMessage.MessageBody</li>
+                }
+            }
+            else
+            {
+                <li>No messages available</li>
+            }
+        </ul>
+        <form id="message-form" action="/Chat/SendMessage" method="post">
+            <input type="text" id="message-input" name="messageBody" />
+            <button id="send-button" type="submit">Send</button>
+        </form>
+    </div>
+    @* <div id="chat-container">
+        <h1>Simple Chat</h1>
+        <ul id="messages">
+            @if (Model.Any())
+            {
+                @foreach (var chatMessage in Model.First().ChatMessages)
+                {
                     
                     <li>@chatMessage.MessageBody</li>
                 }
@@ -48,7 +68,7 @@
         </ul>
         <input type="text" id="message-input" />
         <button id="send-button">Send</button>
-    </div>
+    </div> *@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
@@ -76,13 +96,16 @@
             $("#send-button").click(function () {
                 console.log("Send button clicked");
                 var message = $("#message-input").val();
-                connection.invoke("SendMessage", "John", message) // Assuming "John" is the user's name
+                var user = "@User.Identity.Name";
+                connection.invoke("SendMessage", user, message) 
                     .catch(err => console.error(err));
             });
 
+            console.log("Test1");
             // Handle incoming message event from SignalR hub
             connection.on("ReceiveMessage", (user, message) => {
                 $("#messages").append("<li>" + user + ": " + message + "</li>");
+                console.log("Test2");
             });
         });
     </script>
