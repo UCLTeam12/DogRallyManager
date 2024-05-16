@@ -156,6 +156,7 @@
                 // Append the received message to the message container
                 console.log("ReceiveMessage has been invoked");
                 $("#message-container-" + chatroomId).append("<div>" + user + ": " + message + "</div>");
+                $("#message-input-" + currentChatRoomId).val("");
             });
         });
     </script>
