@@ -73,6 +73,7 @@
         </script>
 </head>
 <body>
+
     <div id="chat-container">
         <h1>Chat!</h1>
         <p>Below is a list of the chatrooms you are participating in. Click one of them to open the chat.</p>
@@ -96,16 +97,12 @@
                     {
                         <div>@message.Sender.UserName: @message.MessageBody</div>
                     }
-                    @foreach (var message in chatRoom.ChatMessages)
-                    {
-                        <div>@message.Sender.UserName: @message.MessageBody</div>
-                    }
                 </div>
                 <div>
                     <!-- Input box for typing messages -->
                     <input type="text" class="message-input" id="message-input-@chatRoom.Id" />
                     <!-- Button to submit messages -->
-                    <button onclick="sendMessage('@chatRoom.Id')">Send</button>
+                    <button id="send-button" data-chatroomid="@chatRoom.Id">Send</button>
                     <!-- Button to hide chat room -->
                     <button onclick="hideChatroom('@chatRoom.Id')">Hide Chat</button>
                 </div>
@@ -120,7 +117,7 @@
 
         $(document).ready(function () {
             $.ajaxSetup({
-                // This is for the preflight request made from the browser, saying to the 
+                // This is for the preflight request made from the browser, saying to the
                 // CORS-guards of the SignalR app that HEY ITS OKAY DONT SHUT DOWN LET US IN !
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://localhost:7142');
@@ -143,27 +140,24 @@
 
             // Handle click event on send button
             $("#send-button").click(function () {
-                console.log("Send button clicked");
-                var message = $("#message-input").val();
+                var currentChatRoomId = $("#send-button").data("chatroomid"); // Capture the chat room ID in a closure
+                console.log("Send button clicked and chatroomid variable is" + currentChatRoomId);
+                var message = $("#message-input-" + currentChatRoomId).val(); // Use the captured chat room ID
                 var user = "@User.Identity.Name";
-                connection.invoke("SendMessage", user, message)
+                console.log("variables loaded");
+                connection.invoke("SendMessage", user, message, currentChatRoomId)
                     .catch(err => console.error(err));
+                console.log("send button function finished");
             });
 
-            function sendMessage(chatroomId) {
-                var message = $("#message-input-" + chatroomId).val();
-                var user = "@User.Identity.Name";
-                connection.invoke("SendMessage", user, message)
-                    .catch(err => console.error(err));
-            }
-
-            console.log("Test1");
+            
             // Handle incoming message event from SignalR hub
-            connection.on("ReceiveMessage", (user, message) => {
+            connection.on("ReceiveMessage", (user, message, chatroomId) => {
                 // Append the received message to the message container
+                console.log("ReceiveMessage has been invoked");
                 $("#message-container-" + chatroomId).append("<div>" + user + ": " + message + "</div>");
             });
-        }
+        });
     </script>
 
 </body>
