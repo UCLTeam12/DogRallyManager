@@ -4,7 +4,7 @@
     {
         public int ChatId { get; set; }
         public string? ChatRoomName { get; set; }
-        public List<ChatMessageVM> Messages { get; set; } = new();
+        public ICollection<ChatMessageVM> ChatMessages { get; set; }
 
     }
 }
