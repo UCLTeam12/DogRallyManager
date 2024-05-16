@@ -96,6 +96,10 @@
                     {
                         <div>@message.Sender.UserName: @message.MessageBody</div>
                     }
+                    @foreach (var message in chatRoom.ChatMessages)
+                    {
+                        <div>@message.Sender.UserName: @message.MessageBody</div>
+                    }
                 </div>
                 <div>
                     <!-- Input box for typing messages -->
