@@ -18,5 +18,9 @@ namespace DogRallyManager.Entities
 
         //[ForeignKey("ChatRoomId")]
         public ChatRoom RecipientChatRoom { get; set; }
+
+        public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
+
+
     }
 }
