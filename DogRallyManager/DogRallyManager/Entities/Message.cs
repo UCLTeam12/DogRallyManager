@@ -16,10 +16,13 @@ namespace DogRallyManager.Entities
         [ForeignKey("UserSenderId")]
         public RallyUser Sender { get; set; }
 
-        //[ForeignKey("ChatRoomId")]
+        [ForeignKey("ChatRoomId")]
         public ChatRoom RecipientChatRoom { get; set; }
+
+        public int ChatRoomId { get; set; }
 
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
     }
 }
+
