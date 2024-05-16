@@ -1,4 +1,5 @@
 ﻿
+using DogRallyManager.DbContexts;
 using DogRallyManager.Entities;
 
 namespace DogRallyManager.Services
@@ -8,6 +9,8 @@ namespace DogRallyManager.Services
         Task AddMessageAsync(Message message);
         Task<List<Message>> GetAllMessagesAsync();
         Task<List<ChatRoom>> GetAssociatedChatRoomsAsync(string userId);
+        Task AddChatRoomAsync(ChatRoom chatRoom);
+        
 
     }
 }
