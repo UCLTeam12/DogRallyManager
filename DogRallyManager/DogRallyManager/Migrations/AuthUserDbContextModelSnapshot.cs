@@ -97,13 +97,13 @@ namespace DogRallyManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ChatRoomId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("MessageBody")
                         .IsRequired()
                         .HasMaxLength(750)
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("RecipientChatRoomId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("TEXT");
@@ -113,7 +113,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipientChatRoomId");
+                    b.HasIndex("ChatRoomId");
 
                     b.HasIndex("UserSenderId");
 
@@ -362,8 +362,8 @@ namespace DogRallyManager.Migrations
             modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
                 {
                     b.HasOne("DogRallyManager.Entities.ChatRoom", "RecipientChatRoom")
-                        .WithMany("Messages")
-                        .HasForeignKey("RecipientChatRoomId")
+                        .WithMany("ChatMessages")
+                        .HasForeignKey("ChatRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -429,7 +429,7 @@ namespace DogRallyManager.Migrations
 
             modelBuilder.Entity("DogRallyManager.Entities.ChatRoom", b =>
                 {
-                    b.Navigation("Messages");
+                    b.Navigation("ChatMessages");
                 });
 #pragma warning restore 612, 618
         }
