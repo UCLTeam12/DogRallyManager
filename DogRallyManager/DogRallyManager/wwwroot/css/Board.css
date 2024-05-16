@@ -7,23 +7,53 @@
 }
 
 body {
+    width: 100%;
+    height: 100vh;
     background-color: white;
 }
 
-    #board-panel {
-        width: 20px;
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+#boards-section {
+    width: 100%;
+    height: 100%;
+
+    padding: 0px !important;
+}
+
+    #boards-panel {
+        width: 100%;
         height: 180px;
+
+        padding: 10px;
 
         background-color: blue;
     }
 
         #signs {
+            width: 720px;
+            height: 160px;
 
+            border: 1px solid black;
+
+            overflow-y: scroll;
         }
 
     #board {
-        width: 720px;
-        height: 720px;
+        width: 100%;
+        height: calc(100% - 180px);
         background-image: url('/Images/grass-texture-repeat.jpg');
         background-repeat: repeat;
         background-size: 200px;
@@ -33,6 +63,8 @@ body {
             width: 100%;
             height: 100%;
 
+            position: relative;
+
             background-color: transparent;
         }
 
@@ -40,11 +72,14 @@ body {
                 width: 200px;
                 height: 200px;
 
-                margin: calc(50% - 100px) auto;
+                position: absolute;
+                top: calc(50% - 100px);
+                left: calc(50% - 100px);
 
                 background-image: url('/Images/drm-turf-logo.png');
                 background-repeat: no-repeat;
                 background-size: 90% auto;
+                background-position: bottom;
             }
 
 .board {
@@ -63,4 +98,8 @@ body {
     color: #fff;
     width: 50px;
     height: 50px;
+}
+
+footer {
+    display: none !important;
 }
