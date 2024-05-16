@@ -56,6 +56,21 @@
             margin-top: 10px;
         }
     </style>
+    <script>
+        // Loading global functions
+        function loadChatroom(chatroomId) {
+            // Hide all chat room containers
+            $('.chat-room-container').hide();
+            // Show the selected chat room container
+            $('#chat-room-' + chatroomId).show();
+        }
+
+        function hideChatroom(chatroomId) {
+            // Hide the chat room container
+            $('#chat-room-' + chatroomId).hide();
+        }
+
+        </script>
 </head>
 <body>
     <div id="chat-container">
@@ -96,18 +111,56 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script>
-        function loadChatroom(chatroomId) {
-            // Hide all chat room containers
-            $('.chat-room-container').hide();
-            // Show the selected chat room container
-            $('#chat-room-' + chatroomId).show();
-        }
 
-        function hideChatroom(chatroomId) {
-            // Hide the chat room container
-            $('#chat-room-' + chatroomId).hide();
+        $(document).ready(function () {
+            $.ajaxSetup({
+                // This is for the preflight request made from the browser, saying to the 
+                // CORS-guards of the SignalR app that HEY ITS OKAY DONT SHUT DOWN LET US IN !
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://localhost:7142');
+                    xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+                }
+            });
+
+            // Connection being established to the chathub url that was mapped in the signalR-app.
+            // That is indeed the rooturl of where the signalr app is hosted, with the appended
+            // signalR endpoint
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7204/chatHub")
+                .build();
+
+            connection.start()
+                .then(() => console.log("SignalR connection established"))
+                .catch((err) => {
+                    return console.error(err.toString());
+                });
+
+            // Handle click event on send button
+            $("#send-button").click(function () {
+                console.log("Send button clicked");
+                var message = $("#message-input").val();
+                var user = "@User.Identity.Name";
+                connection.invoke("SendMessage", user, message)
+                    .catch(err => console.error(err));
+            });
+
+            function sendMessage(chatroomId) {
+                var message = $("#message-input-" + chatroomId).val();
+                var user = "@User.Identity.Name";
+                connection.invoke("SendMessage", user, message)
+                    .catch(err => console.error(err));
+            }
+
+            console.log("Test1");
+            // Handle incoming message event from SignalR hub
+            connection.on("ReceiveMessage", (user, message) => {
+                // Append the received message to the message container
+                $("#message-container-" + chatroomId).append("<div>" + user + ": " + message + "</div>");
+            });
         }
     </script>
+
 </body>
 </html>
