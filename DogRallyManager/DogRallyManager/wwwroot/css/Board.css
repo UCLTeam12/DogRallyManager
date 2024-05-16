@@ -1,11 +1,47 @@
 /* Board */
 
+* {
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+}
+
+body {
+    background-color: white;
+}
+
 .board-container {
     background-image: url('/Images/DogRallyBackground.jpg'); 
     background-size: cover;
     width: 100%; 
     height: 98vh;
 }
+
+#board {
+    width: 720px;
+    height: 720px;
+    background-image: url('/Images/grass-texture-repeat.jpg');
+    background-repeat: repeat;
+    background-size: 200px;
+}
+
+    #board-lines {
+        width: 100%;
+        height: 100%;
+
+        background-color: transparent;
+    }
+
+        #grass-logo {
+            width: 200px;
+            height: 200px;
+
+            margin: calc(50% - 100px) auto;
+
+            background-image: url('/Images/drm-turf-logo.png');
+            background-repeat: no-repeat;
+            background-size: 90% auto;
+        }
 
 .board {
     display: flex;
