@@ -11,9 +11,7 @@ namespace DogRallyManager.Entities
 
         [MaxLength(100)]
         public string? RoomName { get; set; }
-
-
-        public ICollection<Message> Messages { get; set; } = new List<Message>();
+        public ICollection<Message> ChatMessages { get; set; } = new List<Message>();
 
         [ForeignKey("UserId")]
         public ICollection<RallyUser> ParticipatingUsers { get; set; } = new List<RallyUser>();
