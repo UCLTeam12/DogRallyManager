@@ -13,17 +13,14 @@ namespace DogRallyManager.Controllers
     public class ChatController : Controller
     {
         private readonly IDataService _dataService;
-        private readonly IMessageCreationService _messageCreationService;
         private readonly UserManager<RallyUser> _userManager;
         private readonly IMapper _mapper;
 
-        public ChatController(IDataService dataService, 
-            IMessageCreationService messageCreationService,
+        public ChatController(IDataService dataService,
             IMapper mapper,
             UserManager<RallyUser> userManager)
         {
             _dataService = dataService;
-            _messageCreationService = messageCreationService;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -34,32 +31,46 @@ namespace DogRallyManager.Controllers
             var user = await _userManager.GetUserAsync(User);
             var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
 
-            // Map entities to view models
             var chatRoomsVM = _mapper.Map<IEnumerable<ChatRoomVM>>(chatRoomsEntities);
 
-            // Combine messages from all chat rooms
-            var allMessagesEntities = chatRoomsEntities.SelectMany(room => room.Messages);
-            var allMessagesVM = _mapper.Map<IEnumerable<ChatMessageVM>>(allMessagesEntities);
 
-            var viewModel = new ChatViewModel
+            return View("Chat", chatRoomsVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendMessage(string messageBody)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var chatRooms = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
+            var entityChatRoom = chatRooms.FirstOrDefault();
+
+            if (entityChatRoom == null)
             {
-                ChatRooms = chatRoomsVM,
-                ChatMessages = allMessagesVM
+                entityChatRoom = new ChatRoom();
+                entityChatRoom.ParticipatingUsers.Add(user);
+
+                await _dataService.AddChatRoomAsync(entityChatRoom);
+
+            }
+            var chatRoomVMToReturn = _mapper.Map<ChatRoomVM>(entityChatRoom);
+
+            var newMessage = new ChatMessageVM
+            {
+                MessageBody = messageBody,
+                Sender = user,
+                TimeStamp = DateTime.UtcNow,
+                ChatRoomId = chatRoomVMToReturn.ChatId
             };
 
-            return View("Chat", viewModel);
-        }
-        // Example action method to handle message sending
-        [HttpPost]
-        public async Task<IActionResult> SendMessage(ChatMessageVM chatMessageVM, 
-            ChatRoomVM chatRoomVM)
-        {
-            // Create the message entity using MessageCreationService
-            await _messageCreationService.CreateMessageAsync(chatMessageVM, chatRoomVM);
+            chatRoomVMToReturn.ChatMessages.Add(newMessage);
 
-            // Redirect or return appropriate response
-            return RedirectToAction("Index");
-        }
+            var entityMessage = _mapper.Map<Message>(newMessage);
+            entityChatRoom.ChatMessages.Add(entityMessage);
 
+            await _dataService.AddMessageAsync(entityMessage);
+            await _dataService.AddChatRoomAsync(entityChatRoom);
+
+            return View("Chat", chatRoomVMToReturn);
+        }
     }
 }
