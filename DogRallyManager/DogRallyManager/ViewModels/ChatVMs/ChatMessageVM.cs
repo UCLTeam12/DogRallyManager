@@ -1,14 +1,14 @@
-﻿namespace DogRallyManager.ViewModels.ChatVMs
+﻿using DogRallyManager.Entities;
+
+namespace DogRallyManager.ViewModels.ChatVMs;
+
+public class ChatMessageVM
 {
-    public class ChatMessageVM
-    {
-        public string Author { get; set; }
+    public RallyUser Sender { get; set; }
 
-        public string Message { get; set; }
+    public string MessageBody { get; set; }
 
-        public int ChatRoomId { get; set; }
+    public int ChatRoomId { get; set; }
 
-        public DateTime SentAt { get; set; } = DateTime.UtcNow;
-
-    }
+    public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 }
