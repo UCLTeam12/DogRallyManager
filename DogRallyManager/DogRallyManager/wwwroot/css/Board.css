@@ -39,16 +39,19 @@ main {
 
         padding: 10px;
 
-        background-color: blue;
+        background-color: rgb(230, 230, 230);
     }
 
         #signs {
             width: 720px;
             height: 160px;
 
+            padding: 16px;
             border: 1px solid black;
 
             overflow-y: scroll;
+
+            background-color: rgb(255, 255, 255);
         }
 
     #board {
