@@ -1,4 +1,5 @@
 ﻿using DogRallyManager.Entities;
+using DogRallyManager.Services;
 using DogRallyManager.ViewModels.AccountVMs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,16 +13,19 @@ public class AccountController : Controller
     private readonly UserManager<RallyUser> _userManager;
 
     // POSSIBLE TO-DO: Concider if we want to use ASP NET DI instead of newing up like this.
-    public RegisterUserVM RegisterUserVM = new();
-    public LoginUserVM LoginUserVM = new();
+    public RegisterUserVM _RegisterUserVM;
+    public LoginUserVM _LoginUserVM;
+    private readonly IDataService _dataService;
 
     public AccountController(
         SignInManager<RallyUser> signManager,
-        UserManager<RallyUser> userManager
+        UserManager<RallyUser> userManager,
+        IDataService dataService
     )
     {
         _signInManager = signManager;
         _userManager = userManager;
+        _dataService = dataService;
     }
 
     // POSSIBLE TO-DO:
@@ -121,6 +125,10 @@ public class AccountController : Controller
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
+
+                // If the account has succesfully been created, it is also associated with
+                // the general chatroom, where all are a part of, until they choose to leave it.
+                await _dataService.AddUserToChatRoomAsync(user.UserName, 1);
                 return View("Login");
             }
 

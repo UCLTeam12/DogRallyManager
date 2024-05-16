@@ -1,6 +1,7 @@
 using DogRallyManager.DbContexts;
 using DogRallyManager.Entities;
 using DogRallyManager.Services;
+using DogRallyManager.ViewModels.AccountVMs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +19,11 @@ builder.Services.AddDbContext<DogRallyDbContext>(
 // Adding AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Adding dataservice
+// Adding custom dependencies
 builder.Services.AddTransient<IDataService, DemoDataService>();
+builder.Services.AddTransient<RegisterUserVM>();
+builder.Services.AddTransient<LoginUserVM>();
+
 
 // Sets up identity on our custom classes that extends IdentityUser and IdentityRole classes. 
 // So far these classes have just been made to make the class names more app-specific-appropriate.

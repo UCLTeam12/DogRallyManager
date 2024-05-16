@@ -1,6 +1,7 @@
 ﻿using DogRallyManager.DbContexts;
 using DogRallyManager.Entities;
 using DogRallyManager.ViewModels.ChatVMs;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +16,49 @@ namespace DogRallyManager.Services
         {
             _userManager = userManager;
             _dogRallyDbContext = dogRallyDbContext;
+
         }
+
+        public async Task AddUserToChatRoomAsync(string userName, int chatRoomId)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            try
+            {
+                if (user == null)
+                {
+                    throw new InvalidOperationException("A user with that username does not exist");
+                }
+
+                var chatRoom = await _dogRallyDbContext.ChatRooms
+                    .Include(cr => cr.ParticipatingUsers)
+                    .FirstOrDefaultAsync(cr => cr.Id == chatRoomId);
+
+                if (chatRoom == null)
+                {
+                    throw new InvalidOperationException($"Chatroom with ID '{chatRoomId}' was not found");
+                }
+
+                if (chatRoom.ParticipatingUsers.Any(u => u.Id == user.Id))
+                {
+                    throw new InvalidOperationException($"User '{userName}' is already in the chat room");
+                }
+
+                chatRoom.ParticipatingUsers.Add(user);
+            }
+            catch (InvalidOperationException ex)
+            {
+               // Lets make some fancy error handling here =)
+            }
+
+            await _dogRallyDbContext.SaveChangesAsync();
+        }
+
         public async Task<List<ChatRoom>> GetAssociatedChatRoomsAsync(string userId)
         {
             var user = await _dogRallyDbContext.RallyUsers
                 .Include(u => u.AssociatedChatRooms)
-                .ThenInclude(c => c.ChatMessages)     
+                .ThenInclude(c => c.ChatMessages)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user != null)
@@ -30,8 +68,11 @@ namespace DogRallyManager.Services
             }
             else
             {
+               
                 return new List<ChatRoom>();
             }
+                
+            
         }
         public async Task<List<Message>> GetAllMessagesAsync()
         {
