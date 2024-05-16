@@ -22,7 +22,5 @@ namespace DogRallyManager.Entities
         public int ChatRoomId { get; set; }
 
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
-
     }
 }
-
