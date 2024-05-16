@@ -10,42 +10,44 @@
         <link rel="stylesheet" href="~/css/board.css">
     </head>
     <body>
-        <div id="boards-panel">
-            <div id="signs">
-                @foreach (var sign in Model.Signs)
-                {
-                    <div style="position: absolute;top: @string.Format("{0}px", sign.PositionY);left: @string.Format("{0}px", sign.PositionX);z-index: 9"
-                         class="sign"
-                         id="@string.Format("sign-{0}",sign.Id)"
-                         data-sign-id="@sign.Id">
-                        <img src="Images/Signs/@sign.SignType" />
-                    </div>
-                }
-                <table>
-                    @for (var y = 0; y < 8; y++)
+        <main id="boards-section">
+            <div id="boards-panel">
+                <div id="signs">
+                    @foreach (var sign in Model.Signs)
                     {
-                        <tr>
-                            @for (var x = 0; x < 8; x++)
-                            {
-                                var signPiece = Model.Signs.FirstOrDefault(p => p.PositionX == x && p.PositionY == y);
-                                <td>
-                                    @if (signPiece != null)
-                                    {
-                                    }
-                                </td>
-                            }
-                        </tr>
+                        <div style="position: absolute;top: @string.Format("{0}px", sign.PositionY);left: @string.Format("{0}px", sign.PositionX);z-index: 9"
+                             class="sign"
+                             id="@string.Format("sign-{0}",sign.Id)"
+                             data-sign-id="@sign.Id">
+                            <img src="Images/Signs/@sign.SignType" />
+                        </div>
                     }
-                </table>
-            </div>
-        </div>
-
-        <div id="board">
-            <div id="board-lines">
-                <div id="grass-logo">
+                    <table>
+                        @for (var y = 0; y < 8; y++)
+                        {
+                            <tr>
+                                @for (var x = 0; x < 8; x++)
+                                {
+                                    var signPiece = Model.Signs.FirstOrDefault(p => p.PositionX == x && p.PositionY == y);
+                                    <td>
+                                        @if (signPiece != null)
+                                        {
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </table>
                 </div>
             </div>
-        </div>
+
+            <div id="board">
+                <div id="board-lines">
+                    <div id="grass-logo">
+                    </div>
+                </div>
+            </div>
+        </main>
 
         <script>
             function dragElement(elmnt) {
