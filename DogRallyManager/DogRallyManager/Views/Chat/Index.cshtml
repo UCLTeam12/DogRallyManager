@@ -99,12 +99,16 @@
                     }
                 </div>
                 <div>
+
+                   
+                    
                     <!-- Input box for typing messages -->
-                    <input type="text" class="message-input" id="message-input-@chatRoom.Id" />
+                    <input type="text" class="message-input" id="message-input-@chatRoom.Id"/>
                     <!-- Button to submit messages -->
                     <button id="send-button" data-chatroomid="@chatRoom.Id">Send</button>
                     <!-- Button to hide chat room -->
                     <button onclick="hideChatroom('@chatRoom.Id')">Hide Chat</button>
+                    
                 </div>
             </div>
         }
@@ -140,14 +144,38 @@
 
             // Handle click event on send button
             $("#send-button").click(function () {
-                var currentChatRoomId = $("#send-button").data("chatroomid"); // Capture the chat room ID in a closure
+                var currentChatRoomId = $("#send-button").data("chatroomid"); // Here we capture the chat room ID in a closure
                 console.log("Send button clicked and chatroomid variable is" + currentChatRoomId);
-                var message = $("#message-input-" + currentChatRoomId).val(); // Use the captured chat room ID
+                var message = $("#message-input-" + currentChatRoomId).val(); 
                 var user = "@User.Identity.Name";
                 console.log("variables loaded");
                 connection.invoke("SendMessage", user, message, currentChatRoomId)
                     .catch(err => console.error(err));
                 console.log("send button function finished");
+
+
+                // Ajax is used here to prevent default behavior of controller to return us a view
+                // or an action in general, making it so that the user is not experiencing
+                // a refresh of their view.
+                $.ajax({
+                    url: "/Chat/SendMessage",
+                    type: "POST",
+                    data: { messageBody: message },
+                    success: function (response) {
+                        // Handle success response
+                        if (response.success) {
+                            console.log("Message sent successfully");
+                            // Optionally, you can update the UI to indicate success
+                        } else {
+                            console.error("Error sending message: " + response.message);
+                            // Optionally, you can handle errors and display them to the user
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error sending message: " + error);
+                        // Optionally, you can handle errors and display them to the user
+                    }
+                });
             });
 
             
@@ -156,7 +184,12 @@
                 // Append the received message to the message container
                 console.log("ReceiveMessage has been invoked");
                 $("#message-container-" + chatroomId).append("<div>" + user + ": " + message + "</div>");
-                $("#message-input-" + currentChatRoomId).val("");
+                // Upon succesfully having appended the chatmessage to the open chatwindow
+                // There are two things to do to enhance user-experience:
+                // 1: Clear the messagebox. 2: Scroll to bottom of message container
+                $("#message-input-" + chatroomId).val("");
+                var messageContainer = document.getElementById("message-container-"+chatroomId);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
             });
         });
     </script>
