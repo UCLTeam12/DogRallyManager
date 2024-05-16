@@ -5,6 +5,7 @@ using DogRallyManager.ViewModels.ChatVMs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DogRallyManager.Controllers
@@ -46,37 +47,39 @@ namespace DogRallyManager.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage(string messageBody)
         {
-            var user = await _userManager.GetUserAsync(User);
-            var chatRooms = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
-            var entityChatRoom = chatRooms.FirstOrDefault();
-
-            if (entityChatRoom == null)
+            try
             {
-                entityChatRoom = new ChatRoom();
-                entityChatRoom.ParticipatingUsers.Add(user);
+                var user = await _userManager.GetUserAsync(User);
+                var chatRooms = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
+                var entityChatRoom = chatRooms.FirstOrDefault();
 
-                await _dataService.AddChatRoomAsync(entityChatRoom);
+                if (entityChatRoom == null)
+                {
+                    entityChatRoom = new ChatRoom();
+                    entityChatRoom.ParticipatingUsers.Add(user);
+                    await _dataService.AddChatRoomAsync(entityChatRoom);
+                }
 
+                var newMessage = new ChatMessageVM
+                {
+                    MessageBody = messageBody,
+                    Sender = user,
+                    TimeStamp = DateTime.UtcNow,
+                    ChatRoomId = entityChatRoom.Id
+                };
+
+                var entityMessage = _mapper.Map<Message>(newMessage);
+                entityChatRoom.ChatMessages.Add(entityMessage);
+
+                await _dataService.AddMessageAsync(entityMessage);
+
+                return Json(new { success = true, message = "The message was succesfully persisted in database" });
             }
-            var chatRoomVMToReturn = _mapper.Map<ChatRoomVM>(entityChatRoom);
-
-            var newMessage = new ChatMessageVM
+            catch (Exception ex)
             {
-                MessageBody = messageBody,
-                Sender = user,
-                TimeStamp = DateTime.UtcNow,
-                ChatRoomId = chatRoomVMToReturn.Id
-            };
+                return Json(new { success = false, message = $"Error sending message: {ex.Message}" });
+            }
 
-            chatRoomVMToReturn.ChatMessages.Add(newMessage);
-
-            var entityMessage = _mapper.Map<Message>(newMessage);
-            entityChatRoom.ChatMessages.Add(entityMessage);
-
-            await _dataService.AddMessageAsync(entityMessage);
-            await _dataService.AddChatRoomAsync(entityChatRoom);
-
-            return View("Chat", chatRoomVMToReturn);
         }
     }
 }
