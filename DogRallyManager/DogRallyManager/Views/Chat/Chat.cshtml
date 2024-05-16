@@ -1,5 +1,4 @@
-﻿@using DogRallyManager.ViewModels.ChatVMs
-@model ChatViewModel
+﻿@model IEnumerable<DogRallyManager.ViewModels.ChatVMs.ChatRoomVM>
 
 @{
     ViewData["Title"] = "Simple Chat";
@@ -34,9 +33,16 @@
     <div id="chat-container">
         <h1>Simple Chat</h1>
         <ul id="messages">
-            @foreach (var chatMessage in Model.ChatMessages)
+            @if (Model.Any())
             {
-                <li>@chatMessage.</li>
+                @foreach (var chatMessage in Model.First().ChatMessages)
+                {
+                    <li>@chatMessage.MessageBody</li>
+                }
+            }
+            else
+            {
+                <li>No messages available</li>
             }
         </ul>
         <input type="text" id="message-input" />
@@ -51,10 +57,12 @@
                 $.ajax({
                     type: "POST",
                     url: "/Chat/SendMessage",
-                    data: { content: message },
+                    data: { messageBody: message },
                     success: function () {
                         $("#message-input").val('');
                         fetchMessages();
+                        // Reload the index page after successful message sending.
+                        window.location.href = '/Chat'; // Redirect to the index page
                     }
                 });
             });
@@ -68,7 +76,7 @@
                 });
             }
 
-            fetchMessages();
+            fetchMessages(); // Initial fetch on page load
         });
     </script>
 </body>
