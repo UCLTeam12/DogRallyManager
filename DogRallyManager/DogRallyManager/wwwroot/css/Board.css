@@ -18,6 +18,8 @@ body {
     background-color: rgb(240, 240, 240);
 
     padding: 16px 120px 16px 120px;
+
+    font-family: Arial;
 }
 
 header {
@@ -39,6 +41,10 @@ header {
             color: black;
             font-family: Verdana;
             text-decoration: none;
+        }
+
+        .header-nav a:hover {
+            color: darkgreen;
         }
 
         .current-page {
