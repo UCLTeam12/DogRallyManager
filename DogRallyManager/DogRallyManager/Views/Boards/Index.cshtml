@@ -2,14 +2,24 @@
 @{
     ViewData["Title"] = "Board";
 }
+@{
+    Layout = null;
+}
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
     <head>
         <link rel="stylesheet" href="~/css/board.css">
     </head>
     <body>
+        <header>
+        </header>
+
+        <section id="boards-side-panel" class="side-panel">
+            
+        </section>
+
         <main id="boards-section">
             <div id="boards-panel">
                 <div id="signs">
@@ -48,6 +58,12 @@
                 </div>
             </div>
         </main>
+
+        <footer>
+
+        </footer>
+
+        <!-- Scripts: -->
 
         <script>
             function dragElement(elmnt) {
@@ -93,11 +109,11 @@
                 }
             }
         </script>
-            @foreach(var sign in Model.Signs){
-                <script>
-            dragElement(document.getElementById(`sign-@sign.Id`));
+
+        @foreach(var sign in Model.Signs){
+            <script>
+                dragElement(document.getElementById(`sign-@sign.Id`));
             </script>
-        
-            }
+        }
     </body>
 </html>
