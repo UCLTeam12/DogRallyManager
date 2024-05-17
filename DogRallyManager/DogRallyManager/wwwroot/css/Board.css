@@ -13,10 +13,11 @@
 }
 
 body {
-    width: calc(100% - 160px);
-    background-color: lightgrey;
+    min-width: 1000px;
+    width: calc(100% - 240px);
+    background-color: rgb(240, 240, 240);
 
-    padding: 16px 80px 16px 80px;
+    padding: 16px 120px 16px 120px;
 }
 
 header {
@@ -59,7 +60,7 @@ header {
         float: left;
         width: 260px;
         height: 28px;
-        margin: 10px 0px 0px 12px;
+        margin: 12px 0px 0px 10px;
         background-image: url('/Images/drm-logo.png');
         background-repeat: no-repeat;
         background-size: cover;
@@ -80,7 +81,7 @@ main {
 
         padding: 16px;
 
-        background-color: rgb(230, 230, 230);
+        background-color: lightgrey;
     }
 
         #signs {
