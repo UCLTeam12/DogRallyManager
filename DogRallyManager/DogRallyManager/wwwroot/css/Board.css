@@ -41,6 +41,7 @@ header {
             color: black;
             font-family: Verdana;
             text-decoration: none;
+            font-size: 16px;
         }
 
         .header-nav a:hover {
@@ -75,6 +76,15 @@ header {
 main {
     width: 100%;
     height: auto;
+
+    background-color: lightgrey;
+}
+
+#main-your-page {
+    width: calc(100% - 32px);
+    height: 1000px;
+    background-color: lightgrey;
+    padding: 16px;
 }
 
 #boards-section {
@@ -88,6 +98,8 @@ main {
         padding: 16px;
 
         background-color: lightgrey;
+
+        border-bottom: 1px solid grey;
     }
 
         #signs {
@@ -122,7 +134,7 @@ main {
     height: calc(100% - 140px - 32px);
 
     padding: 16px;
-    background-color: white;
+    background-color: lightgrey;
 }
 
     #board {
@@ -174,5 +186,5 @@ footer {
     padding: 16px;
 
     border-radius: 0px 0px 4px 4px;
-    background-color: blue;
+    background-color: grey;
 }
