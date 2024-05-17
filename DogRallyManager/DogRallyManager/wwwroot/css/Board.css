@@ -28,6 +28,13 @@ main {
     margin: 0px !important;
 }
 
+main .pb-3 {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 0px !important;
+    margin: 0px !important;
+}
+
 #boards-section {
     width: 100%;
     height: 100%;
@@ -106,5 +113,9 @@ main {
 }
 
 footer {
-    display: none !important;
+    width: 100%;
+    height: 120px;
+    border: none !important;
+
+    background-color: blue;
 }
