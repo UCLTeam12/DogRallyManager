@@ -9,8 +9,10 @@ namespace DogRallyManager.ViewModels.ChatVMs
 
         public int NumberOfAssociatedUsers { get; set; }
 
-        public ICollection<UserViewModel> userViewModels { get; set; }
+        public ICollection<UserViewModel> ParticipatingUsers { get; set; }
+
         public ICollection<ChatMessageVM> ChatMessages { get; set; }
+
 
     }
 }
