@@ -54,11 +54,12 @@ namespace DogRallyManager.Services
             await _dogRallyDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<ChatRoom>> GetAssociatedChatRoomsAsync(string userId)
+        public async Task<List<ChatRoom>> GetAssociatedChatRoomsWithMessagesAsync(string userId)
         {
             var user = await _dogRallyDbContext.RallyUsers
                 .Include(u => u.AssociatedChatRooms)
                 .ThenInclude(c => c.ChatMessages)
+                .ThenInclude(m => m.Sender)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user != null)
@@ -74,10 +75,36 @@ namespace DogRallyManager.Services
                 
             
         }
+
+
+
+        public async Task<List<ChatMessageVM>> GetMessagesForChatRoomAsync(int chatRoomId)
+        {
+            var messages = await _dogRallyDbContext.Messages
+                                .Include(m => m.Sender)
+                                .Where(m => m.ChatRoomId == chatRoomId)
+                                .OrderBy(m => m.TimeStamp)
+                                .ToListAsync();
+
+            // Map to ChatMessageVM
+            var messageVMs = messages.Select(message => new ChatMessageVM
+            {
+                Sender = message.Sender,
+                MessageBody = message.MessageBody,
+                ChatRoomId = message.ChatRoomId,
+                TimeStamp = message.TimeStamp
+            }).ToList();
+
+            return messageVMs;
+        }
+
+
         public async Task<List<Message>> GetAllMessagesAsync()
         {
             return await _dogRallyDbContext.Messages.ToListAsync();
         }
+
+
 
         public async Task AddMessageAsync(Message message)
         {

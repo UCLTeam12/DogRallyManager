@@ -63,6 +63,8 @@
             $('.chat-room-container').hide();
             // Show the selected chat room container
             $('#chat-room-' + chatroomId).show();
+            var messageContainer = document.getElementById("message-container-" + chatroomId);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         }
 
         function hideChatroom(chatroomId) {
@@ -89,6 +91,7 @@
             <div class="chat-room-container" id="chat-room-@chatRoom.Id">
                 <div class="chat-room-header">
                     <h2>Welcome to Chatroom with Id @chatRoom.Id</h2>
+                    
                     <p>There is you and @(chatRoom.NumberOfAssociatedUsers-1) other users in this room. They might not be online though...</p>
                 </div>
                 <div class="message-container" id="message-container-@chatRoom.Id">
@@ -120,6 +123,8 @@
     <script>
 
         $(document).ready(function () {
+
+
             $.ajaxSetup({
                 // This is for the preflight request made from the browser, saying to the
                 // CORS-guards of the SignalR app that HEY ITS OKAY DONT SHUT DOWN LET US IN !

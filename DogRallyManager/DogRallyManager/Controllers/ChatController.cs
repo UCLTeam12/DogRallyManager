@@ -31,15 +31,19 @@ namespace DogRallyManager.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             
-            var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
+            var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsWithMessagesAsync(user.Id);
 
             if (chatRoomsEntities == null)
             {
-
+                // TO-DO:
+                // If ChatRoomsEntities is null, we will get an error on the load of messages
+                // saying that it is trying to read from something without an object reference.
+                // Probably alot of ways to fix this. We could put an if loop in the razor page? 
+                // Maybe the fix actually lies somewhere else.... let me see... 
             }
 
+            // This could be done in dataservice
             var chatRoomsVM = _mapper.Map<IEnumerable<ChatRoomVM>>(chatRoomsEntities);
-
 
             return View(chatRoomsVM);
         }
@@ -50,7 +54,7 @@ namespace DogRallyManager.Controllers
             try
             {
                 var user = await _userManager.GetUserAsync(User);
-                var chatRooms = await _dataService.GetAssociatedChatRoomsAsync(user.Id);
+                var chatRooms = await _dataService.GetAssociatedChatRoomsWithMessagesAsync(user.Id);
                 var entityChatRoom = chatRooms.FirstOrDefault();
 
                 if (entityChatRoom == null)
