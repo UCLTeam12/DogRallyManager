@@ -12,6 +12,9 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="~/css/board.css">
+    <link rel="stylesheet" href="~/css/chat.css">
+        <script src="~/js/include.js"></script>
+        <script src="~/js/toggleClass.js"></script>
     </head>
     <body>
         <header>
@@ -64,7 +67,7 @@
                 </div>
             </div>
 
-            <!-- Class clear clears both type of floats: -->
+            <!-- Class clear clears both type of floats. -->
             <div class="clear"></div>
         </main>
 
@@ -72,7 +75,12 @@
             <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
         </footer>
 
+        <!-- Including the chat on the board page. -->
+        <div include="/components/chat.html"></div>
+
         <!-- Scripts: -->
+
+        <script>include();</script>
 
         <script>
             function dragElement(elmnt) {
