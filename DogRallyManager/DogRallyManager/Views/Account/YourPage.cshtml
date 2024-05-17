@@ -2,6 +2,10 @@
     ViewData["Title"] = "Your Page";
 }
 
+@{
+    Layout = null;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +14,7 @@
     <title>@ViewData["Title"]</title>
     <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> -->
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/board.css" />
     <link rel="stylesheet" href="~/css/chat.css" />
 
     <script src="~/js/include.js"></script>
@@ -17,26 +22,11 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-teal">
-        <div class="container">
-            <a class="navbar-brand" href="#">Så, @User.Identity.Name, Så er du kravt'edme Rally</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="Logout">Logout</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/boards">Board</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <header>
+        <a href="/Account/YourPage"><div class="header-logo-dog"></div><div class="header-logo-txt"></div></a>
+        <nav class="header-nav"><a class="current-page" href="#">Your Page</a><a href="/Boards">Boards</a><a href="/Account/Logout">Log Out</a></nav>
+        <div class="clear"></div>
+    </header>
 
 <div include="/components/chat.html"></div>
 
