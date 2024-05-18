@@ -19,6 +19,16 @@ namespace DogRallyManager.Services
 
         }
 
+        public async Task<List<string?>> GetAllUsersAsync()
+        {
+            var ListOfUserNames = await _dogRallyDbContext.Users
+                .Select(u => u.UserName )
+                .ToListAsync();
+
+            return ListOfUserNames;
+               
+        }
+
         public async Task AddUserToChatRoomAsync(string userName, int chatRoomId)
         {
             var user = await _userManager.FindByNameAsync(userName);
