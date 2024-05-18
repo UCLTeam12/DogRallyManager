@@ -17,7 +17,10 @@ namespace DogRallyManager.MapperProfiles
             CreateMap<ChatMessageVM, Message>();
 
             CreateMap<UserViewModel, RallyUser>();
-            CreateMap<RallyUser, UserViewModel>(); 
+            CreateMap<RallyUser, UserViewModel>();
+
+            // Could be concidered redundant, but it contributes to a streamlining of AutoMapper-usage throughout the app.
+            CreateMap<string, UserViewModel>();
 
         }
     }
