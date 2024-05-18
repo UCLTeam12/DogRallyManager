@@ -1,9 +1,11 @@
 ﻿using DogRallyManager.DbContexts;
 using DogRallyManager.Entities;
+using DogRallyManager.ViewModels.AccountVMs;
 using DogRallyManager.ViewModels.ChatVMs;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace DogRallyManager.Services
 {
@@ -19,13 +21,16 @@ namespace DogRallyManager.Services
 
         }
 
-        public async Task<List<string?>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserViewModel>> GetAllUserNamesAsync()
         {
             var ListOfUserNames = await _dogRallyDbContext.Users
                 .Select(u => u.UserName )
                 .ToListAsync();
 
-            return ListOfUserNames;
+              IEnumerable<UserViewModel> userViewModels = ListOfUserNames.Select(username => new UserViewModel { UserName = username } )  
+             .ToList();
+
+            return userViewModels;
                
         }
 
