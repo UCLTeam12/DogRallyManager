@@ -50,7 +50,22 @@
 
             startChatBtn.addEventListener('click', function() {
                 if (selectedUsername) {
-                    window.location.href = '/Chat/Start/' + selectedUsername;
+                    $.ajax({
+                        url: "/SearchUser/StartChat",
+                        type: "GET",
+                        data: { recipientUsername: selectedUsername },
+                        success: function (response) {
+                            // Handle success response
+                            if (response.success) {
+                                console.log("Chat initiated");
+                            } else {
+                                console.error("There was an error initiating the chat: " + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error sending message: " + error);
+                        }
+                    });
                 }
             });
         });
