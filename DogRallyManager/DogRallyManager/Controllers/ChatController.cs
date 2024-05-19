@@ -52,8 +52,9 @@ namespace DogRallyManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddChatVMToViewList(string recipientUserName)
+        public async Task<IActionResult> StartChat(string recipientUserName)
         {
+            // TO-DO:
             // use AJAX to request an update of the chatview incase signalR is down.
             // Until then, we will add it to the list of chatrooms and return view of chat, since we dont have
             // components rolling side by side
@@ -70,13 +71,15 @@ namespace DogRallyManager.Controllers
                 // saying that it is trying to read from something without an object reference.
                 // Probably alot of ways to fix this. We could put an if loop in the razor page? 
                 // Maybe the fix actually lies somewhere else.... let me see... 
+                // For now I just do this:
+                chatRoomsEntities = new List<ChatRoom>();
             }
 
             // This could (should it?) be done in dataservice
             var chatRoomsVM = _mapper.Map<List<ChatRoomVM>>(chatRoomsEntities);
 
             ChatRoomVM chatRoomVMToBeAdded = new ChatRoomVM { NumberOfAssociatedUsers = 2 };
-            
+
             UserViewModel recipientUserVM = new UserViewModel { UserName = recipientUserName };
 
             UserViewModel initiatingUserVM = new UserViewModel { UserName = User.Identity.Name };

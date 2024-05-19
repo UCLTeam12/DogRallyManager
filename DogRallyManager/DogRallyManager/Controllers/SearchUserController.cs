@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DogRallyManager.Controllers
 {
-    public class SearchUser : Controller
+    public class SearchUserController : Controller
     {
         private readonly IDataService _dataservice;
         private readonly IMapper _mapper;
 
-        public SearchUser(IDataService dataservice, IMapper mapper)
+        public SearchUserController(IDataService dataservice, 
+            IMapper mapper)
         {
             _dataservice = dataservice;
             _mapper = mapper;
@@ -22,10 +23,17 @@ namespace DogRallyManager.Controllers
 
             return View(ListOfUserVMs);
         }
-
+        [HttpGet]
         public IActionResult StartChat(string recipientUsername)
         {
-            return RedirectToAction("AddChatVMToViewList", "ChatController", recipientUsername);
+            // TO-DO: Verify if user exists before creating chatroom
+
+            if (string.IsNullOrEmpty(recipientUsername))
+            {
+                return Json(new { success = false, message = "Recipient username is required." });
+            }
+
+            return RedirectToAction("StartChat", "ChatController", recipientUsername);
         }
     }
 }
