@@ -103,6 +103,7 @@ main {
     }
 
         #signs {
+            display: inline-block;
             width: 40%;
             height: calc(100% - 32px);
 
@@ -113,6 +114,98 @@ main {
 
             background-color: rgb(255, 255, 255);
         }
+
+        #toggle-line-color {
+            display: inline-block;
+            width: 80px;
+            max-height: 100%;
+
+            background-color: transparent;
+        }
+
+        /*** Code for toggle button: ***/
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+/* Text change logic */
+.switch-description:before {
+    content: "Dark";
+    color: black;
+    transition: color 0.4s;
+}
+
+.switch-description:after {
+    content: "Light";
+    color: transparent;
+    transition: color 0.4s;
+}
+
+input:checked ~ .switch-description:before {
+    color: transparent;
+}
+
+input:checked ~ .switch-description:after {
+    color: black;
+}
+
+        /*** Code for toggle button ends. ***/
 
     .side-panel {
         float: left;
@@ -152,7 +245,7 @@ main {
 
             position: relative;
 
-            background-image: url('/Images/dog-rally-track-grass-dark-two.png');
+            background-image: url('/Images/dog-rally-track-grass-light-two.png');
             background-repeat: no-repeat;
             background-position: center;
             background-size: 800px;
