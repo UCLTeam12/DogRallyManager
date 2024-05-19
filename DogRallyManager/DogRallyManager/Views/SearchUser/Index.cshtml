@@ -25,15 +25,15 @@
 
 @section Scripts {
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var userLinks = document.querySelectorAll('.user-link');
             var viewProfileBtn = document.getElementById('view-profile-btn');
             var startChatBtn = document.getElementById('start-chat-btn');
             var selectedUsernameSpan = document.getElementById('selected-username');
             var selectedUsername = null;
 
-            userLinks.forEach(function(link) {
-                link.addEventListener('click', function(e) {
+            userLinks.forEach(function (link) {
+                link.addEventListener('click', function (e) {
                     e.preventDefault();
                     selectedUsername = this.getAttribute('data-username');
                     selectedUsernameSpan.textContent = selectedUsername;
@@ -42,30 +42,15 @@
                 });
             });
 
-            viewProfileBtn.addEventListener('click', function() {
+            viewProfileBtn.addEventListener('click', function () {
                 if (selectedUsername) {
                     window.location.href = '/User/Profile/' + selectedUsername;
                 }
             });
 
-            startChatBtn.addEventListener('click', function() {
+            startChatBtn.addEventListener('click', function () {
                 if (selectedUsername) {
-                    $.ajax({
-                        url: "/SearchUser/StartChat",
-                        type: "GET",
-                        data: { recipientUsername: selectedUsername },
-                        success: function (response) {
-                            // Handle success response
-                            if (response.success) {
-                                console.log("Chat initiated");
-                            } else {
-                                console.error("There was an error initiating the chat: " + response.message);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error sending message: " + error);
-                        }
-                    });
+                    window.location.href = '/Chat/StartChat?recipientUsername=' + encodeURIComponent(selectedUsername);
                 }
             });
         });
