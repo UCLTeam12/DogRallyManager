@@ -15,10 +15,9 @@
 body {
     min-width: 1120px;
     width: calc(100% - 240px);
-    background-color: rgb(240, 240, 240);
-
+    background: rgb(191,187,255);
+    background: linear-gradient(90deg, rgba(191,187,255,1) 0%, rgba(198,198,255,1) 28%, rgba(173,241,255,1) 100%);
     padding: 16px 120px 16px 120px;
-
     font-family: Arial;
 }
 
@@ -92,12 +91,14 @@ main {
 }
 
     #boards-panel {
+        display: flex;
+        justify-content: flex-end;
         width: calc(100% - 32px);
         height: calc(140px - 32px);
 
         padding: 16px;
 
-        background-color: lightgrey;
+        background-color: rgb(230, 230, 230);
 
         border-bottom: 1px solid grey;
     }
@@ -109,7 +110,7 @@ main {
 
             padding: 16px;
             border: 1px solid black;
-
+            float: right;
             overflow-y: scroll;
 
             background-color: rgb(255, 255, 255);
@@ -117,15 +118,23 @@ main {
 
         #toggle-line-color {
             display: inline-block;
-            width: 80px;
-            max-height: 100%;
-
+            height: calc(140px - 32px);
+            float: right;
+            padding-left: 16px;
+            border-left: 1px solid grey;
+            margin: 0px 0px 0px 16px;
             background-color: transparent;
         }
 
         /*** Code for toggle button: ***/
 
 /* The switch - the box around the slider */
+
+.switch-container {
+    margin: auto;
+    padding: 0px 16px 0px 16px;
+}
+
 .switch {
     position: relative;
     display: inline-block;
@@ -148,7 +157,7 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: rgb(70, 70, 70);
     transition: .4s;
 }
 
@@ -159,12 +168,12 @@ main {
         width: 26px;
         left: 4px;
         bottom: 4px;
-        background-color: white;
+        background-color: rgb(40, 40, 40);
         transition: .4s;
     }
 
 input:checked + .slider {
-    background-color: #2196F3;
+    background-color: rgb(240, 240, 240);
 }
 
 input:focus + .slider {
@@ -173,11 +182,13 @@ input:focus + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+    background-color: white;
 }
 
 /* Rounded sliders */
 .slider.round {
     border-radius: 34px;
+    border: 1px solid lightgrey;
 }
 
     .slider.round:before {
@@ -185,6 +196,11 @@ input:checked + .slider:before {
     }
 
 /* Text change logic */
+
+.switch-description {
+    text-align: center;
+}
+
 .switch-description:before {
     content: "Dark";
     color: black;
@@ -192,16 +208,19 @@ input:checked + .slider:before {
 }
 
 .switch-description:after {
+    display: none;
     content: "Light";
     color: transparent;
     transition: color 0.4s;
 }
 
 input:checked ~ .switch-description:before {
+    display: none;
     color: transparent;
 }
 
 input:checked ~ .switch-description:after {
+    display: block;
     color: black;
 }
 
@@ -245,7 +264,7 @@ input:checked ~ .switch-description:after {
 
             position: relative;
 
-            background-image: url('/Images/dog-rally-track-grass-light-two.png');
+            background-image: url('/Images/dog-rally-track-grass-dark-two.png');
             background-repeat: no-repeat;
             background-position: center;
             background-size: 800px;
