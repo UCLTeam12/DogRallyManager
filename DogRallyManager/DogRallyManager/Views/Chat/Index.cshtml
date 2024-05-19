@@ -170,15 +170,12 @@
                         // Handle success response
                         if (response.success) {
                             console.log("Message sent successfully");
-                            // Optionally, you can update the UI to indicate success
                         } else {
                             console.error("Error sending message: " + response.message);
-                            // Optionally, you can handle errors and display them to the user
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error("Error sending message: " + error);
-                        // Optionally, you can handle errors and display them to the user
                     }
                 });
             });

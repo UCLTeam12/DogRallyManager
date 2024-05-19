@@ -22,5 +22,10 @@ namespace DogRallyManager.Controllers
 
             return View(ListOfUserVMs);
         }
+
+        public IActionResult StartChat(string recipientUsername)
+        {
+            return RedirectToAction("AddChatVMToViewList", "ChatController", recipientUsername);
+        }
     }
 }
