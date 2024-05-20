@@ -5,7 +5,7 @@ namespace DogRallyManager.ViewModels.ChatVMs
     public class ChatRoomVM
     {
         public int Id { get; set; }
-        public string? ChatRoomName { get; set; }
+        public string? RoomName { get; set; }
 
         public int NumberOfAssociatedUsers { get; set; }
 
