@@ -60,6 +60,17 @@ namespace DogRallyManager.Controllers
             // components rolling side by side
             // For now we basically just copy paste the body of the index method above and add an extra
             // ChatVM to the list and return the view of the chat.
+
+            // AS IT IS RIGHT NOW, YOU CAN STILL SEND A QUERY VALUE BY ACCESSING
+            // ROOTURL/CHAT/StartChart?recipientUsername = USER_THAT_DOES_NOT_EXIST AND IT WILL APPROVE IT.
+            // We make this not possible --- this can sure be more  pretty, but yea, here goes for now:
+            var verifySearchedUser = await _dataService.GetUserAsync(recipientUserName);
+
+            if (verifySearchedUser == null)
+            {
+                return NotFound("A user with that name does not exist");
+            }
+
             var user = await _userManager.GetUserAsync(User);
 
             var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsWithMessagesAsync(user.Id);

@@ -21,10 +21,25 @@ namespace DogRallyManager.Services
 
         }
 
-        public async Task<List<UserViewModel>> GetUserAsync(string username)
+        public async Task<UserViewModel> GetUserAsync(string userName)
+        {
+            var retrievedUser = await _dogRallyDbContext.Users
+                .Where(x => x.UserName == userName)
+                .FirstOrDefaultAsync();
+
+            if (retrievedUser == null)
+            {
+                return null;
+            }
+            var existingUserViewModel = new UserViewModel { UserName = retrievedUser.UserName};
+
+            return existingUserViewModel;
+        }
+
+        public async Task<List<UserViewModel>> GetSimilarNamedUsersAsync(string userName)
         {
             var users = await _dogRallyDbContext.Users
-                .Where(x => x.UserName.StartsWith(username))
+                .Where(x => x.UserName.StartsWith(userName))
                 .Select(x => new UserViewModel
                 {
                     UserName = x.UserName,
