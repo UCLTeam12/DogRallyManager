@@ -146,24 +146,44 @@
             </script>
         }
 
-        <!-- Script that changes the background-image of the div with id "board-lines". -->
+        <!-- Script that changes the background-image of the div with id "board-lines".
+             It persists the state of the toggle switch by using the browsers storage. -->
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const toggleSwitch = document.getElementById('toggle-switch');
-                const targetDiv = document.getElementById('board-lines');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleSwitch = document.getElementById('toggle-switch');
+            const targetDiv = document.getElementById('board-lines');
 
-                function updateBackgroundImage() {
-                    if (toggleSwitch.checked) {
-                        targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-light-two.png")';
-                    } else {
-                        targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-dark-two.png")';
-                    }
+            function updateBackgroundImage() {
+                if (toggleSwitch.checked) {
+                    targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-light-two.png")';
+                } else {
+                    targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-dark-two.png")';
                 }
+            }
 
-                toggleSwitch.addEventListener('change', updateBackgroundImage);
+            function saveToggleState() {
+                localStorage.setItem('toggleState', toggleSwitch.checked ? 'on' : 'off');
+            }
+
+            function loadToggleState() {
+                const toggleState = localStorage.getItem('toggleState');
+                if (toggleState === 'on') {
+                    toggleSwitch.checked = true;
+                } else {
+                    toggleSwitch.checked = false;
+                }
+            }
+
+            loadToggleState();
+            updateBackgroundImage();
+
+            /* Event listener that listens for changes to the state of the toggle switch: */
+            toggleSwitch.addEventListener('change', function () {
                 updateBackgroundImage();
+                saveToggleState();
             });
-        </script>
+        });
+    </script>
     </body>
 </html>
