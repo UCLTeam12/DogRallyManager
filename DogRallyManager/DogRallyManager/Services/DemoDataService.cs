@@ -21,6 +21,25 @@ namespace DogRallyManager.Services
 
         }
 
+        public async Task<List<UserViewModel>> GetUserAsync(string username)
+        {
+            var users = await _dogRallyDbContext.Users
+                .Where(x => x.UserName.StartsWith(username))
+                .Select(x => new UserViewModel
+                {
+                    UserName = x.UserName,
+                })
+                .ToListAsync();
+
+            if (!users.Any())
+            {
+                return new List<UserViewModel>();
+            }
+
+            return users;
+        }
+
+
         public async Task<IEnumerable<UserViewModel>> GetAllUserNamesAsync()
         {
             var ListOfUserNames = await _dogRallyDbContext.Users
@@ -118,6 +137,7 @@ namespace DogRallyManager.Services
         {
             return await _dogRallyDbContext.Messages.ToListAsync();
         }
+
 
 
 
