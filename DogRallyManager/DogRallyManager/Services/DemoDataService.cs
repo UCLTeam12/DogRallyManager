@@ -21,6 +21,21 @@ namespace DogRallyManager.Services
 
         }
 
+
+        public async Task CreateGeneralChatRoomAsync()
+        {
+            var generalRoom = await _dogRallyDbContext.ChatRooms
+            .FirstOrDefaultAsync(x => x.RoomName == "General" && x.Id == 1);
+
+            if (generalRoom == null)
+            {
+                ChatRoom createdGeneralRoom = new ChatRoom { Id = 1, RoomName = "General"};
+                await _dogRallyDbContext.ChatRooms.AddAsync(createdGeneralRoom);
+                await _dogRallyDbContext.SaveChangesAsync();
+            }
+
+        }
+
         public async Task<UserViewModel> GetUserAsync(string userName)
         {
             var retrievedUser = await _dogRallyDbContext.Users
@@ -124,8 +139,6 @@ namespace DogRallyManager.Services
                 
             
         }
-
-
 
         public async Task<List<ChatMessageVM>> GetMessagesForChatRoomAsync(int chatRoomId)
         {
