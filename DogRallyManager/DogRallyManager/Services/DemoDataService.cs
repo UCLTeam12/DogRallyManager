@@ -46,7 +46,7 @@ namespace DogRallyManager.Services
                 .Select(u => u.UserName )
                 .ToListAsync();
 
-              IEnumerable<UserViewModel> userViewModels = ListOfUserNames.Select(username => new UserViewModel { UserName = username } )  
+              List<UserViewModel> userViewModels = ListOfUserNames.Select(username => new UserViewModel { UserName = username } )  
              .ToList();
 
             return userViewModels;
