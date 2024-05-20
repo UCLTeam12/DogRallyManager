@@ -82,7 +82,7 @@
         <ul class="chatroom-list">
             @foreach (var chatRoom in Model)
             {
-                <li onclick="loadChatroom('@chatRoom.Id')">Chatroom @chatRoom.Id</li>
+                <li onclick="loadChatroom('@chatRoom.Id')">@chatRoom.RoomName</li>
             }
         </ul>
 
@@ -90,9 +90,9 @@
         {
             <div class="chat-room-container" id="chat-room-@chatRoom.Id">
                 <div class="chat-room-header">
-                    <h2>Welcome to Chatroom with Id @chatRoom.Id</h2>
-                    
-                    <p>There is you and @(chatRoom.NumberOfAssociatedUsers-1) other users in this room. They might not be online though...</p>
+                    <h2>Welcome to Chatroom @chatRoom.RoomName</h2>
+
+                    <p>There are you and @(chatRoom.NumberOfAssociatedUsers - 1) other users in this room. They might not be online though...</p>
                 </div>
                 <div class="message-container" id="message-container-@chatRoom.Id">
                     <!-- Display messages here -->
