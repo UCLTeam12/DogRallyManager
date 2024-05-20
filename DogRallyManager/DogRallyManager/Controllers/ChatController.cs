@@ -98,6 +98,8 @@ namespace DogRallyManager.Controllers
             chatRoomVMToBeAdded.ParticipatingUsers.Add(recipientUserVM);
             chatRoomVMToBeAdded.ParticipatingUsers.Add(initiatingUserVM);
 
+            chatRoomVMToBeAdded.RoomName = "Your chat with "+recipientUserName;
+
             chatRoomsVM.Add(chatRoomVMToBeAdded);
 
             // TO-DO:
@@ -111,7 +113,7 @@ namespace DogRallyManager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendMessage(string messageBody)
+        public async Task<IActionResult> SendMessage(string messageBody, int? chatRoomId)
         {
             try
             {
