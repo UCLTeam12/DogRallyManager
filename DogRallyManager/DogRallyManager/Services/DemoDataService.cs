@@ -40,7 +40,7 @@ namespace DogRallyManager.Services
         }
 
 
-        public async Task<IEnumerable<UserViewModel>> GetAllUserNamesAsync()
+        public async Task<List<UserViewModel>> GetAllUserNamesAsync()
         {
             var ListOfUserNames = await _dogRallyDbContext.Users
                 .Select(u => u.UserName )

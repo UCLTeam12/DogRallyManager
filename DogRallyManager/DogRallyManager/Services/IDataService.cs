@@ -16,7 +16,7 @@ namespace DogRallyManager.Services
         Task AddChatRoomAsync(ChatRoom chatRoom);
         Task AddUserToChatRoomAsync(string userName, int chatRoomId);
 
-        Task<UserViewModel> GetUserAsync(string username);
+        Task<List<UserViewModel>> GetUserAsync(string username);
 
         Task<List<UserViewModel>> GetAllUserNamesAsync();
         
