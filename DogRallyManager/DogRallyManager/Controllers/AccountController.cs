@@ -104,8 +104,7 @@ public class AccountController : Controller
                 ViewBag.UserNameError = "Dit rally navn, ikke din e-mail addresse.";
             }
         }
-
-        return View(LoginUserVM); // Return the Login view
+        return View(LoginUserVM); 
     }
 
     [HttpPost]
@@ -133,6 +132,7 @@ public class AccountController : Controller
                 return View("Login");
             }
 
+            // If there are errors detected in the ModelState, we will attach errors to the object that is returned.
             foreach (var error in result.Errors)
             {
                 if (error.Description.Contains("username", StringComparison.OrdinalIgnoreCase))
@@ -148,11 +148,8 @@ public class AccountController : Controller
                     ModelState.AddModelError(nameof(RegisterUserVM.Password),
                         "Password must contain: One non alphanumeric character, be atleast 9 characters long and contain atleast one uppercase and one lowercase letter.");
                 }
-                // Add similar checks for other properties
             }
         }
-
-        // Returnerer objektet og viser eventuelle behæftede fejl som opstod objekt-relateret i forbindelse med registrering.
         return View("register", RegisterUserVM);
     }
 }
