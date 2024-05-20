@@ -15,8 +15,7 @@
 body {
     min-width: 1120px;
     width: calc(100% - 240px);
-    background: rgb(191,187,255);
-    background: linear-gradient(90deg, rgba(191,187,255,1) 0%, rgba(198,198,255,1) 28%, rgba(173,241,255,1) 100%);
+    background-color: rgb(220, 220, 220);
     padding: 16px 120px 16px 120px;
     font-family: Arial;
 }
@@ -120,9 +119,8 @@ main {
             display: inline-block;
             height: calc(140px - 32px);
             float: right;
-            padding-left: 16px;
-            border-left: 1px solid grey;
-            margin: 0px 0px 0px 16px;
+            padding: 8px 0px 0px 0px;
+            margin: 0px 16px 0px 32px;
             background-color: transparent;
         }
 
@@ -264,7 +262,7 @@ input:checked ~ .switch-description:after {
 
             position: relative;
 
-            background-image: url('/Images/dog-rally-track-grass-dark-two.png');
+            /* background-image: url('/Images/dog-rally-track-grass-dark-two.png'); */
             background-repeat: no-repeat;
             background-position: center;
             background-size: 800px;
@@ -301,5 +299,5 @@ footer {
     padding: 16px;
 
     border-radius: 0px 0px 4px 4px;
-    background-color: grey;
+    background-color: white;
 }

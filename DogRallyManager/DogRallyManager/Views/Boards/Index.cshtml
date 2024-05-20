@@ -57,7 +57,7 @@
                     <br />
                     <div class="switch-container">
                         <label class="switch">
-                            <input type="checkbox">
+                            <input id="toggle-switch" type="checkbox" />
                             <span class="slider round"></span>
                             <br />
                             <br />
@@ -145,5 +145,25 @@
                 dragElement(document.getElementById(`sign-@sign.Id`));
             </script>
         }
+
+        <!-- Script that changes the background-image of the div with id "board-lines". -->
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const toggleSwitch = document.getElementById('toggle-switch');
+                const targetDiv = document.getElementById('board-lines');
+
+                function updateBackgroundImage() {
+                    if (toggleSwitch.checked) {
+                        targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-light-two.png")';
+                    } else {
+                        targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-dark-two.png")';
+                    }
+                }
+
+                toggleSwitch.addEventListener('change', updateBackgroundImage);
+                updateBackgroundImage();
+            });
+        </script>
     </body>
 </html>
