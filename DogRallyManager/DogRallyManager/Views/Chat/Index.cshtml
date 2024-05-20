@@ -90,9 +90,19 @@
         {
             <div class="chat-room-container" id="chat-room-@chatRoom.Id">
                 <div class="chat-room-header">
-                    <h2>Welcome to Chatroom @chatRoom.RoomName</h2>
-
-                    <p>There are you and @(chatRoom.NumberOfAssociatedUsers - 1) other users in this room. They might not be online though...</p>
+                    <h2>@chatRoom.RoomName</h2>
+                    @if (chatRoom.NumberOfAssociatedUsers == 1)
+                    {
+                        <p> You are alone in this room.</p>
+                    }
+                    @if (chatRoom.NumberOfAssociatedUsers == 2)
+                    {
+                        <p>There are you and @(chatRoom.NumberOfAssociatedUsers - 1) other user in this room. They might not be online though...</p>
+                    }
+                    else
+                    {
+                       <p>There are you and @(chatRoom.NumberOfAssociatedUsers - 1) other users in this room. They might not be online though...</p>
+                    }
                 </div>
                 <div class="message-container" id="message-container-@chatRoom.Id">
                     <!-- Display messages here -->
