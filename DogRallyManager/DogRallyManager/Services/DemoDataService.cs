@@ -21,7 +21,6 @@ namespace DogRallyManager.Services
 
         }
 
-
         public async Task CreateGeneralChatRoomAsync()
         {
             var generalRoom = await _dogRallyDbContext.ChatRooms
