@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using System.Runtime.Intrinsics.X86;
 
 namespace DogRallyManager.Services
 {
@@ -19,6 +20,25 @@ namespace DogRallyManager.Services
             _userManager = userManager;
             _dogRallyDbContext = dogRallyDbContext;
 
+        }
+
+        public async Task<bool> CheckIfRoomAlreadyExists(string initiatingUserName, string recipientUserName)
+            {
+                var chatRoom = await _dogRallyDbContext.ChatRooms
+            .Where(room => room.NumberOfAssociatedUsers == 2 &&
+                        room.RoomName == $"{initiatingUserName} and {recipientUserName}" 
+                        ||
+                        room.RoomName == $"{recipientUserName} and {initiatingUserName}")
+            .FirstOrDefaultAsync();
+
+            if (chatRoom == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task CreateGeneralChatRoomAsync()

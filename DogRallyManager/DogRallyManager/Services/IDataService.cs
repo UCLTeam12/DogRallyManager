@@ -23,8 +23,8 @@ namespace DogRallyManager.Services
         Task<List<UserViewModel>> GetSimilarNamedUsersAsync(string userName);
 
         Task<List<UserViewModel>> GetAllUserNamesAsync();
-        
 
+        Task<bool> CheckIfRoomAlreadyExists(string initiatingUser, string recipientUser);
 
 
 
