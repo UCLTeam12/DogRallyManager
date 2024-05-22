@@ -27,51 +27,51 @@
                 border-radius: 5px;
             }
 
-        /* CSS styles for the chat room container */
+                .chatroom-list li.highlighted {
+                    background-color: yellow;
+                }
+
         .chat-room-container {
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 10px;
             border-radius: 5px;
-            display: none; /* Initially hide all chat room containers */
+            display: none;
         }
 
-        /* CSS styles for the chat room header */
         .chat-room-header {
             background-color: darkturquoise;
             padding: 10px;
             border-bottom: 1px solid #ccc;
         }
 
-        /* CSS styles for the message container */
         .message-container {
             height: 200px;
-            overflow-y: auto; /* Enable scrolling */
+            overflow-y: auto;
             border: 1px solid #ccc;
             padding: 10px;
             margin-bottom: 10px;
         }
 
-        /* CSS styles for the message input */
         .message-input {
             width: 100%;
             margin-top: 10px;
         }
     </style>
     <script>
-        // Loading global functions
         function loadChatroom(chatroomId) {
-            // Hide all chat room containers
             $('.chat-room-container').hide();
-            // Show the selected chat room container
             $('#chat-room-' + chatroomId).show();
+            $('.chatroom-list li').removeClass('highlighted');
+            $('#chatroom-list-item-' + chatroomId).addClass('highlighted');
+
             var messageContainer = document.getElementById("message-container-" + chatroomId);
             messageContainer.scrollTop = messageContainer.scrollHeight;
         }
 
         function hideChatroom(chatroomId) {
-            // Hide the chat room container
             $('#chat-room-' + chatroomId).hide();
+            $('#chatroom-list-item-' + chatroomId).removeClass('highlighted');
         }
 
         </script>
@@ -84,7 +84,7 @@
         <ul class="chatroom-list">
             @foreach (var chatRoom in Model)
             {
-                <li onclick="loadChatroom('@chatRoom.Id')">@chatRoom.RoomName</li>
+                <li id="chatroom-list-item-@chatRoom.Id" onclick="loadChatroom('@chatRoom.Id')">@chatRoom.RoomName</li>
             }
         </ul>
 
