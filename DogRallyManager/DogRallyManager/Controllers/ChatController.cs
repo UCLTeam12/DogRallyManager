@@ -27,8 +27,6 @@ namespace DogRallyManager.Controllers
             _userManager = userManager;
         }
 
-        
-
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -54,16 +52,7 @@ namespace DogRallyManager.Controllers
         [HttpGet]
         public async Task<IActionResult> StartChat(string recipientUserName)
         {
-            // TO-DO:
-            // use AJAX to request an update of the chatview incase signalR is down.
-            // Until then, we will add it to the list of chatrooms and return view of chat, since we dont have
-            // components rolling side by side
-            // For now we basically just copy paste the body of the index method above and add an extra
-            // ChatVM to the list and return the view of the chat.
 
-            // AS IT IS RIGHT NOW, YOU CAN STILL SEND A QUERY VALUE BY ACCESSING
-            // ROOTURL/CHAT/StartChart?recipientUsername = USER_THAT_DOES_NOT_EXIST AND IT WILL APPROVE IT.
-            // We make this not possible --- this can sure be more  pretty, but yea, here goes for now:
             var verifySearchedUser = await _dataService.GetUserAsync(recipientUserName);
 
             if (verifySearchedUser == null)
@@ -77,19 +66,13 @@ namespace DogRallyManager.Controllers
 
             if (chatRoomsEntities == null)
             {
-                // TO-DO:
-                // If ChatRoomsEntities is null, we will get an error on the load of messages
-                // saying that it is trying to read from something without an object reference.
-                // Probably alot of ways to fix this. We could put an if loop in the razor page? 
-                // Maybe the fix actually lies somewhere else.... let me see... 
-                // For now I just do this:
                 chatRoomsEntities = new List<ChatRoom>();
             }
 
             // This could (should it?) be done in dataservice
             var chatRoomsVM = _mapper.Map<List<ChatRoomVM>>(chatRoomsEntities);
 
-            ChatRoomVM chatRoomVMToBeAdded = new ChatRoomVM { NumberOfAssociatedUsers = 2 };
+            ChatRoomVM chatRoomVMToBeAdded = new ChatRoomVM { NumberOfAssociatedUsers = 2, Id = 0 };
 
             UserViewModel recipientUserVM = new UserViewModel { UserName = recipientUserName };
 
@@ -113,28 +96,66 @@ namespace DogRallyManager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendMessage(string messageBody, int? chatRoomId)
+        public async Task<IActionResult> SendMessageOnNewlyCreatedRoom([FromBody] dynamic data)
+        {
+            try { 
+                var user = await _userManager.GetUserAsync(User);
+
+                var newMessageVM = new ChatMessageVM
+                {
+                    MessageBody = data.messageBody,
+                    Sender = user,
+                    TimeStamp = DateTime.UtcNow
+                };
+
+                ChatRoomVM chatRoomVM = new();
+
+                List<string> recipientUserNames = data.recipientUserNames.ToObject<List<string>>();
+
+                foreach (string ParticipatingUserName in recipientUserNames)
+                {
+                    UserViewModel ParticipatingUserVM = new UserViewModel { UserName = ParticipatingUserName };
+                    chatRoomVM.ParticipatingUsers.Add(ParticipatingUserVM);
+                }
+
+                chatRoomVM.ChatMessages.Add(newMessageVM);
+
+                var chatRoomEntity = _mapper.Map<ChatRoom>(chatRoomVM);
+
+                await _dataService.AddChatRoomAsync(chatRoomEntity);
+
+                return Json(new { success = true, message = "Message sent successfully to the new room." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error sending message: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendMessage(string messageBody, int chatRoomId)
         {
             try
             {
                 var user = await _userManager.GetUserAsync(User);
-                var chatRooms = await _dataService.GetAssociatedChatRoomsWithMessagesAsync(user.Id);
-                var entityChatRoom = chatRooms.FirstOrDefault();
 
-                if (entityChatRoom == null)
+                // If the ChatRoomId is 0, this means that the ChatRoom only exists on an object-context
+                // as a ChatRoomVM. 
+                if (chatRoomId == 0)
                 {
-                    entityChatRoom = new ChatRoom();
+                    var newMessageVM = new ChatMessageVM
+                    {
+                        MessageBody = messageBody,
+                        Sender = user,
+                        TimeStamp = DateTime.UtcNow
+                    };
+                    var newEntityMessage = _mapper.Map<Message>(newMessageVM);
+
+                    var entityChatRoom = new ChatRoom();
                     entityChatRoom.ParticipatingUsers.Add(user);
+                    entityChatRoom.ChatMessages.Add(newEntityMessage);
                     await _dataService.AddChatRoomAsync(entityChatRoom);
                 }
-
-                var newMessage = new ChatMessageVM
-                {
-                    MessageBody = messageBody,
-                    Sender = user,
-                    TimeStamp = DateTime.UtcNow,
-                    ChatRoomId = entityChatRoom.Id
-                };
 
                 var entityMessage = _mapper.Map<Message>(newMessage);
                 entityChatRoom.ChatMessages.Add(entityMessage);
