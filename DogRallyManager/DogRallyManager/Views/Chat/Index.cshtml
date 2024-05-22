@@ -116,7 +116,7 @@
                     <!-- Input box for typing messages -->
                     <input type="text" class="message-input" id="message-input-@chatRoom.Id"/>
                     <!-- Button to submit messages -->
-                    <button id="send-button" data-recipientUser data-chatroomid="@chatRoom.Id">Send</button>
+                    <button class="send-button" data-chatroomid="@chatRoom.Id">Send</button>
                     <!-- Button to hide chat room -->
                     <button onclick="hideChatroom('@chatRoom.Id')">Hide Chat</button>
                     
@@ -156,10 +156,8 @@
                 });
 
             // Handle click event on send button
-            $("#send-button").click(function () {
-                console.log("Send button clicked and chatroomid variable is" + $("send-button").data("chatroomid");
-                
-                var currentChatRoomId = $("#send-button").data("chatroomid"); // Here we capture the chat room ID in a closure
+            $(".send-button").click(function () {
+                var currentChatRoomId = $(this).data("chatroomid");                
                 console.log("Send button clicked and chatroomid variable is" + currentChatRoomId);
                 var message = $("#message-input-" + currentChatRoomId).val(); 
                 var user = "@User.Identity.Name";

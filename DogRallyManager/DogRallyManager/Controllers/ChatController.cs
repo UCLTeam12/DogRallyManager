@@ -157,10 +157,10 @@ namespace DogRallyManager.Controllers
                     await _dataService.AddChatRoomAsync(entityChatRoom);
                 }
 
-                var entityMessage = _mapper.Map<Message>(newMessage);
-                entityChatRoom.ChatMessages.Add(entityMessage);
+                //var entityMessage = _mapper.Map<Message>(newMessage);
+                //entityChatRoom.ChatMessages.Add(entityMessage);
 
-                await _dataService.AddMessageAsync(entityMessage);
+                //await _dataService.AddMessageAsync(entityMessage);
 
                 return Json(new { success = true, message = "The message was succesfully persisted in database" });
             }
