@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Text.Json;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 
 namespace DogRallyManager.Controllers
 {
@@ -94,37 +97,40 @@ namespace DogRallyManager.Controllers
             return View("Index", chatRoomsToBeReturned);
 
         }
-
+        
         [HttpPost]
-        public async Task<IActionResult> SendMessageOnNewlyCreatedRoom([FromBody] dynamic data)
+        public async Task<IActionResult> SendMessageOnNewlyCreatedRoom([FromBody] SendMessageRequest request)
         {
-            try { 
+            try
+            {
                 var user = await _userManager.GetUserAsync(User);
 
                 var newMessageVM = new ChatMessageVM
                 {
-                    MessageBody = data.messageBody,
+                    MessageBody = request.MessageBody,
                     Sender = user,
                     TimeStamp = DateTime.UtcNow
                 };
 
                 ChatRoomVM chatRoomVM = new();
+                chatRoomVM.ChatMessages.Add(newMessageVM);
+                var chatRoomEntity = _mapper.Map<ChatRoom>(chatRoomVM);
 
-                List<string> recipientUserNames = data.recipientUserNames.ToObject<List<string>>();
-
-                foreach (string ParticipatingUserName in recipientUserNames)
+                foreach (string ParticipatingUserName in request.RecipientUserNames)
                 {
-                    UserViewModel ParticipatingUserVM = new UserViewModel { UserName = ParticipatingUserName };
-                    chatRoomVM.ParticipatingUsers.Add(ParticipatingUserVM);
+                    var recipientUser = await _userManager.FindByNameAsync(ParticipatingUserName);
+                    if (recipientUser == null)
+                    {
+                        return Json(new { success = false, message = $"Error sending message: A user with username: {ParticipatingUserName} does not exist." });
+                    }
+                    chatRoomEntity.ParticipatingUsers.Add(recipientUser);
                 }
 
-                chatRoomVM.ChatMessages.Add(newMessageVM);
-
-                var chatRoomEntity = _mapper.Map<ChatRoom>(chatRoomVM);
+                  chatRoomEntity.RoomName = $"Chatroom: {request.RecipientUserNames.ElementAt(0)} and {request.RecipientUserNames.ElementAt(1)}";
 
                 await _dataService.AddChatRoomAsync(chatRoomEntity);
 
-                return Json(new { success = true, message = "Message sent successfully to the new room." });
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {

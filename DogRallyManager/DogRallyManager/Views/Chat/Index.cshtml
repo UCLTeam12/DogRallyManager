@@ -1,5 +1,7 @@
 ﻿@using DogRallyManager.ViewModels.ChatVMs
+@using Newtonsoft.Json
 @model IEnumerable<DogRallyManager.ViewModels.ChatVMs.ChatRoomVM>
+
 
 <!DOCTYPE html>
 <html>
@@ -112,14 +114,12 @@
                     }
                 </div>
                 <div>
-                    
-                    <!-- Input box for typing messages -->
                     <input type="text" class="message-input" id="message-input-@chatRoom.Id"/>
-                    <!-- Button to submit messages -->
-                    <button class="send-button" data-chatroomid="@chatRoom.Id">Send</button>
-                    <!-- Button to hide chat room -->
+                    <button class="send-button" data-chatroomid="@chatRoom.Id"
+                            data-participating-users="@JsonConvert.SerializeObject(chatRoom.ParticipatingUsers.Select(u => u.UserName).ToList())">
+                            Send 
+                        </button>
                     <button onclick="hideChatroom('@chatRoom.Id')">Hide Chat</button>
-                    
                 </div>
             </div>
         }
@@ -158,34 +158,58 @@
             // Handle click event on send button
             $(".send-button").click(function () {
                 var currentChatRoomId = $(this).data("chatroomid");                
-                console.log("Send button clicked and chatroomid variable is" + currentChatRoomId);
+                console.log("Send button clicked and chatroomid variable is: " + currentChatRoomId);
+                var participatingUsernames = $(this).data("participating-users");
                 var message = $("#message-input-" + currentChatRoomId).val(); 
                 var user = "@User.Identity.Name";
                 console.log("variables loaded");
-                connection.invoke("SendMessage", user, message, currentChatRoomId)
-                    .catch(err => console.error(err));
                 console.log("send button function finished");
 
+                if (currentChatRoomId == 0) {
+                    var participatingUsernames = $(this).data("participating-users");
 
-                // Ajax is used here to prevent default behavior of controller to return us a view
-                // or an action in general, making it so that the user is not experiencing
-                // a refresh of their view.
-                $.ajax({
-                    url: "/Chat/SendMessage",
-                    type: "POST",
-                    data: { messageBody: message },
-                    success: function (response) {
-                        // Handle success response
-                        if (response.success) {
-                            console.log("Message sent successfully");
-                        } else {
-                            console.error("Error sending message: " + response.message);
+                    console.log(participatingUsernames);
+                    $.ajax({
+                        url: "/Chat/SendMessageOnNewlyCreatedRoom",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ MessageBody: message, RecipientUserNames: participatingUsernames }),
+                        success: function (response) {
+                            if (response.success) {
+                                console.log(response.message);
+                                connection.invoke("SendMessage", user, message, currentChatRoomId)
+                                    .catch(err => console.error(err));
+                                location.reload();
+                            } else {
+                                console.error("Error: " + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error sending message and user data: " + error);
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error sending message: " + error);
-                    }
-                });
+                    });
+                } else {
+                    connection.invoke("SendMessage", user, message, currentChatRoomId)
+                        .catch(err => console.error(err));
+
+                    $.ajax({
+                        url: "/Chat/SendMessage",
+                        type: "POST",
+
+                        data: { messageBody: message, chatRoomId: currentChatRoomId },
+                        success: function (response) {
+                            if (response.success) {
+                                console.log(response.message);
+                            } else {
+                                console.error("Error: " + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error sending message: " + error);
+                        }
+                    });
+                }
+                
             });
 
             
