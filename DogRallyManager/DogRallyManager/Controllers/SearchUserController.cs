@@ -33,8 +33,7 @@ namespace DogRallyManager.Controllers
         [HttpGet]
         public IActionResult StartChat(string recipientUsername)
         {
-            // TO-DO: Verify if user exists before creating chatroom
-
+            
             if (string.IsNullOrEmpty(recipientUsername))
             {
                 return Json(new { success = false, message = "Recipient username is required." });

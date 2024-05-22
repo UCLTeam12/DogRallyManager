@@ -63,7 +63,15 @@ namespace DogRallyManager.Controllers
                 return NotFound("A user with that name does not exist");
             }
 
+
             var user = await _userManager.GetUserAsync(User);
+
+            bool RoomAlreadyExist = await _dataService.CheckIfRoomAlreadyExists(user.UserName, verifySearchedUser.UserName);
+
+            if(RoomAlreadyExist)
+            {
+                return RedirectToAction("Index");
+            }
 
             var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsWithMessagesAsync(user.Id);
 
