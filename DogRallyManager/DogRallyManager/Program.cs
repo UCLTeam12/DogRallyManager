@@ -4,6 +4,7 @@ using DogRallyManager.Services;
 using DogRallyManager.ViewModels.AccountVMs;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<DogRallyDbContext>(
 
 // Adding AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 // Adding custom dependencies
 builder.Services.AddTransient<IDataService, DemoDataService>();

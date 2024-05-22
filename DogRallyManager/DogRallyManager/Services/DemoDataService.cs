@@ -36,6 +36,7 @@ namespace DogRallyManager.Services
 
         }
 
+
         public async Task<UserViewModel> GetUserAsync(string userName)
         {
             var retrievedUser = await _dogRallyDbContext.Users
