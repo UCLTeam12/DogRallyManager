@@ -3,6 +3,7 @@ using System;
 using DogRallyManager.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DogRallyManager.Migrations
 {
     [DbContext(typeof(DogRallyDbContext))]
-    partial class AuthUserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523172340_DatabaseFix")]
+    partial class DatabaseFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -29,7 +32,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChatRoomRallyUser", (string)null);
+                    b.ToTable("ChatRoomRallyUser");
                 });
 
             modelBuilder.Entity("DogRallyManager.Database.Models.Signs.Sign", b =>
@@ -50,7 +53,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Signs", (string)null);
+                    b.ToTable("Signs");
 
                     b.HasData(
                         new
@@ -84,7 +87,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatRooms", (string)null);
+                    b.ToTable("ChatRooms");
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
@@ -113,7 +116,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserSenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
