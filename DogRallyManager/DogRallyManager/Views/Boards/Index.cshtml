@@ -2,13 +2,10 @@
 @{
     ViewData["Title"] = "Board";
 }
-
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <link rel="stylesheet" href="~/css/board.css">
@@ -87,9 +84,10 @@
         <footer>
             <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
         </footer>
-
         <!-- Including the chat on the board page. -->
-        <div include="/components/chat.html"></div>
+    <div>
+        @Html.Partial("~/Views/Components/ChatRoomPartial.cshtml")
+    </div>
 
         <!-- Scripts: -->
 

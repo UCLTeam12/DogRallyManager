@@ -1,3 +1,16 @@
-﻿<!-- This file contains the CSHTML code for the chat. -->
+﻿<!-- This file contains the HTML code for the chat. -->
 
-<h2 id="chat-h2">JAAAAAAAA! Vores include() function fungerer.</h2>
+<div id="chat" class="chat-minimized" onclick="toggleClass('chat', 'chat-minimized', 'chat-expanded')">
+    <div id="chat-notifications" class="chat-unread"><p id="unread-amount">17</p></div>
+    <div id="chat-window">
+        <ul id="chat-history">
+            <!-- Each message is added to the database and loaded into the chat-history dynamically as a list item using the <li> tag. -->
+            <li class="message-sent">This is an example of a sent message from the user.</li> <!-- Users messages has class .message-sent. -->
+            <li class="message-response">This is an example of a response from another user.</li> <!-- Messages from other users has class .message-response. -->
+        </ul>
+    </div>
+    <div>
+        <input id="chat-write" type="text" />
+        <button id="chat-send" type="submit">Send</button>
+    </div>
+</div>
