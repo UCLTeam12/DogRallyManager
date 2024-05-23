@@ -10,90 +10,95 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="~/css/board.css">
-        <link rel="stylesheet" href="~/css/chat.css">
-        <script src="~/js/include.js"></script>
-        <script src="~/js/toggleClass.js"></script>
-    </head>
-    <body>
-        <header>
-        <a href="/Account/YourPage"><div class="header-logo-dog"></div><div class="header-logo-txt"></div></a>
-        <nav class="header-nav"><a href="/Account/YourPage">Your Page</a><a class="current-page" href="#">Boards</a><a href="/Account/Logout">Log Out</a></nav>
-            <div class="clear"></div>
-        </header>
+<head>
+    <link rel="stylesheet" href="~/css/board.css">
+    <link rel="stylesheet" href="~/css/chat.css">
+    <script src="~/js/include.js"></script>
+    <script src="~/js/toggleClass.js"></script>
+</head>
+<body>
+<header>
+    <a href="/Account/YourPage">
+        <div class="header-logo-dog"></div>
+        <div class="header-logo-txt"></div>
+    </a>
+    <nav class="header-nav">
+        <a href="/Account/YourPage">Your Page</a><a class="current-page" href="#">Boards</a><a href="/Account/Logout">Log Out</a>
+    </nav>
+    <div class="clear"></div>
+</header>
 
-        <main id="boards-section">
-            <div id="boards-panel">
-                <div id="signs">
-                    @foreach (var sign in Model.Signs)
-                    {
-                        <div style="position: absolute;top: @string.Format("{0}px", sign.PositionY);left: @string.Format("{0}px", sign.PositionX);z-index: 9"
-                             class="sign"
-                             id="@string.Format("sign-{0}",sign.Id)"
-                             data-sign-id="@sign.Id">
-                            <img src="Images/Signs/@sign.SignType" />
-                        </div>
-                    }
-                    <table>
-                        @for (var y = 0; y < 8; y++)
+<main id="boards-section">
+    <div id="boards-panel">
+        <div id="signs">
+            @foreach (var sign in Model.Signs)
+            {
+                <div style="@(sign.IsPlaced() ? "position: absolute;" : "")top: @string.Format("{0}px", sign.PositionY);left: @string.Format("{0}px", sign.PositionX);z-index: 9"
+                     class="sign"
+                     id="@string.Format("sign-{0}", sign.Id)"
+                     data-sign-id="@sign.Id">
+                    <img src="Images/Signs/@sign.SignType"/>
+                </div>
+            }
+            <table>
+                @for (var y = 0; y < 8; y++)
+                {
+                    <tr>
+                        @for (var x = 0; x < 8; x++)
                         {
-                            <tr>
-                                @for (var x = 0; x < 8; x++)
+                            var signPiece = Model.Signs.FirstOrDefault(p => p.PositionX == x && p.PositionY == y);
+                            <td>
+                                @if (signPiece != null)
                                 {
-                                    var signPiece = Model.Signs.FirstOrDefault(p => p.PositionX == x && p.PositionY == y);
-                                    <td>
-                                        @if (signPiece != null)
-                                        {
-                                        }
-                                    </td>
                                 }
-                            </tr>
+                            </td>
                         }
-                    </table>
-                </div>
-                <div id="toggle-line-color">
-                    <div>Course lines:</div>
-                    <br />
-                    <div class="switch-container">
-                        <label class="switch">
-                            <input id="toggle-switch" type="checkbox" />
-                            <span class="slider round"></span>
-                            <br />
-                            <br />
-                            <div class="switch-description"></div>
-                        </label>
-                    </div>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="toggle-line-color">
+            <div>Course lines:</div>
+            <br/>
+            <div class="switch-container">
+                <label class="switch">
+                    <input id="toggle-switch" type="checkbox"/>
+                    <span class="slider round"></span>
+                    <br/>
+                    <br/>
+                    <div class="switch-description"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <section id="boards-side-panel" class="side-panel">
+        <p>This panel can be used to navigate between boards of an event sorted by rounds and dogs.</p>
+    </section>
+
+    <div id="board-padding">
+        <div id="board">
+            <div id="board-lines">
+                <div id="grass-logo">
                 </div>
             </div>
+        </div>
+    </div>
 
-            <section id="boards-side-panel" class="side-panel">
-                <p>This panel can be used to navigate between boards of an event sorted by rounds and dogs.</p>
-            </section>
+    <!-- Class clear clears both type of floats. -->
+    <div class="clear"></div>
+</main>
 
-            <div id="board-padding">
-                <div id="board">
-                    <div id="board-lines">
-                        <div id="grass-logo">
-                        </div>
-                    </div>
-                </div>
-            </div>
+<footer>
+    <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
+</footer>
 
-            <!-- Class clear clears both type of floats. -->
-            <div class="clear"></div>
-        </main>
+<!-- Including the chat on the board page. -->
+<div include="/components/chat.html"></div>
 
-        <footer>
-            <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
-        </footer>
+<!-- Scripts: -->
 
-        <!-- Including the chat on the board page. -->
-        <div include="/components/chat.html"></div>
-
-        <!-- Scripts: -->
-
-        <script>include();</script>
+<script>include();</script>
 
 <script>
             let elements = document.getElementsByClassName("sign");
@@ -158,16 +163,17 @@
             }
         </script>
 
-        @foreach(var sign in Model.Signs){
-            <script>
+@foreach (var sign in Model.Signs)
+{
+    <script>
                 dragElement(document.getElementById(`sign-@sign.Id`));
             </script>
-        }
+}
 
-        <!-- Script that changes the background-image of the div with id "board-lines".
-             It persists the state of the toggle switch by using the browsers storage. -->
+<!-- Script that changes the background-image of the div with id "board-lines".
+It persists the state of the toggle switch by using the browsers storage. -->
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function () {
             const toggleSwitch = document.getElementById('toggle-switch');
             const targetDiv = document.getElementById('board-lines');
@@ -203,5 +209,5 @@
             });
         });
     </script>
-    </body>
+</body>
 </html>
