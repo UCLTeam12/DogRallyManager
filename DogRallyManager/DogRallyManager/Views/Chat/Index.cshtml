@@ -2,7 +2,6 @@
 @using Newtonsoft.Json
 @model IEnumerable<DogRallyManager.ViewModels.ChatVMs.ChatRoomVM>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,8 +130,6 @@
     <script>
 
         $(document).ready(function () {
-
-
             $.ajaxSetup({
                 // This is for the preflight request made from the browser, saying to the
                 // CORS-guards of the SignalR app that HEY ITS OKAY DONT SHUT DOWN LET US IN !
@@ -179,7 +176,7 @@
                                 console.log(response.message);
                                 connection.invoke("SendMessage", user, message, currentChatRoomId)
                                     .catch(err => console.error(err));
-                                location.reload();
+                                 object.reload();
                             } else {
                                 console.error("Error: " + response.message);
                             }
