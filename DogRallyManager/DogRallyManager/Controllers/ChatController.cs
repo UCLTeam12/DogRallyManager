@@ -52,7 +52,7 @@ namespace DogRallyManager.Controllers
         public async Task<IActionResult> StartChat(string recipientUserName)
         {
 
-            var verifySearchedUser = await _dataService.GetUserAsync(recipientUserName);
+            var verifySearchedUser = await _dataService.GetUserByNameAsync(recipientUserName);
             var user = await _userManager.GetUserAsync(User);
 
             if (verifySearchedUser == null)
@@ -60,7 +60,7 @@ namespace DogRallyManager.Controllers
                 return NotFound("A user with that name does not exist");
             }
 
-            bool RoomAlreadyExist = await _dataService.RoomAlreadyExists(user.UserName, verifySearchedUser.UserName);
+            bool RoomAlreadyExist = await _dataService.RoomExists(user.UserName, verifySearchedUser.UserName);
 
             if(RoomAlreadyExist)
             {
@@ -129,8 +129,8 @@ namespace DogRallyManager.Controllers
                 }
 
                   chatRoomEntity.RoomName = $"Chatroom: {request.RecipientUserNames.ElementAt(0)} and {request.RecipientUserNames.ElementAt(1)}";
-
-                await _dataService.AddChatRoomAsync(chatRoomEntity);
+                // TO-DO:
+                //await _dataService.AddChatRoomAsync(chatRoomEntity);
 
                 return Json(new { success = true, message = "Nicolai er sød" });
                 //return RedirectToAction("Index");
