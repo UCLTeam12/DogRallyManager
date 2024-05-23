@@ -1,0 +1,30 @@
+@model DogRallyManager.Views.Boards.Index
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+
+    <form action="/Boards/CreateBoard" method="post">
+        <label for="name">Opret Bane:</label><br>
+        <input type="text" id="name" name="name" value="Bane Navn">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    @foreach (var board in Model.BoardsList)
+    {
+        <a href="/boards/details/@board.Id">
+            @board.Name
+        </a>
+    }
+</div>
+</body>
+</html>
