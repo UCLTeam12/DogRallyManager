@@ -143,8 +143,17 @@
                     /* stop moving when mouse button is released:*/
                     document.onmouseup = null;
                     document.onmousemove = null;
-                    $.post('/Sign/MoveSign', { signId: elmnt.dataset["signId"], newX: elmnt.style.left.replace("px",""), newY: elmnt.style.top.replace("px","") }, function () {
-                    });
+                    fetch('/Sign/MoveSign', 
+                    {
+                        headers: {"Content-Type":"application/json"},
+                        body: JSON.stringify(
+                        { 
+                            signId: parseInt(elmnt.dataset["signId"]), 
+                            newX: parseInt(elmnt.style.left.replace("px","")), 
+                            newY: parseInt(elmnt.style.top.replace("px","")) 
+                        }) ,
+                        method: 'post'
+                    })
                 }
             }
         </script>
