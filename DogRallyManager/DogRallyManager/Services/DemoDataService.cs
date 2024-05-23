@@ -23,7 +23,8 @@ namespace DogRallyManager.Services
 
         }
 
-        public async Task<bool> RoomAlreadyExists(string initiatingUserName, string recipientUserName)
+        // Extract to chatservice
+        public async Task<bool> RoomExists(string initiatingUserName, string recipientUserName)
             {
                 var chatRoom = await _dogRallyDbContext.ChatRooms
             .Where(room => room.NumberOfAssociatedUsers == 2 &&
@@ -42,65 +43,38 @@ namespace DogRallyManager.Services
             }
         }
 
-        public async Task CreateGeneralChatRoomAsync()
+        public async Task<ChatRoom?> GetChatRoomByNameAsync(string name)
         {
-            var generalRoom = await _dogRallyDbContext.ChatRooms
-            .FirstOrDefaultAsync(x => x.RoomName == "General" && x.Id == 1);
+             var chatRoom = await _dogRallyDbContext.ChatRooms
+             .Where(r => r.RoomName == name)
+             .FirstOrDefaultAsync();
 
-            if (generalRoom == null)
-            {
-                ChatRoom createdGeneralRoom = new ChatRoom { Id = 1, RoomName = "General"};
-                await _dogRallyDbContext.ChatRooms.AddAsync(createdGeneralRoom);
-                await _dogRallyDbContext.SaveChangesAsync();
-            }
-
+             return chatRoom;
         }
 
-
-        public async Task<UserViewModel> GetUserAsync(string userName)
+        public async Task<RallyUser?> GetUserByNameAsync(string userName)
         {
-            var retrievedUser = await _dogRallyDbContext.Users
-                .Where(x => x.UserName == userName)
-                .FirstOrDefaultAsync();
-
-            if (retrievedUser == null)
-            {
-                return null;
-            }
-            var existingUserViewModel = new UserViewModel { UserName = retrievedUser.UserName};
-
-            return existingUserViewModel;
+            var retrievedUser = await _userManager.FindByNameAsync(userName);
+            return retrievedUser;
         }
 
-        public async Task<List<UserViewModel>> GetSimilarNamedUsersAsync(string userName)
+        // TO-DO: Estract conversion from RallyUser to UserViewModel in SearchUser service
+        // extract to Search User service
+        public async Task<List<RallyUser>> GetSimilarNamedUsersAsync(string userName)
         {
-            var users = await _dogRallyDbContext.Users
-                .Where(x => x.UserName.StartsWith(userName))
-                .Select(x => new UserViewModel
-                {
-                    UserName = x.UserName,
-                })
-                .ToListAsync();
-
-            if (!users.Any())
-            {
-                return new List<UserViewModel>();
-            }
-
+            List<RallyUser> users = await _userManager.Users
+            .Where(x => x.UserName.StartsWith(userName))
+            .ToListAsync();
             return users;
         }
 
-        public async Task<List<UserViewModel>> GetAllUserNamesAsync()
+        // TO-DO:
+        // Make use of UserManager instead?
+        // Concider using UserManager instead of this method all together.
+        public async Task<List<RallyUser>> GetAllUserNamesAsync()
         {
-            var ListOfUserNames = await _dogRallyDbContext.Users
-                .Select(u => u.UserName )
-                .ToListAsync();
-
-              List<UserViewModel> userViewModels = ListOfUserNames.Select(username => new UserViewModel { UserName = username } )  
-             .ToList();
-
-            return userViewModels;
-               
+            var ListOfUsers = await _userManager.Users.ToListAsync();
+            return ListOfUsers;
         }
 
         public async Task AddUserToChatRoomAsync(string userName, int chatRoomId)
@@ -160,7 +134,7 @@ namespace DogRallyManager.Services
             
         }
 
-        public async Task<List<ChatMessageVM>> GetMessagesForChatRoomAsync(int chatRoomId)
+        public async Task<List<Message>> GetMessagesForChatRoomAsync(int chatRoomId)
         {
             var messages = await _dogRallyDbContext.Messages
                                 .Include(m => m.Sender)
@@ -168,16 +142,17 @@ namespace DogRallyManager.Services
                                 .OrderBy(m => m.TimeStamp)
                                 .ToListAsync();
 
+            // TO-DO: Extract it to ChatService
             // Map to ChatMessageVM
-            var messageVMs = messages.Select(message => new ChatMessageVM
-            {
-                Sender = message.Sender,
-                MessageBody = message.MessageBody,
-                ChatRoomId = message.ChatRoomId,
-                TimeStamp = message.TimeStamp
-            }).ToList();
+            //var messageVMs = messages.Select(message => new ChatMessageVM
+            //{
+            //    Sender = message.Sender,
+            //    MessageBody = message.MessageBody,
+            //    ChatRoomId = message.ChatRoomId,
+            //    TimeStamp = message.TimeStamp
+            //}).ToList();
 
-            return messageVMs;
+            return messages;
         }
 
         public async Task<List<Message>> GetAllMessagesAsync()
@@ -198,7 +173,8 @@ namespace DogRallyManager.Services
             await _dogRallyDbContext.SaveChangesAsync();
         }
 
-        public async Task AddChatRoomAsync(ChatRoom chatRoom)
+        // For create ChatRoom-functions. Extract this to ChatService?
+        public async Task CreateChatRoom(ChatRoom chatRoom)
         {
             _dogRallyDbContext.ChatRooms.Add(chatRoom);
             await _dogRallyDbContext.SaveChangesAsync();
