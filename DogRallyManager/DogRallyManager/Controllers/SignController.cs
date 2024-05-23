@@ -8,12 +8,19 @@ public class SignController(DogRallyDbContext dbContext) : Controller
     public record BoardData(int signId, int newX, int newY);
 
     [HttpPost]
-    public IActionResult MoveSign(BoardData boardData)
+    public IActionResult MoveSign([FromBody]BoardData boardData)
     {
         var sign = dbContext.Signs.Find(boardData.signId);
         sign.PositionY = boardData.newY;
         sign.PositionX = boardData.newX;
         dbContext.SaveChanges();
         return Ok();
+    }
+
+    [HttpGet]
+    public IActionResult GetSigns()
+    {
+        var signs = dbContext.Signs.ToList();
+        return Ok(signs);
     }
 }
