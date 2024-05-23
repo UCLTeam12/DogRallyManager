@@ -29,7 +29,22 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChatRoomRallyUser", (string)null);
+                    b.ToTable("ChatRoomRallyUser");
+                });
+
+            modelBuilder.Entity("DogRallyManager.Database.Models.Boards.Board", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Boards");
                 });
 
             modelBuilder.Entity("DogRallyManager.Database.Models.Signs.Sign", b =>
@@ -38,10 +53,13 @@ namespace DogRallyManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PositionX")
+                    b.Property<int>("BoardId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PositionY")
+                    b.Property<int?>("PositionX")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PositionY")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SignType")
@@ -50,23 +68,9 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Signs", (string)null);
+                    b.HasIndex("BoardId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            PositionX = 50,
-                            PositionY = 50,
-                            SignType = "exercise-1.png"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            PositionX = 100,
-                            PositionY = 100,
-                            SignType = "exercise-2.png"
-                        });
+                    b.ToTable("Signs");
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.ChatRoom", b =>
@@ -84,7 +88,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatRooms", (string)null);
+                    b.ToTable("ChatRooms");
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
@@ -113,7 +117,7 @@ namespace DogRallyManager.Migrations
 
                     b.HasIndex("UserSenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -355,6 +359,17 @@ namespace DogRallyManager.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DogRallyManager.Database.Models.Signs.Sign", b =>
+                {
+                    b.HasOne("DogRallyManager.Database.Models.Boards.Board", "Board")
+                        .WithMany("Sign")
+                        .HasForeignKey("BoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Board");
+                });
+
             modelBuilder.Entity("DogRallyManager.Entities.Message", b =>
                 {
                     b.HasOne("DogRallyManager.Entities.ChatRoom", "RecipientChatRoom")
@@ -421,6 +436,11 @@ namespace DogRallyManager.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DogRallyManager.Database.Models.Boards.Board", b =>
+                {
+                    b.Navigation("Sign");
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.ChatRoom", b =>
