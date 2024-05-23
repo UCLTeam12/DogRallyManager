@@ -44,16 +44,14 @@ namespace DogRallyManager.Controllers
         [HttpGet]
         public async Task<IActionResult> StartChat(string recipientUserName)
         {
+            bool userExists = await _chatService.DoesUserExistAsync(recipientUserName);
 
-            var verifySearchedUser = await _dataService.GetUserByNameAsync(recipientUserName);
-            var user = await _userManager.GetUserAsync(User);
-
-            if (verifySearchedUser == null)
+            if (!userExists)
             {
                 return NotFound("A user with that name does not exist");
             }
 
-            bool RoomAlreadyExist = await _dataService.RoomExists(user.UserName, verifySearchedUser.UserName);
+            bool RoomExist = await _dataService.RoomExists(user.UserName, verifySearchedUser.UserName);
 
             if(RoomAlreadyExist)
             {

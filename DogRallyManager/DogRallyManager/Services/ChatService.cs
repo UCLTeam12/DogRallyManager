@@ -45,5 +45,12 @@ namespace DogRallyManager.Services
             return chatRoomsVM;
         }
 
+        public async Task<bool> DoesUserExistAsync(string userName)
+        {
+           var user = await _userManager.FindByNameAsync(userName);
+            return user != null;
+        }
+
+
     }
 }
