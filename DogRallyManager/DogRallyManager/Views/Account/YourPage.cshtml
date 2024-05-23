@@ -16,12 +16,12 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/board.css" />
     <link rel="stylesheet" href="~/css/chat.css" />
+    <link rel="stylesheet" href="~/css/yourpage.css" />
 
     <script src="~/js/include.js"></script>
     <script src="~/js/toggleClass.js"></script>
 </head>
 <body>
-
     <header>
         <a href="/Account/YourPage"><div class="header-logo-dog"></div><div class="header-logo-txt"></div></a>
         <nav class="header-nav"><a class="current-page" href="#">Your Page</a><a href="/Boards">Boards</a><a href="/Account/Logout">Log Out</a></nav>
@@ -29,7 +29,43 @@
     </header>
 
     <main id="main-your-page">
-        <p>Here goes the main content of your page.</p>
+        <div class="flex-container">
+            <img id="profile-picture" class="flex-element" src="#"  />
+            <div id="personal-information" class="flex-element">
+                <h2>Personal Information</h2>
+                <p id="username"></p>
+                <p id="e-mail"></p>
+            </div>
+             <div id="plans" class="flex-container">
+                <h2>Rally Plans</h2>
+                <div id="plan-one" class="plan"></div>
+                <div id="plan-two"class="plan"></div>
+                <div id="plan-three" class="plan"></div>
+                <div id="plan-four" class="plan"></div>
+                <div id="=plan-five" class="plan"></div>
+            </div>
+        </div>
+        <div class="dog-container" id="dogs">
+            <h3>My Dogs</h3>
+            <div class="dog" id="dog-one">
+                <img src="~/images/Dogs/Hund_1.png" alt="Dog One">
+                <p>Race: Danish spitz</p>
+                <p>Name: Adele</p>
+                <p>Age: 13</p>
+            </div>
+            <div class="dog" id="dog-two">
+                <img src="~/images/Dogs/Hund_2.png" alt="Dog Two">
+                <p>Race: German shephard</p>
+            </div>
+            <div class="dog" id="dog-three">
+                <img src="~/images/Dogs/Hund_3.png" alt="Dog Three">
+                <p>Race: Rotweiler</p>
+            </div>
+            <div class="dog" id="dog-four">
+                <img src="~/images/Dogs/Hund_4.png" alt="Dog Four">
+                <p>Race: Dalmatian</p>
+            </div>
+        </div>
     </main>
 
     <footer>

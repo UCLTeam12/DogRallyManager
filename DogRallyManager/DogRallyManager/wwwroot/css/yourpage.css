@@ -1,0 +1,92 @@
+﻿.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.flex-element {
+    padding: 10px;
+    margin: 10px;
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+#profile-picture {
+    width: 200px;
+    height: 220px;
+    
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#personal-information {
+    display: flex;
+    flex-direction column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 200px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    margin: 10px;
+    margin-left: 64px;
+    color: #000000;
+}
+
+#plans {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    padding: 15px;
+    background-color: #f0f0f0; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    margin: 20px 10px; 
+    width: 40%; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.plan {
+    width: 100%;
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    padding: 15px 20px;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+    border-radius: 4px;
+}
+
+.dog-container {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 20px; 
+}
+
+.dog {
+    flex: 1; 
+    margin: 0px 10px; 
+    background-color: #ffffff; 
+    border: 2px solid #cccccc; 
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+    text-align: center; 
+}
+
+.dog img {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        margin-bottom: 10px;
+    }
