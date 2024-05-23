@@ -23,8 +23,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Adding custom dependencies
 builder.Services.AddTransient<IDataService, DemoDataService>();
+builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddTransient<RegisterUserVM>();
 builder.Services.AddTransient<LoginUserVM>();
+
 
 
 // Sets up identity on our custom classes that extends IdentityUser and IdentityRole classes. 

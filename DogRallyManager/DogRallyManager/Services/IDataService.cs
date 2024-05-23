@@ -8,14 +8,16 @@ namespace DogRallyManager.Services
 {
     public interface IDataService
     {
-        Task AddMessageAsync(string messageBody, int chatRoomId, RallyUser sender);
+        Task CreateMessageAsync(Message message);
         Task<List<Message>> GetMessagesForChatRoomAsync(int chatRoomId);
         Task<List<Message>> GetAllMessagesAsync();
         Task<List<ChatRoom>> GetUserAssociatedChatRoomsWithMessagesAsync(string userId);
         Task<ChatRoom?> GetChatRoomByNameAsync(string name);
         Task CreateChatRoom(ChatRoom chatRoom);
+        // TO-DO:
+        // Concider renaming and extracting some logic to DataService
         Task AddUserToChatRoomAsync(string userName, int chatRoomId);
-        Task<bool> RoomExists(string initiatingUser, string recipientUser);
+        Task<bool> DoesRoomExist(string roomName);
         Task<RallyUser?> GetUserByNameAsync(string userName);
         Task<List<RallyUser>> GetSimilarNamedUsersAsync(string userName);
         Task<List<RallyUser>> GetAllUserNamesAsync();

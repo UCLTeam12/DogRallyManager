@@ -24,13 +24,10 @@ namespace DogRallyManager.Services
         }
 
         // Extract to chatservice
-        public async Task<bool> RoomExists(string initiatingUserName, string recipientUserName)
+        public async Task<bool> DoesRoomExist(string roomName)
         {
              var chatRoom = await _dogRallyDbContext.ChatRooms
-            .Where(room => room.NumberOfAssociatedUsers == 2 &&
-                        room.RoomName == $"Chatroom: {initiatingUserName} and {recipientUserName}" 
-                        ||
-                        room.RoomName == $"Chatroom: {recipientUserName} and {initiatingUserName}")
+            .Where(room => room.NumberOfAssociatedUsers == 2 && room.RoomName == roomName)
             .FirstOrDefaultAsync();
 
                 if (chatRoom == null)
@@ -125,11 +122,8 @@ namespace DogRallyManager.Services
             }
             else
             {
-               
                 return new List<ChatRoom>();
             }
-                
-            
         }
 
         public async Task<List<Message>> GetMessagesForChatRoomAsync(int chatRoomId)
@@ -158,15 +152,8 @@ namespace DogRallyManager.Services
             return await _dogRallyDbContext.Messages.ToListAsync();
         }
 
-        public async Task AddMessageAsync(string messageBody, int chatRoomId, RallyUser sender)
+        public async Task CreateMessageAsync(Message message)
         {
-            Message message = new Message
-            {
-                MessageBody = messageBody,
-                Sender = sender,
-                ChatRoomId = chatRoomId
-            };
-
             await _dogRallyDbContext.Messages.AddAsync(message);
             await _dogRallyDbContext.SaveChangesAsync();
         }
