@@ -8,8 +8,13 @@ public class Sign
 {
     public int Id { get; set; }
     public string SignType { get; set; } = null!;
-    public int PositionX { get; set; }
-    public int PositionY { get; set; }
+    public int? PositionX { get; set; }
+    public int? PositionY { get; set; }
+
+    public bool IsPlaced()
+    {
+        return PositionX != null || PositionY != null;
+    }
 }
 
 public class SignsConfigureration: IEntityTypeConfiguration<Sign>
