@@ -86,7 +86,7 @@ namespace DogRallyManager.Controllers
             chatRoomVMToBeAdded.ParticipatingUsers.Add(recipientUserVM);
             chatRoomVMToBeAdded.ParticipatingUsers.Add(initiatingUserVM);
 
-            chatRoomVMToBeAdded.RoomName = "Your chat with "+recipientUserName;
+            chatRoomVMToBeAdded.RoomName = $"Chatroom: { initiatingUserVM}  and  { recipientUserName}";
 
             chatRoomsVM.Add(chatRoomVMToBeAdded);
 
@@ -132,11 +132,12 @@ namespace DogRallyManager.Controllers
 
                 await _dataService.AddChatRoomAsync(chatRoomEntity);
 
-                return RedirectToAction("Index");
+                return Json(new { success = true, message = "Nicolai er sød" });
+                //return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Error sending message: " + ex.Message });
+                return Json(new { success = false, message = "the catch was hit " + ex.Message });
             }
         }
 
