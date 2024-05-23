@@ -58,7 +58,6 @@ namespace DogRallyManager.Controllers
             await _chatService.InitiateChat(user.UserName, recipientUserName);
 
             return View("Index");
-
         }
         
         [HttpPost]
@@ -76,9 +75,6 @@ namespace DogRallyManager.Controllers
             {
                 return Json(new { success = false, message = $"Error sending message: {ex.Message}" });
             }
-
         }
-
-        
     }
 }
