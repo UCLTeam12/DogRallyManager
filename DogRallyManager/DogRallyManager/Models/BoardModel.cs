@@ -1,4 +1,5 @@
 using DogRallyManager.Database.Models.Signs;
+using DogRallyManager.Entities;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DogRallyManager.Models;
