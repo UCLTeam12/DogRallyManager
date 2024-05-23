@@ -6,5 +6,6 @@ namespace DogRallyManager.Models;
 
 public class BoardModel : PageModel
 {
+    public ChatRoom ChatRoom { get; set; }
     public List<Sign> Signs { get; set; }
 }

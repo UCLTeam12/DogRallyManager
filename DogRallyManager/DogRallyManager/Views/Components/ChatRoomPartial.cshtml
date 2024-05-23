@@ -1,21 +1,33 @@
 ﻿@using DogRallyManager.Entities
 @using Microsoft.AspNetCore.Identity;
 @inject UserManager<RallyUser> userManager;
-@model DogRallyManager.ViewModels.ChatVMs.ChatRoomVM
+@model DogRallyManager.Entities.ChatRoom
 
 <div id="chat" class="chat-minimized" onclick="toggleClass('chat', 'chat-minimized', 'chat-expanded')">
     <div id="chat-notifications" class="chat-unread"><p id="unread-amount">17</p></div>
     <div id="chat-window">
         <ul id="chat-history">
+            <script>
+                console.log("before foreach loop");
+            </script>
             @foreach (var message in Model.ChatMessages)
             {
+                <script>
+                    console.log("trying to upload");
+                </script>
                 @if (message.Sender.UserName == User.Identity.Name)
                 {
-                    <li class="message-sent">@message</li>
+                    <li class="message-sent">You: @message.MessageBody</li>
+                    <script>
+                        console.log("verified username");
+                    </script>
                 }
                 else
                 {
-                    <li class="message-response">This is an example of a response from another user.</li> <!-- Messages from other users has class .message-response. -->
+                    <script>
+                        console.log("else statement was hit");
+                    </script>
+                    <li class="message-response">@message.Sender.UserName: @message.MessageBody</li> <!-- Messages from other users has class .message-response. -->
                 }
             }
         </ul>
