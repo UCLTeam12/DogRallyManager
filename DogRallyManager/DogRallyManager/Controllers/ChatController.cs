@@ -18,14 +18,17 @@ namespace DogRallyManager.Controllers
     public class ChatController : Controller
     {
         private readonly IDataService _dataService;
+        private readonly ChatService _chatService;
         private readonly UserManager<RallyUser> _userManager;
         private readonly IMapper _mapper;
 
         public ChatController(IDataService dataService,
+            ChatService chatService,
             IMapper mapper,
             UserManager<RallyUser> userManager)
         {
             _dataService = dataService;
+            _chatService = chatService;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -34,17 +37,7 @@ namespace DogRallyManager.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            
-            var chatRoomsEntities = await _dataService.GetAssociatedChatRoomsWithMessagesAsync(user.Id);
-
-            if (chatRoomsEntities == null)
-            {
-
-            }
-
-            // This could be done in dataservice
-            var chatRoomsVM = _mapper.Map<IEnumerable<ChatRoomVM>>(chatRoomsEntities);
-
+            var chatRoomsVM = _chatService.GetUserAssociatedChatRoomsVM(user.Id);
             return View(chatRoomsVM);
         }
 

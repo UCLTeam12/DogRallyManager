@@ -25,22 +25,21 @@ namespace DogRallyManager.Services
 
         // Extract to chatservice
         public async Task<bool> RoomExists(string initiatingUserName, string recipientUserName)
-            {
-                var chatRoom = await _dogRallyDbContext.ChatRooms
+        {
+             var chatRoom = await _dogRallyDbContext.ChatRooms
             .Where(room => room.NumberOfAssociatedUsers == 2 &&
                         room.RoomName == $"Chatroom: {initiatingUserName} and {recipientUserName}" 
                         ||
                         room.RoomName == $"Chatroom: {recipientUserName} and {initiatingUserName}")
             .FirstOrDefaultAsync();
 
-            if (chatRoom == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+                if (chatRoom == null)
+                {
+                    return false;
+                }
+
+            return true;
+            
         }
 
         public async Task<ChatRoom?> GetChatRoomByNameAsync(string name)
@@ -48,7 +47,6 @@ namespace DogRallyManager.Services
              var chatRoom = await _dogRallyDbContext.ChatRooms
              .Where(r => r.RoomName == name)
              .FirstOrDefaultAsync();
-
              return chatRoom;
         }
 
@@ -112,7 +110,7 @@ namespace DogRallyManager.Services
             await _dogRallyDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<ChatRoom>> GetAssociatedChatRoomsWithMessagesAsync(string userId)
+        public async Task<List<ChatRoom>> GetUserAssociatedChatRoomsWithMessagesAsync(string userId)
         {
             var user = await _dogRallyDbContext.RallyUsers
                 .Include(u => u.AssociatedChatRooms)
