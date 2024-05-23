@@ -15,29 +15,30 @@ namespace DogRallyManager.Services
         private readonly DogRallyDbContext _dogRallyDbContext;
         private readonly UserManager<RallyUser> _userManager;
 
-        public DemoDataService(DogRallyDbContext dogRallyDbContext, UserManager<RallyUser> userManager)
+        public DemoDataService(DogRallyDbContext dogRallyDbContext, 
+            UserManager<RallyUser> userManager)
         {
             _userManager = userManager;
             _dogRallyDbContext = dogRallyDbContext;
 
         }
 
-        public async Task<bool> CheckIfRoomAlreadyExists(string initiatingUserName, string recipientUserName)
+        public async Task<bool> RoomAlreadyExists(string initiatingUserName, string recipientUserName)
             {
                 var chatRoom = await _dogRallyDbContext.ChatRooms
             .Where(room => room.NumberOfAssociatedUsers == 2 &&
-                        room.RoomName == $"{initiatingUserName} and {recipientUserName}" 
+                        room.RoomName == $"Chatroom: {initiatingUserName} and {recipientUserName}" 
                         ||
-                        room.RoomName == $"{recipientUserName} and {initiatingUserName}")
+                        room.RoomName == $"Chatroom: {recipientUserName} and {initiatingUserName}")
             .FirstOrDefaultAsync();
 
             if (chatRoom == null)
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 
@@ -88,7 +89,6 @@ namespace DogRallyManager.Services
 
             return users;
         }
-
 
         public async Task<List<UserViewModel>> GetAllUserNamesAsync()
         {
@@ -180,17 +180,20 @@ namespace DogRallyManager.Services
             return messageVMs;
         }
 
-
         public async Task<List<Message>> GetAllMessagesAsync()
         {
             return await _dogRallyDbContext.Messages.ToListAsync();
         }
 
-
-
-
-        public async Task AddMessageAsync(Message message)
+        public async Task AddMessageAsync(string messageBody, int chatRoomId, RallyUser sender)
         {
+            Message message = new Message
+            {
+                MessageBody = messageBody,
+                Sender = sender,
+                ChatRoomId = chatRoomId
+            };
+
             await _dogRallyDbContext.Messages.AddAsync(message);
             await _dogRallyDbContext.SaveChangesAsync();
         }

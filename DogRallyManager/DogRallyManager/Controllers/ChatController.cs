@@ -39,11 +39,7 @@ namespace DogRallyManager.Controllers
 
             if (chatRoomsEntities == null)
             {
-                // TO-DO:
-                // If ChatRoomsEntities is null, we will get an error on the load of messages
-                // saying that it is trying to read from something without an object reference.
-                // Probably alot of ways to fix this. We could put an if loop in the razor page? 
-                // Maybe the fix actually lies somewhere else.... let me see... 
+
             }
 
             // This could be done in dataservice
@@ -57,16 +53,14 @@ namespace DogRallyManager.Controllers
         {
 
             var verifySearchedUser = await _dataService.GetUserAsync(recipientUserName);
+            var user = await _userManager.GetUserAsync(User);
 
             if (verifySearchedUser == null)
             {
                 return NotFound("A user with that name does not exist");
             }
 
-
-            var user = await _userManager.GetUserAsync(User);
-
-            bool RoomAlreadyExist = await _dataService.CheckIfRoomAlreadyExists(user.UserName, verifySearchedUser.UserName);
+            bool RoomAlreadyExist = await _dataService.RoomAlreadyExists(user.UserName, verifySearchedUser.UserName);
 
             if(RoomAlreadyExist)
             {
@@ -151,30 +145,9 @@ namespace DogRallyManager.Controllers
         {
             try
             {
-                var user = await _userManager.GetUserAsync(User);
+                var userSender = await _userManager.GetUserAsync(User);
 
-                // If the ChatRoomId is 0, this means that the ChatRoom only exists on an object-context
-                // as a ChatRoomVM. 
-                if (chatRoomId == 0)
-                {
-                    var newMessageVM = new ChatMessageVM
-                    {
-                        MessageBody = messageBody,
-                        Sender = user,
-                        TimeStamp = DateTime.UtcNow
-                    };
-                    var newEntityMessage = _mapper.Map<Message>(newMessageVM);
-
-                    var entityChatRoom = new ChatRoom();
-                    entityChatRoom.ParticipatingUsers.Add(user);
-                    entityChatRoom.ChatMessages.Add(newEntityMessage);
-                    await _dataService.AddChatRoomAsync(entityChatRoom);
-                }
-
-                //var entityMessage = _mapper.Map<Message>(newMessage);
-                //entityChatRoom.ChatMessages.Add(entityMessage);
-
-                //await _dataService.AddMessageAsync(entityMessage);
+                await _dataService.AddMessageAsync(messageBody, chatRoomId, userSender);
 
                 return Json(new { success = true, message = "The message was succesfully persisted in database" });
             }
