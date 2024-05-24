@@ -59,7 +59,7 @@ namespace DogRallyManager.Services
         {
             // Sorting it alphabethically
             var sortedUsernames = new List<string> { userName1, userName2 }.OrderBy(u => u).ToList();
-            return $"Chatroom: {sortedUsernames[0]} and {sortedUsernames[2]}";
+            return $"Chatroom: {sortedUsernames[0]} and {sortedUsernames[1]}";
         }
 
         public async Task SendMessageAsync(string messageBody, RallyUser sender, int chatRoomId)

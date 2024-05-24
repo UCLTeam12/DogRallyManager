@@ -57,7 +57,7 @@ namespace DogRallyManager.Controllers
 
             await _chatService.InitiateChat(user.UserName, recipientUserName);
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
         
         [HttpPost]
