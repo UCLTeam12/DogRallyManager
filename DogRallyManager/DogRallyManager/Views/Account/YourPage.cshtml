@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<RallyUser> userManager;
+@{
     ViewData["Title"] = "Your Page";
 }
 
@@ -30,11 +32,11 @@
 
     <main id="main-your-page">
         <div class="flex-container">
-            <img id="profile-picture" class="flex-element" src="#"  />
+            <img id="profile-picture" class="flex-element" src="~/Images/genericProfilePic.png"  />
             <div id="personal-information" class="flex-element">
                 <h2>Personal Information</h2>
-                <p id="username"></p>
-                <p id="e-mail"></p>
+                <p id="username">@User.Identity.Name</p>
+                <p id="e-mail">@User.Identity.Email</p>
             </div>
              <div id="plans" class="flex-container">
                 <h2>Rally Plans</h2>
