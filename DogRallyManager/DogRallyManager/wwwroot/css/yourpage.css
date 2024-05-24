@@ -27,9 +27,6 @@
 }
 
 #personal-information {
-    display: flex;
-    flex-direction column;
-    justify-content: center;
     align-items: center;
     width: 250px;
     height: 200px;
@@ -40,6 +37,10 @@
     margin: 10px;
     margin-left: 64px;
     color: #000000;
+}
+
+.information{
+    display: block;
 }
 
 #plans {
