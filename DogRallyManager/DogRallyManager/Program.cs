@@ -24,6 +24,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Adding custom dependencies
 builder.Services.AddTransient<IDataService, DemoDataService>();
 builder.Services.AddTransient<IChatService, ChatService>();
+builder.Services.AddTransient<ISearchService, SearchService>();
 builder.Services.AddTransient<RegisterUserVM>();
 builder.Services.AddTransient<LoginUserVM>();
 
