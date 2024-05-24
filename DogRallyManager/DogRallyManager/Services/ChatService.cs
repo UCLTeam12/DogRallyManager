@@ -22,7 +22,7 @@ namespace DogRallyManager.Services
 
         public async Task CreateGeneralChatRoomAsync()
         {
-            var generalRoom = _dataService.GetChatRoomByNameAsync("General");
+            var generalRoom = await _dataService.GetChatRoomByNameAsync("General");
 
             if (generalRoom == null)
             {

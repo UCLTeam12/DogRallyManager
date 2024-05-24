@@ -1,6 +1,7 @@
 using DogRallyManager.Database.Models.Boards;
 using DogRallyManager.Database.Models.Signs;
 using DogRallyManager.DbContexts;
+using DogRallyManager.Entities;
 using DogRallyManager.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,13 +34,20 @@ public class BoardsController(DogRallyDbContext dbContext) : Controller
                     SignType = "exercise-"+i+".png"
                 }
             );
-
         }
+        
         var board = new Board()
         {
             Name = boardCreateModel.name,
             Sign = signList,
         };
+
+        ChatRoom associatedChatRoom = new ChatRoom
+        {
+            RoomName = $"{boardCreateModel.name} chat"
+        };
+
+        board.AssociatedChatRoom = associatedChatRoom;
         dbContext.Boards.Add(board);
         dbContext.SaveChanges();
         return RedirectToAction("Details", new {id= board.Id});
