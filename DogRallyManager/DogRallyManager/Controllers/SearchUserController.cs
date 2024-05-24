@@ -8,13 +8,16 @@ namespace DogRallyManager.Controllers
     public class SearchUserController : Controller
     {
         private readonly IDataService _dataService;
+        private readonly ISearchService _searchService;
         private readonly IMapper _mapper;
 
         public SearchUserController(IDataService dataservice, 
-            IMapper mapper)
+            IMapper mapper,
+            ISearchService searchService)
         {
             _dataService = dataservice;
             _mapper = mapper;
+            _searchService = searchService;
         }
 
         public async Task<IActionResult> Index()
@@ -23,10 +26,9 @@ namespace DogRallyManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchUser(string username)
+        public async Task<IActionResult> SearchUser(string userName)
         {
-            var users = await _dataService.GetSimilarNamedUsersAsync(username);
-            var userViewModels = _mapper.Map<List<UserViewModel>>(users);
+            var userViewModels = _searchService.SearchUser(userName);
             return Json(userViewModels);
         }
 
