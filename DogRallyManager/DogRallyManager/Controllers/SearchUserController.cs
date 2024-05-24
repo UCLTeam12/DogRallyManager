@@ -28,7 +28,7 @@ namespace DogRallyManager.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchUser(string userName)
         {
-            var userViewModels = _searchService.SearchUser(userName);
+            var userViewModels = await _searchService.SearchUser(userName);
             return Json(userViewModels);
         }
 
