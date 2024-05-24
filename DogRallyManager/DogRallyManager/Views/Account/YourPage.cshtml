@@ -1,5 +1,11 @@
-﻿@{
+﻿@using DogRallyManager.Entities;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<RallyUser> userManager;
+
+@{
     ViewData["Title"] = "Your Page";
+    var user = await userManager.GetUserAsync(User);
+    var userEmail = await userManager.GetEmailAsync(user);
 }
 
 @{
@@ -30,17 +36,17 @@
 
     <main id="main-your-page">
         <div class="flex-container">
-            <img id="profile-picture" class="flex-element" src="#"  />
+            <img id="profile-picture" class="flex-element" src="~/Images/genericProfilePicture.png"  />
             <div id="personal-information" class="flex-element">
                 <h2>Personal Information</h2>
-                <p id="username"></p>
-                <p id="e-mail"></p>
+                <p class="information" id="username">@User.Identity.Name</p>
+                <p class="information "id="e-mail">@userEmail</p>
             </div>
              <div id="plans" class="flex-container">
                 <h2>Rally Plans</h2>
-                <div id="plan-one" class="plan"></div>
-                <div id="plan-two"class="plan"></div>
-                <div id="plan-three" class="plan"></div>
+                <div id="plan-one" class="plan"><p>01/02/2025: Hundetræning i Parkskoven</p></div>
+                <div id="plan-two" class="plan">07/04/2025: Rallymøde i Hillerød</div>
+                <div id="plan-three" class="plan">10/08/2025: Rexes fødselsdag</div>
                 <div id="plan-four" class="plan"></div>
                 <div id="=plan-five" class="plan"></div>
             </div>
@@ -58,8 +64,8 @@
                 <p>Race: German shephard</p>
             </div>
             <div class="dog" id="dog-three">
-                <img src="~/images/Dogs/Hund_3.png" alt="Dog Three">
-                <p>Race: Rotweiler</p>
+                <img src="~/images/Dogs/IceCube.png" alt="Dog Three">
+                <p>Race: Irriterende og underlegen hund</p>
             </div>
             <div class="dog" id="dog-four">
                 <img src="~/images/Dogs/Hund_4.png" alt="Dog Four">
