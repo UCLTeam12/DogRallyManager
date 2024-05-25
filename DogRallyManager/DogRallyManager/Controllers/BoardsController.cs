@@ -32,16 +32,18 @@ public class BoardsController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var board = await _dbContext.Boards
-            .Include(u => u.AssociatedChatRoom)
+            .Include(cr => cr.AssociatedChatRoom)
             .ThenInclude(c => c.ChatMessages)
             .ThenInclude(m => m.Sender)
+            .Include(u => u.ParticipatingUsers)
             .FirstOrDefaultAsync(b => b.Id == id);
 
         var boardModel = new BoardModel
         {
             Signs = _dbContext.Signs.ToList(),
             Id = board.Id,
-            ChatRoom = board.AssociatedChatRoom
+            AssociatedChatRoom = board.AssociatedChatRoom,
+            ParticipatingUsers = board.ParticipatingUsers
         };
 
         return View(boardModel);

@@ -89,12 +89,25 @@
     <div class="clear"></div>
 </main>
 
-<footer>
-    <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
-</footer>
+    <footer>
+        <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
+
+        <!-- List of Associated Users -->
+        <h3>List of associated users:</h3>
+        <ul>
+            @foreach (var user in Model.ParticipatingUsers)
+            {
+                <li>@user.UserName</li>
+            }
+        </ul>
+
+        <!-- Button to Add User to Board -->
+        
+        <input type="button" id="add-user-btn" value="Add user to board"/>
+    </footer>
 
 <!-- Including the chat on the board page. -->
-    @await Html.PartialAsync("~/Views/Components/Chat.cshtml", Model.ChatRoom)
+    @await Html.PartialAsync("~/Views/Components/Chat.cshtml", Model.AssociatedChatRoom)
 
 <!-- Scripts: -->
 
