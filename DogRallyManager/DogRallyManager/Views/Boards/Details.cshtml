@@ -8,7 +8,6 @@
 }
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <link rel="stylesheet" href="~/css/board.css">
@@ -190,6 +189,9 @@ It persists the state of the toggle switch by using the browsers storage. -->
         document.addEventListener('DOMContentLoaded', function () {
             const toggleSwitch = document.getElementById('toggle-switch');
             const targetDiv = document.getElementById('board-lines');
+
+
+            
 
             function updateBackgroundImage() {
                 if (toggleSwitch.checked) {
