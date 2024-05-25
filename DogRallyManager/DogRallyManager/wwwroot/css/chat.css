@@ -9,21 +9,16 @@
 .chat-minimized {
     width: 64px;
     height: 64px;
-
     border-radius: 24px 24px;
-
     position: fixed;
     right: 16px;
     bottom: 16px;
-
-    background-color: blue;
+    background-color:  darkolivegreen;
     background-image: url("/images/speech-bubble.png");
     background-repeat: no-repeat;
     background-size: 75% 75%;
     background-position: center;
-
     cursor: pointer;
-
     overflow: hidden;
 }
 

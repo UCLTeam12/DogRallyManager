@@ -13,10 +13,9 @@
 }
 
 body {
-    min-width: 1120px;
-    width: calc(100% - 240px);
+    width: calc(100% - 320px);
     background-color: rgb(220, 220, 220);
-    padding: 16px 120px 16px 120px;
+    padding: 16px 160px 16px 160px;
     font-family: Arial;
 }
 
@@ -24,7 +23,7 @@ header {
     height: calc(60px - 12px);
     padding: 6px 24px;
 
-    border-radius: 4px 4px 0px 0px;
+    border-radius: 6px 6px 0px 0px;
     background-color: white;
 }
 
@@ -74,15 +73,12 @@ header {
 main {
     width: 100%;
     height: auto;
-
-    background-color: lightgrey;
+    background-color: #008468;
 }
 
 #main-your-page {
     width: calc(100% - 32px);
-    height: 1000px;
-    background-color: lightgrey;
-    padding: 16px;
+    padding: 16px 16px 16px 16px;
 }
 
 #boards-section {
@@ -293,10 +289,15 @@ input:checked ~ .switch-description:after {
 
 footer {
     width: calc(100% - 32px);
-    height: 120px;
 
     padding: 16px;
 
-    border-radius: 0px 0px 4px 4px;
+    border-radius: 0px 0px 6px 6px;
     background-color: white;
+}
+
+footer #copyright {
+    display: block;
+    margin: auto;
+    text-align: center;
 }

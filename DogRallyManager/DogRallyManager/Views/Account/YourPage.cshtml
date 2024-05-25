@@ -35,50 +35,66 @@
     </header>
 
     <main id="main-your-page">
-        <div class="flex-container">
-            <img id="profile-picture" class="flex-element" src="~/Images/genericProfilePicture.png"  />
-            <div id="personal-information" class="flex-element">
-                <h2>Personal Information</h2>
-                <p class="information" id="username">@User.Identity.Name</p>
-                <p class="information "id="e-mail">@userEmail</p>
+        <section id="account-information">
+            <h2>Account Information</h2>
+            <div class="flex-container">
+                <div id="profile-picture" class="flex-item" alt="Profile picture or avatar."><label><input type="file" accept="image/*" /><div class="upload-image"></div></label></div>
+                <div id="personal-information" class="flex-item">
+                    <p class="information" id="username">@User.Identity.Name</p>
+                    <p class="information "id="e-mail">@userEmail</p>
+                    <div class="edit"></div>
+                </div>
             </div>
-             <div id="plans" class="flex-container">
-                <h2>Rally Plans</h2>
-                <div id="plan-one" class="plan"><p>01/02/2025: Hundetræning i Parkskoven</p></div>
-                <div id="plan-two" class="plan">07/04/2025: Rallymøde i Hillerød</div>
-                <div id="plan-three" class="plan">10/08/2025: Rexes fødselsdag</div>
-                <div id="plan-four" class="plan"></div>
-                <div id="=plan-five" class="plan"></div>
+        </section>
+
+        <section id="dog-schedule">
+            <h2>Dog Schedule</h2>
+            <div class="flex-container">
+                <div id="plans" class="flex-container">
+                    <div id="plan-one" class="plan"><p>01/02/2025: Hundetræning i skovparken</p></div>
+                    <div id="plan-two" class="plan">07/04/2025: Rally i Hillerød</div>
+                    <div id="plan-three" class="plan">10/08/2025: Rex's fødselsdag</div>
+                    <div id="plan-four" class="plan-last">12/08/2025: Tiny gets fixed.</div>
+                </div>
             </div>
-        </div>
-        <div class="dog-container" id="dogs">
-            <h3>My Dogs</h3>
-            <div class="dog" id="dog-one">
-                <img src="~/images/Dogs/Hund_1.png" alt="Dog One">
-                <p>Race: Danish spitz</p>
-                <p>Name: Adele</p>
-                <p>Age: 13</p>
+        </section>
+
+        <section class="section-last">
+            <h2>My Dogs</h2>
+            <div class="flex-container">
+                <div id="dogs">
+                    <div id="dog-one" class="dog">
+                        <div class="dog-img" alt="Dog one." style="background-image: url('/images/Dogs/hund_1.png');"></div>
+                        <p>Name: Adele</p>
+                        <p>Race: Danish spitz</p>
+                        <p>Age: 13</p>
+                    </div>
+                    <div id="dog-two" class="dog">
+                        <div class="dog-img" alt="Dog two." style="background-image: url('/images/Dogs/hund_2.png');"></div>
+                        <p>Name: Rex</p>
+                        <p>Race: German shephard</p>
+                        <p>Age: 7</p>
+                    </div>
+                    <div id="dog-three" class="dog">
+                        <div class="dog-img" alt="Dog three." style="background-image: url('/images/Dogs/hund_3.png');"></div>
+                        <p>Navn: Tiny</p>
+                        <p>Race: German Rottweiler</p>
+                        <p>Age: 5</p>
+                    </div>
+                    <div id="dog-four" class="dog">
+                        <div class="dog-img" alt="Dog Four." style="background-image: url('/images/Dogs/Hund_4.png');"></div>
+                        <p>Navn: Smoky</p>
+                        <p>Race: Dalmatian</p>
+                        <p>Age: 5</p>
+                    </div>
+                </div>
             </div>
-            <div class="dog" id="dog-two">
-                <img src="~/images/Dogs/Hund_2.png" alt="Dog Two">
-                <p>Race: German shephard</p>
-            </div>
-            <div class="dog" id="dog-three">
-                <img src="~/images/Dogs/IceCube.png" alt="Dog Three">
-                <p>Race: Amerikansk gadehund</p>
-            </div>
-            <div class="dog" id="dog-four">
-                <img src="~/images/Dogs/Hund_4.png" alt="Dog Four">
-                <p>Race: Dalmatian</p>
-            </div>
-        </div>
+        </section>
     </main>
 
     <footer>
-        <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
+        <p id="copyright">Copyright &copy; @DateTime.Now.Year Dog Rally Manager A/S. All rights reserved.</p>
     </footer>
-
-<div include="/components/chat.html"></div>
 
     <!-- Include Bootstrap JS files -->
     <script>include();</script>
