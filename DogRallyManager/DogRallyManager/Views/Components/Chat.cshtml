@@ -2,92 +2,111 @@
 @using DogRallyManager.Entities;
 @inject UserManager<RallyUser> userManager;
 @model DogRallyManager.Entities.ChatRoom?;
-
+<!DOCTYPE html>
+<html>
+    <body>
 <div id="chat" class="chat-minimized" onclick="toggleClass('chat', 'chat-minimized', 'chat-expanded')">
     <div id="chat-notifications" class="chat-unread"><p id="unread-amount">17</p></div>
     <div id="chat-window">
         <ul id="chat-history">
-                @if (Model != null && Model.ChatMessages.Any() )
+            @if (Model != null && Model.ChatMessages.Any())
+            {
+                @foreach (var message in Model.ChatMessages)
                 {
-                    @foreach (var message in Model.ChatMessages)
+                    if (message.Sender.UserName == User.Identity.Name)
                     {
-                        if(message.Sender.UserName == User.Identity.Name)
-                        {
-                            <li class="message-sent">@message</li>
-                        }
-                        else
-                        {
-                            <li class="message-response">@message</li>
-                        }
+                        <li class="message-sent">@message.Sender: @message.MessageBody</li>
                     }
-                }   
+                    else
+                    {
+                        <li class="message-response">@message.Sender: @message.MessageBody</li>
+                    }
+                }
+            }
         </ul>
     </div>
     <div>
         <input id="chat-write" type="text" />
-        <button class="send-button" data-chatroomid="@Model.Id"> </button>
+        <button class="send-button" data-chatroomid="@Model.Id">Send</button>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script>
-
         $(document).ready(function () {
             $.ajaxSetup({
-                // This is for the preflight request made from the browser, saying to the
-                // CORS-guards of the SignalR app that HEY ITS OKAY DONT SHUT DOWN LET US IN !
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://localhost:7142');
                     xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
                 }
             });
 
-            // Connection being established to the chathub url that was mapped in the signalR-app.
-            // That is indeed the rooturl of where the signalr app is hosted, with the appended
-            // signalR endpoint
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl("https://localhost:7204/chatHub")
                 .build();
 
             connection.start()
                 .then(() => console.log("SignalR connection established"))
-                .catch((err) => {
-                    return console.error(err.toString());
-                });
+                .catch((err) => console.error(err.toString()));
 
-            // Handle click event on send button
-            $(".send-button").click(function () {
-                var currentChatRoomId = $(this).data("chatroomid");
+            document.querySelector('.send-button').addEventListener('click', function () {
+                const currentChatRoomId = $(this).data("chatroomid");
+                const message = $("#chat-write").val();
+                const user = "@User.Identity.Name";
+
                 console.log("Send button clicked and chatroomid variable is: " + currentChatRoomId);
-                var message = $("#chat-write").val();
-                var user = "@User.Identity.Name";
-                console.log("variables loaded");
-                console.log("send button function finished");
+                console.log("Message to send: " + message);
+                console.log("User: " + user);
 
-            
                 connection.invoke("SendMessage", user, message, currentChatRoomId)
-                .catch(err => console.error(err));
+                    .catch(err => console.error(err));
 
-                $.ajax({
-                    url: "/Chat/SendMessage",
-                    type: "POST",
-                    data: { messageBody: message, chatRoomId: currentChatRoomId },
-                    success: function (response) {
-                        if (response.success) {
-                            console.log(response.message);
-                        } else {
-                            console.error("Error: " + response.message);
+                if (message !== "") {
+                    $.ajax({
+                        url: "/Chat/SendMessage",
+                        type: "POST",
+                        data: { messageBody: message, chatRoomId: currentChatRoomId },
+                        success: function (response) {
+                            if (response.success) {
+                                console.log(response.message);
+                            } else {
+                                console.error("Error: " + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error sending message: " + error);
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error sending message: " + error);
-                    }
-                });
-            // Handle incoming message event from SignalR hub
+                    });
+                }
+            });
+
+            const userName = "@User.Identity.Name";
+
             connection.on("ReceiveMessage", (user, message, chatroomId) => {
-                // Append the received message to the message container
                 console.log("ReceiveMessage has been invoked");
-                $("#chat-history").append(<li> user + ": " + message </li>);
-                var messageContainer = document.getElementById("#chat-history");
+
+                if (user === userName) {
+                    $("#chat-history").append(`<li class="message-sent">${user}: ${message}</li>`);
+                } else {
+                    $("#chat-history").append(`<li class="message-response">${user}: ${message}</li>`);
+                }
+
+                const messageContainer = document.getElementById("chat-history");
                 messageContainer.scrollTop = messageContainer.scrollHeight;
             });
-                </script>
+        });
+
+        function toggleClass(elementId, class1, class2) {
+            const element = document.getElementById(elementId);
+            if (element.classList.contains(class1)) {
+                element.classList.remove(class1);
+                element.classList.add(class2);
+            } else {
+                element.classList.remove(class2);
+                element.classList.add(class1);
+            }
+        }
+    </script>
+    </body>
+    </html>
