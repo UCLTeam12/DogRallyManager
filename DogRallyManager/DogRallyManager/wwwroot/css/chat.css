@@ -1,5 +1,4 @@
-﻿
-#chat {
+﻿#chat {
 
 }
 
@@ -90,9 +89,8 @@
     .chat-expanded #chat-history {
         width: 216px;
         height: 250px;
-
+        overflow: scroll;
         padding: 6px;
-
         background-color: white;
         color: black;
     }

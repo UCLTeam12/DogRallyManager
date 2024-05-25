@@ -3,6 +3,7 @@ using System;
 using DogRallyManager.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DogRallyManager.Migrations
 {
     [DbContext(typeof(DogRallyDbContext))]
-    partial class AuthUserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240525145635_JunctionTableForBoardsUsers")]
+    partial class JunctionTableForBoardsUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
