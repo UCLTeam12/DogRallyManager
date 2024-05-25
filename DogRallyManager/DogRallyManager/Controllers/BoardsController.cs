@@ -1,23 +1,35 @@
+using AutoMapper;
 using DogRallyManager.Database.Models.Boards;
 using DogRallyManager.Database.Models.Signs;
 using DogRallyManager.DbContexts;
 using DogRallyManager.Entities;
 using DogRallyManager.Models;
+using DogRallyManager.ViewModels.ChatVMs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DogRallyManager.Controllers;
 
 public class BoardsController(DogRallyDbContext dbContext) : Controller
 {
+    
     public record BoardCreateModel(string name);
-    public IActionResult Details(int id)
+
+    public async Task<IActionResult> Details(int id)
     {
-        var board = dbContext.Boards.Find(id);
+        var board = await dbContext.Boards
+            .Include(u => u.AssociatedChatRoom)
+            .ThenInclude(c => c.ChatMessages)
+            .ThenInclude(m => m.Sender)
+            .FirstOrDefaultAsync(b => b.Id == id);
+
         var boardModel = new BoardModel
         {
             Signs = dbContext.Signs.ToList(),
-            Id = board.Id
+            Id = board.Id,
+            ChatRoom = board.AssociatedChatRoom
         };
+
         return View(boardModel);
     }
 

@@ -9,5 +9,5 @@ public class BoardModel : PageModel
 {
     public int Id { get; set; }
     public List<Sign> Signs { get; set; }
-    public ChatRoomVM? ChatRoomVM { get; set; }
+    public ChatRoom ChatRoom { get; set; }
 }
