@@ -144,7 +144,7 @@ html {
             #dot-one {
                 opacity: 0;
                 animation-name: dots;
-                animation-delay: 1s;
+                animation-delay: 0.1s;
                 animation-duration: 0.1s;
                 animation-fill-mode: forwards;
             }
@@ -152,7 +152,7 @@ html {
             #dot-two {
                 opacity: 0;
                 animation-name: dots;
-                animation-delay: 2s;
+                animation-delay: 0.8s;
                 animation-duration: 0.1s;
                 animation-fill-mode: forwards;
             }
@@ -160,7 +160,7 @@ html {
             #dot-three {
                 opacity: 0;
                 animation-name: dots;
-                animation-delay: 3s;
+                animation-delay: 1.4s;
                 animation-duration: 0.1s;
                 animation-fill-mode: forwards;
             }
