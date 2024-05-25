@@ -69,39 +69,59 @@
 .chat-expanded {
     width: 240px;
     height: 320px;
-
     position: fixed;
     right: 16px;
     bottom: 16px;
-
     padding: 12px;
-    border: 1px solid black;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 0px 6px 6px 6px;
     background-color: grey;
-
     cursor: pointer;
-    overflow: hidden;
+}
+
+#minimize-chat {
+    width: 28px;
+    height: 32px;
+    display: block;
+    position: absolute;
+    right: 256px;
+    bottom: 300px;
+    color: red;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: grey;
+    padding: 6px 8px 6px 8px;
+    border-radius: 6px 0px 0px 6px;
+    background-image: url("/Images/paw.png");
+    background-size: auto 32px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
     .chat-expanded #chat-notifications {
         display: none;
     }
 
+    .chat-expanded #chat-window {
+        border-radius: 6px 6px 0px 0px;
+        overflow: hidden;
+    }
+
     .chat-expanded #chat-history {
-        width: 216px;
-        height: 250px;
+        width: calc(100% - 16px);
+        height: 268px;
         overflow-y: scroll;
-        padding: 6px;
+        padding: 8px;
         background-color: white;
         color: black;
+        margin-bottom: 4px;
     }
 
         .chat-expanded #chat-history .message-sent {
             width: 90%;
 
             float: right;
-            padding: 6px;
-
-            margin-bottom: 12px;
+            padding: 8px;
 
             background-color: green;
             list-style-type: none;
@@ -117,17 +137,20 @@
             text-align: left;
         }
 
-    .chat-expanded #chat-write {
-        width: 166px;
-        height: 32px;
-        margin: 0px;
-    }
+        .chat-expanded #chat-write {
+            width: 178px;
+            height: 26px;
+            margin: 0px;
+            border-radius: 0px 0px 0px 6px;
+            padding: 4px;
+        }
 
-    .chat-expanded #chat-send {
-        width: 20%;
-        height: 32px;
-        margin: 0px;
-    }
+        .chat-expanded #chat-send {
+            width: 20%;
+            height: 34px;
+            border-radius: 0px 0px 6px 0px;
+            background-color: #43A047;
+        }
 
 .chat-offline {
     width: 64px;
