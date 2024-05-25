@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using DogRallyManager.Services;
 using DogRallyManager.ViewModels.AccountVMs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DogRallyManager.Controllers
 {
+    [Authorize]
     public class SearchUserController : Controller
     {
         private readonly IDataService _dataService;

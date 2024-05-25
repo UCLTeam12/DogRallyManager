@@ -11,6 +11,6 @@ public class Board
     public string Name { get; set; }
     public ICollection<Sign> Sign { get; set; } = [];
     public ChatRoom? AssociatedChatRoom { get; set; }
-    public ICollection<RallyUser>? ParticipatingUsers{ get; set; }
+    public ICollection<RallyUser>? ParticipatingUsers{ get; set; } = new List<RallyUser>();
 }
 

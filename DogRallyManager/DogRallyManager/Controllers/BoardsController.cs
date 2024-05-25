@@ -5,19 +5,33 @@ using DogRallyManager.DbContexts;
 using DogRallyManager.Entities;
 using DogRallyManager.Models;
 using DogRallyManager.ViewModels.ChatVMs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DogRallyManager.Controllers;
 
-public class BoardsController(DogRallyDbContext dbContext) : Controller
+[Authorize]
+public class BoardsController : Controller
 {
-    
+    private readonly DogRallyDbContext _dbContext;
+    private readonly UserManager<RallyUser> _userManager;
+    private readonly IMapper _mapper;
+    public BoardsController(DogRallyDbContext dbContext,
+        UserManager<RallyUser> userManager,
+        IMapper mapper)
+    {
+        _userManager = userManager;
+        _dbContext = dbContext;
+        _mapper = mapper;
+    }
+
     public record BoardCreateModel(string name);
 
     public async Task<IActionResult> Details(int id)
     {
-        var board = await dbContext.Boards
+        var board = await _dbContext.Boards
             .Include(u => u.AssociatedChatRoom)
             .ThenInclude(c => c.ChatMessages)
             .ThenInclude(m => m.Sender)
@@ -25,7 +39,7 @@ public class BoardsController(DogRallyDbContext dbContext) : Controller
 
         var boardModel = new BoardModel
         {
-            Signs = dbContext.Signs.ToList(),
+            Signs = _dbContext.Signs.ToList(),
             Id = board.Id,
             ChatRoom = board.AssociatedChatRoom
         };
@@ -34,8 +48,11 @@ public class BoardsController(DogRallyDbContext dbContext) : Controller
     }
 
     [HttpPost]
-    public IActionResult CreateBoard([FromForm]BoardCreateModel boardCreateModel)
+    public async Task<IActionResult> CreateBoard([FromForm]BoardCreateModel boardCreateModel)
     {
+
+        var user = await _userManager.GetUserAsync(User);
+
         var signList = new List<Sign>();
         for (int i = 1; i < 300; i++)
         {
@@ -47,7 +64,7 @@ public class BoardsController(DogRallyDbContext dbContext) : Controller
                 }
             );
         }
-        
+
         var board = new Board()
         {
             Name = boardCreateModel.name,
@@ -59,14 +76,16 @@ public class BoardsController(DogRallyDbContext dbContext) : Controller
             RoomName = $"{boardCreateModel.name} chat"
         };
 
+        board.ParticipatingUsers.Add(user);
         board.AssociatedChatRoom = associatedChatRoom;
-        dbContext.Boards.Add(board);
-        dbContext.SaveChanges();
+        
+        _dbContext.Boards.Add(board);
+        _dbContext.SaveChanges();
         return RedirectToAction("Details", new {id= board.Id});
     }
     public IActionResult Index()
     {
-        var boards = dbContext.Boards.ToList();
+        var boards = _dbContext.Boards.ToList();
         var pageModel = new DogRallyManager.Views.Boards.Index
         {
             BoardsList = boards
