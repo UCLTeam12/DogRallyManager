@@ -85,6 +85,7 @@ public class BoardsController : Controller
         _dbContext.SaveChanges();
         return RedirectToAction("Details", new {id= board.Id});
     }
+
     public IActionResult Index()
     {
         var boards = _dbContext.Boards.ToList();
@@ -95,5 +96,32 @@ public class BoardsController : Controller
         return View(pageModel);
     }
     
+    public async Task<IActionResult> AddUserToBoard(string username, int boardId)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        if (user == null)
+        {
+            return Json("No user with that username was found");
+        }
+
+        var board = await _dbContext.Boards
+                             .Where(b => b.Id == boardId)
+                             .FirstOrDefaultAsync();
+        if(board == null)
+        {
+            return Json("No board with such an id exists in the database");
+        }
+
+        if(board.ParticipatingUsers  == null)
+        {
+            board.ParticipatingUsers = new List<RallyUser>();
+            board.ParticipatingUsers.Add(user); 
+        }
+        board.ParticipatingUsers.Add(user);
+        await _dbContext.SaveChangesAsync();
+
+        return Json("User was succesfully persisted to the database");
+
+    }
     
 }
