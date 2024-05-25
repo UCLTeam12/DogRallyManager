@@ -7,32 +7,32 @@
     <head>
     </head>
     <body>
-        <div id="chat" class="chat-minimized" onclick="toggleClass('chat', 'chat-minimized', 'chat-expanded')">
-            <div id="minimize-chat" onclick="event.stopPropagation(); toggleClass('chat', 'chat-expanded', 'chat-minimized')"></div>
-            <div id="chat-notifications" class="chat-unread"><p id="unread-amount">17</p></div>
-            <div id="chat-window">
-                <ul id="chat-history">
-                    @if (Model != null && Model.ChatMessages.Any())
+    <div id="chat" class="chat-minimized">
+        <div id="minimize-chat"></div>
+        <div id="chat-notifications" class="chat-unread"><p id="unread-amount">17</p></div>
+        <div id="chat-window">
+            <ul id="chat-history">
+                @if (Model != null && Model.ChatMessages.Any())
+                {
+                    @foreach (var message in Model.ChatMessages)
                     {
-                        @foreach (var message in Model.ChatMessages)
+                        if (message.Sender.UserName == User.Identity.Name)
                         {
-                            if (message.Sender.UserName == User.Identity.Name)
-                            {
-                                <li class="message-sent">@message.Sender: @message.MessageBody</li>
-                            }
-                            else
-                            {
-                                <li class="message-response">@message.Sender: @message.MessageBody</li>
-                            }
+                            <li class="message-sent">@message.Sender: @message.MessageBody</li>
+                        }
+                        else
+                        {
+                            <li class="message-response">@message.Sender: @message.MessageBody</li>
                         }
                     }
-                </ul>
-            </div>
-            <div>
-                <input id="chat-write" type="text" />
-                <button id="chat-send" data-chatroomid="@Model.Id">Send</button>
-            </div>
+                }
+            </ul>
         </div>
+        <div>
+            <input id="chat-write" type="text" />
+            <button id="chat-send" data-chatroomid="@Model.Id">Send</button>
+        </div>
+    </div>
     
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -98,6 +98,59 @@
 
                 const messageContainer = document.getElementById("chat-history");
                 messageContainer.scrollTop = messageContainer.scrollHeight;
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chat = document.getElementById('chat');
+            const minimizeChat = document.getElementById('minimize-chat');
+
+            function saveChatState() {
+                if (chat.classList.contains('chat-expanded')) {
+                    localStorage.setItem('chatState', 'expanded');
+                } else {
+                    localStorage.setItem('chatState', 'minimized');
+                }
+            }
+
+            function loadChatState() {
+                const chatState = localStorage.getItem('chatState');
+                if (chatState === 'expanded') {
+                    chat.classList.add('chat-expanded');
+                    chat.classList.remove('chat-minimized');
+                } else {
+                    chat.classList.add('chat-minimized');
+                    chat.classList.remove('chat-expanded');
+                }
+            }
+
+            function minimizeChatWindow() {
+                chat.classList.add('chat-minimized');
+                chat.classList.remove('chat-expanded');
+                saveChatState();
+            }
+
+            function expandChatWindow() {
+                chat.classList.add('chat-expanded');
+                chat.classList.remove('chat-minimized');
+                saveChatState();
+            }
+
+            // Load chat state on page load
+            loadChatState();
+
+            // Add event listener for minimizing the chat
+            minimizeChat.addEventListener('click', function (event) {
+                event.stopPropagation();
+                minimizeChatWindow();
+            });
+
+            // Optionally, you can expand the chat when clicking outside the minimize area
+            chat.addEventListener('click', function () {
+                if (chat.classList.contains('chat-minimized')) {
+                    expandChatWindow();
+                }
             });
         });
     </script>

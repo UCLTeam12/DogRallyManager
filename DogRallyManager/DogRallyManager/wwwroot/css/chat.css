@@ -75,7 +75,7 @@
     padding: 12px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     border-radius: 0px 6px 6px 6px;
-    background-color: grey;
+    background-color: darkslategrey;
     cursor: pointer;
 }
 
@@ -89,7 +89,7 @@
     color: red;
     font-size: 2em;
     font-weight: bold;
-    background-color: grey;
+    background-color: darkslategrey;
     padding: 6px 8px 6px 8px;
     border-radius: 6px 0px 0px 6px;
     background-image: url("/Images/paw.png");
@@ -150,6 +150,7 @@
             height: 34px;
             border-radius: 0px 0px 6px 0px;
             background-color: #43A047;
+            font-weight: bold;
         }
 
 .chat-offline {
