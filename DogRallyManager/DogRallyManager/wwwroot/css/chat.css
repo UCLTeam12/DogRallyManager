@@ -89,7 +89,7 @@
     .chat-expanded #chat-history {
         width: 216px;
         height: 250px;
-        overflow: scroll;
+        overflow-y: scroll;
         padding: 6px;
         background-color: white;
         color: black;
