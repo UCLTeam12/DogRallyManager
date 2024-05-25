@@ -167,15 +167,16 @@ html {
 
 /* LOG IN PAGE */
 
-        #login-form {
-            width: 480px;
-            height: 540px;
-            background-color: rgb(255, 255, 255);
-            border: 1px solid rgb(200, 200, 200);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin: calc(50vh - 260px) auto 0px auto;
-        }
+#login-form {
+    width: 480px;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(200, 200, 200);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin: calc(50vh - 260px) auto 0px auto;
+    transition: padding-bottom 0.3s ease;
+}
 
             #remember-me {
                 margin: 12px 0px;
@@ -195,6 +196,11 @@ html {
                 width: 100%;
                 text-align: center;
                 color: darkblue;
+            }
+
+            .error-message {
+                color: red;
+                margin-bottom: 15px;
             }
 
 /* SIGN UP PAGE */
