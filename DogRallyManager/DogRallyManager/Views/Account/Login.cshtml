@@ -22,6 +22,13 @@
         <form id="login-form" method="post">
             <div class="form-logo"></div>
 
+        @if (ViewData.ModelState.ErrorCount > 0)
+        {
+            <div class="error-message">
+                @ViewData.ModelState.Values.SelectMany(v => v.Errors).FirstOrDefault()?.ErrorMessage
+            </div>
+        }
+
             <input type="text" placeholder="Username" asp-for="UserName" required />
             <span asp-validation-for="UserName" class="text-danger"></span>
             <input type="password" placeholder="Password" asp-for="Password" required />
