@@ -94,7 +94,7 @@
 </footer>
 
 <!-- Including the chat on the board page. -->
-<div include="/components/chat.html"></div>
+    @await Html.PartialAsync("~/Views/Components/Chat.cshtml", Model.ChatRoom)
 
 <!-- Scripts: -->
 
