@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DogRallyManager.Database.Models.Boards;
+using Microsoft.AspNetCore.Identity;
 
 namespace DogRallyManager.Entities
 {
@@ -6,5 +7,6 @@ namespace DogRallyManager.Entities
     {
         public ICollection<Message> SentMessages { get; set; } = new List<Message>();
         public ICollection<ChatRoom>? AssociatedChatRooms { get; set; } = new List<ChatRoom>();
+        public ICollection<Board>? Boards { get; set; }
     }
 }

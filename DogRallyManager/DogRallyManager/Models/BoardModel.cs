@@ -10,4 +10,5 @@ public class BoardModel : PageModel
     public int Id { get; set; }
     public List<Sign> Signs { get; set; }
     public ChatRoom ChatRoom { get; set; }
+    public List<RallyUser> RallyUsers { get; set; } = new List<RallyUser>();
 }
