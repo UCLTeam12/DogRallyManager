@@ -54,7 +54,7 @@
                 .then(() => console.log("SignalR connection established"))
                 .catch((err) => console.error(err.toString()));
 
-            document.querySelector('.send-button').addEventListener('click', function () {
+            document.querySelector('#chat-send').addEventListener('click', function () {
                 const currentChatRoomId = $(this).data("chatroomid");
                 const message = $("#chat-write").val();
                 const user = "@User.Identity.Name";
@@ -82,6 +82,7 @@
                             console.error("Error sending message: " + error);
                         }
                     });
+                    $("#chat-write").val("");
                 }
             });
 
