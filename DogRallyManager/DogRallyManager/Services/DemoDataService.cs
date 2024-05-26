@@ -171,17 +171,6 @@ namespace DogRallyManager.Services
                                 .Where(m => m.ChatRoomId == chatRoomId)
                                 .OrderBy(m => m.TimeStamp)
                                 .ToListAsync();
-
-            // TO-DO: Extract it to ChatService
-            // Map to ChatMessageVM
-            //var messageVMs = messages.Select(message => new ChatMessageVM
-            //{
-            //    Sender = message.Sender,
-            //    MessageBody = message.MessageBody,
-            //    ChatRoomId = message.ChatRoomId,
-            //    TimeStamp = message.TimeStamp
-            //}).ToList();
-
             return messages;
         }
 
@@ -196,7 +185,6 @@ namespace DogRallyManager.Services
             await _dogRallyDbContext.SaveChangesAsync();
         }
 
-        // For create ChatRoom-functions. Extract this to ChatService?
         public async Task CreateChatRoom(ChatRoom chatRoom)
         {
             _dogRallyDbContext.ChatRooms.Add(chatRoom);

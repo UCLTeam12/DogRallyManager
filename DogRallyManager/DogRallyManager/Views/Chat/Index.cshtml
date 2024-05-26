@@ -152,7 +152,6 @@
                     return console.error(err.toString());
                 });
 
-            // Handle click event on send button
             $(".send-button").click(function () {
                 var currentChatRoomId = $(this).data("chatroomid");                
                 console.log("Send button clicked and chatroomid variable is: " + currentChatRoomId);
@@ -209,15 +208,10 @@
                 
             });
 
-            
-            // Handle incoming message event from SignalR hub
+
             connection.on("ReceiveMessage", (user, message, chatroomId) => {
-                // Append the received message to the message container
                 console.log("ReceiveMessage has been invoked");
                 $("#message-container-" + chatroomId).append("<div>" + user + ": " + message + "</div>");
-                // Upon succesfully having appended the chatmessage to the open chatwindow
-                // There are two things to do to enhance user-experience:
-                // 1: Clear the messagebox. 2: Scroll to bottom of message container
                 $("#message-input-" + chatroomId).val("");
                 var messageContainer = document.getElementById("message-container-"+chatroomId);
                 messageContainer.scrollTop = messageContainer.scrollHeight;
