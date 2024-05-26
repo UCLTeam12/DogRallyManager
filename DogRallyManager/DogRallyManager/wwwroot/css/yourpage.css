@@ -91,7 +91,7 @@ h2 {
             top: calc(50% - 24px);
             right: calc(50% - 24px);
             position: absolute;
-            background-image: url('/Images/edit.png');
+            background-image: url('/Images/edit-pencil.png');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
