@@ -138,16 +138,13 @@
                 saveChatState();
             }
 
-            // Load chat state on page load
             loadChatState();
 
-            // Add event listener for minimizing the chat
             minimizeChat.addEventListener('click', function (event) {
                 event.stopPropagation();
                 minimizeChatWindow();
             });
 
-            // Optionally, you can expand the chat when clicking outside the minimize area
             chat.addEventListener('click', function () {
                 if (chat.classList.contains('chat-minimized')) {
                     expandChatWindow();
