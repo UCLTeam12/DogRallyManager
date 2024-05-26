@@ -185,19 +185,16 @@
 <!-- Script that changes the background-image of the div with id "board-lines".
 It persists the state of the toggle switch by using the browsers storage. -->
 
-<script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const toggleSwitch = document.getElementById('toggle-switch');
             const targetDiv = document.getElementById('board-lines');
 
-
-            
-
-            function updateBackgroundImage() {
+            function updateBackgroundColor() {
                 if (toggleSwitch.checked) {
-                    targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-light-two.png")';
+                    targetDiv.style.filter = 'invert(1)';
                 } else {
-                    targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-dark-two.png")';
+                    targetDiv.style.filter = 'invert(0)';
                 }
             }
 
@@ -215,11 +212,11 @@ It persists the state of the toggle switch by using the browsers storage. -->
             }
 
             loadToggleState();
-            updateBackgroundImage();
+            updateBackgroundColor();
 
-            /* Event listener that listens for changes to the state of the toggle switch: */
+            // Event listener that listens for changes to the state of the toggle switch
             toggleSwitch.addEventListener('change', function () {
-                updateBackgroundImage();
+                updateBackgroundColor();
                 saveToggleState();
             });
         });
