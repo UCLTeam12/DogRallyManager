@@ -38,7 +38,7 @@
         <section id="account-information">
             <h2>Account Information</h2>
             <div class="flex-container">
-                <div id="profile-picture" class="flex-item" alt="Profile picture or avatar."><label><input type="file" accept="image/*" /><div class="upload-image"></div></label></div>
+                <div id="profile-picture" class="flex-item" alt="Profile picture or avatar."><label><input id="file-input" type="file" accept="image/*" /><div class="upload-image"></div></label></div>
                 <div id="personal-information" class="flex-item">
                     <p class="information" id="username">@User.Identity.Name</p>
                     <p class="information "id="e-mail">@userEmail</p>
@@ -100,5 +100,21 @@
     <script>include();</script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('#file-input').addEventListener('change', function(event) {
+
+            const file = event.target.files[0];
+
+            if (file) {
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                document.getElementById('profile-picture').style.backgroundImage = `url(${e.target.result})`;
+
+            };
+            reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>
