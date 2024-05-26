@@ -16,6 +16,11 @@ namespace DogRallyManager.Services
             _mapper = mapper;
         }
 
+        public async Task<bool> AddUserToBoardAsync(string username, int boardId)
+        {
+            bool isAdded = await _dataService.AddUserToBoardAsync(username, boardId);
+            return isAdded;
+        }
         public async Task<List<UserViewModel>> SearchUser(string userName)
         {
             var users = await _dataService.GetSimilarNamedUsersAsync(userName);

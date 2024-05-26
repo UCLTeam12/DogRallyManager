@@ -1,0 +1,188 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Search Window";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <style>
+        .window {
+            border: 2px solid #000;
+            width: 400px;
+            margin: 0 auto;
+            background: #C0C0C0;
+        }
+
+        .title-bar {
+            background: #000080;
+            color: #FFF;
+            padding: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title-bar-text {
+            padding-left: 5px;
+        }
+
+        .title-bar-controls button {
+            width: 16px;
+            height: 16px;
+            background: #C0C0C0;
+            border: 1px solid #FFF;
+            margin-left: 2px;
+            cursor: pointer;
+        }
+
+        .window-body {
+            padding: 10px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 2px;
+            border: 2px solid #000;
+            margin-right: 5px;
+        }
+
+        .search-button {
+            padding: 2px 10px;
+            border: 2px solid #000;
+            background: #C0C0C0;
+            cursor: pointer;
+        }
+
+        .list-window {
+            border: 2px solid #000;
+            height: 200px;
+            background: #FFF;
+            overflow-y: auto;
+        }
+
+        .result-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .result-list li {
+            padding: 5px;
+            border-bottom: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">Search Window</div>
+            <div class="title-bar-controls">
+                <button class="close-button" aria-label="Close" onclick="closeWindow()">X</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." class="search-input" id="search-input" />
+                <button class="search-button" id="search-btn">Search</button>
+            </div>
+            <div class="list-window" id="user-list">
+                <ul class="result-list">
+                    <!-- Results will be dynamically inserted here -->
+                </ul>
+            </div>
+            <div>
+                <span id="selected-username"></span>
+                <button id="add-user-btn" disabled>Add to board</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function closeWindow() {
+            const windowElement = document.querySelector('.window');
+            windowElement.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var searchInput = document.getElementById('search-input');
+            var searchBtn = document.getElementById('search-btn');
+            var userList = document.getElementById('user-list').querySelector('ul');
+            var addUserBtn = document.getElementById('add-user-btn');
+            var selectedUsernameSpan = document.getElementById('selected-username');
+            var selectedUsername = null;
+            var boardId = @Model;
+
+            searchBtn.addEventListener('click', function () {
+                var searchValue = searchInput.value.trim();
+                if (searchValue !== '') {
+                    fetch('/SearchUser/SearchUser?username=' + encodeURIComponent(searchValue))
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.length > 0) {
+                                userList.innerHTML = '';
+                                data.forEach(user => {
+                                    var li = document.createElement('li');
+                                    li.innerHTML = `<ul class="user-link" data-username="${user.userName}">${user.userName}</ul>`;
+                                    userList.appendChild(li);
+                                });
+                            } else {
+                                userList.innerHTML = '<li>No users found</li>';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching users:', error);
+                        });
+                }
+            });
+
+            userList.addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('user-link')) {
+                    selectedUsername = e.target.getAttribute('data-username');
+                    selectedUsernameSpan.textContent = selectedUsername;
+                    addUserBtn.disabled = false;
+                }
+            });
+
+            addUserBtn.addEventListener('click', function () {
+                if (selectedUsername) {
+                    console.log("Went here");
+
+                    var boardId = @Model; 
+
+                    // TO-DO: DataService skal ikke sende en bool tilbage men en status besked
+                    $.ajax({
+                        url: "/SearchUser/AddUserToBoard",
+                        type: "POST", 
+                        data: { username: selectedUsername, boardId: boardId },
+                        success: function (response) {
+                            if (response.success) {
+                                console.log(response.message);
+                                var associatedUsersList = document.getElementById('participatingUsersList');
+                                var newUserItem = document.createElement('li');
+                                newUserItem.textContent = selectedUsername;
+                                associatedUsersList.appendChild(newUserItem);
+                            } else {
+                                console.error("Error: " + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error adding user to board: " + error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

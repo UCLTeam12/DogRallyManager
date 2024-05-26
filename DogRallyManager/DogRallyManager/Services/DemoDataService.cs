@@ -4,6 +4,7 @@ using DogRallyManager.ViewModels.AccountVMs;
 using DogRallyManager.ViewModels.ChatVMs;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Runtime.Intrinsics.X86;
@@ -23,7 +24,44 @@ namespace DogRallyManager.Services
 
         }
 
-        // Extract to chatservice
+        public async Task<bool> AddUserToBoardAsync(string username, int boardId)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(username);
+
+                if (user == null)
+                {
+                    return false;
+                }
+
+                var board = await _dogRallyDbContext.Boards
+                    .Include(b => b.ParticipatingUsers)
+                    .FirstOrDefaultAsync(b => b.Id == boardId);
+
+                if (board == null)
+                {
+                    return false;
+                }
+
+                board.ParticipatingUsers.Add(user);
+                await _dogRallyDbContext.SaveChangesAsync();
+                return true;
+
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log detailed EF validation errors
+                var errorMessage = ex.InnerException?.Message ?? ex.Message;
+                Console.WriteLine("Error saving changes: " + errorMessage);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
         public async Task<bool> DoesRoomExist(string roomName)
         {
              var chatRoom = await _dogRallyDbContext.ChatRooms
