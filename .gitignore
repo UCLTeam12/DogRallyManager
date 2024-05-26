@@ -367,3 +367,5 @@ MigrationBackup/
 .DS_Store
 ._.DS_Store
 /WritersWalk/WritersWalk.API/WritersWalk - Backup.API.csproj
+/DogRallyManager/DogRallyManager/DogRallySQLite.db-wal
+/DogRallyManager/DogRallyManager/DogRallySQLite.db-shm
