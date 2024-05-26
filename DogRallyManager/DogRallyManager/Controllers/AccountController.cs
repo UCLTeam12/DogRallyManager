@@ -12,7 +12,6 @@ public class AccountController : Controller
     private readonly SignInManager<RallyUser> _signInManager;
     private readonly UserManager<RallyUser> _userManager;
 
-    // POSSIBLE TO-DO: Concider if we want to use ASP NET DI instead of newing up like this.
     public RegisterUserVM _RegisterUserVM;
     public LoginUserVM _LoginUserVM;
     private readonly IDataService _dataService;
@@ -28,9 +27,6 @@ public class AccountController : Controller
         _dataService = dataService;
     }
 
-    // POSSIBLE TO-DO:
-    // Concider changing name of Index method to login, and returning view(). 
-    // This will require a rerouting on paths 
     public async Task<IActionResult> Index()
     {
         await OnPostLogoutAsync();
@@ -48,7 +44,7 @@ public class AccountController : Controller
         if (choice == "yes")
         {
             await OnPostLogoutAsync();
-            return RedirectToAction("Index"); // Redirect to home after logout
+            return RedirectToAction("Index");
         }
 
         if (choice == "no")
@@ -68,9 +64,7 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> OnPostLogoutAsync()
     {
-        // ASP NET will handle all the signout functions for us
         await _signInManager.SignOutAsync();
-
         return RedirectToAction("Login");
     }
 
@@ -126,8 +120,7 @@ public class AccountController : Controller
                 await _signInManager.SignInAsync(user, false);
 
                 // If the account has succesfully been created, it is also associated with
-                // the general chatroom, where all are a part of, unt
-                // il they choose to leave it.
+                // the general chatroom, where all are a part of, until they choose to leave it.
                 await _dataService.AddUserToChatRoomAsync(user.UserName, 1);
                 return View("Login");
             }

@@ -6,7 +6,6 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,14 +89,12 @@
         </div>
     </div>
 
-    <!-- Class clear clears both type of floats. -->
     <div class="clear"></div>
 </main>
 
     <footer>
         <p>This is the footer, which will be implemented, as the header will, as an include across the logged in pages.</p>
 
-        <!-- List of Associated Users -->
         <h3>List of associated users:</h3>
         <ul id="participatingUsersList">
             @foreach (var user in Model.ParticipatingUsers)
@@ -109,17 +106,12 @@
         <div onclick="showHideModalSearch()">
             <p> Add user to board </p>
         </div>
-        <!-- Button to Add User to Board -->
         <div id="modal-search">
             @Html.Partial("~/Views/Components/Search.cshtml", Model.Id)
         </div>
-        
     </footer>
-
-<!-- Including the chat on the board page. -->
     @await Html.PartialAsync("~/Views/Components/Chat.cshtml", Model.AssociatedChatRoom)
 
-<!-- Scripts: -->
 
 <script>include();</script>
 
@@ -136,33 +128,27 @@
             function dragElement(elmnt) {
                 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
                 if (document.getElementById(elmnt.id + "header")) {
-                    /* if present, the header is where you move the DIV from:*/
                     document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
                 } else {
-                    /* otherwise, move the DIV from anywhere inside the DIV:*/
                     elmnt.onmousedown = dragMouseDown;
                 }
 
                 function dragMouseDown(e) {
                     e = e || window.event;
                     e.preventDefault();
-                    // get the mouse cursor position at startup:
                     pos3 = e.clientX;
                     pos4 = e.clientY;
                     document.onmouseup = closeDragElement;
-                    // call a function whenever the cursor moves:
                     document.onmousemove = elementDrag;
                 }
 
                 function elementDrag(e) {
                     e = e || window.event;
                     e.preventDefault();
-                    // calculate the new cursor position:
                     pos1 = pos3 - e.clientX;
                     pos2 = pos4 - e.clientY;
                     pos3 = e.clientX;
                     pos4 = e.clientY;
-                    // set the element's new position:
                     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
                     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
                 }
@@ -192,9 +178,6 @@
                 dragElement(document.getElementById(`sign-@sign.Id`));
             </script>
 }
-
-<!-- Script that changes the background-image of the div with id "board-lines".
-It persists the state of the toggle switch by using the browsers storage. -->
 
 <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -228,7 +211,6 @@ It persists the state of the toggle switch by using the browsers storage. -->
             loadToggleState();
             updateBackgroundImage();
 
-            /* Event listener that listens for changes to the state of the toggle switch: */
             toggleSwitch.addEventListener('change', function () {
                 updateBackgroundImage();
                 saveToggleState();
