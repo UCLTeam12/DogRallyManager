@@ -21,6 +21,11 @@ h2 {
     padding: 16px 96px 32px 96px;
 }
 
+#personal-flex {
+    flex-direction: column;
+    align-items: center;
+}
+
     .flex-item {
     }
 
@@ -43,6 +48,7 @@ h2 {
         background-position: top center;
         background-color: turquoise;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        margin-bottom: 32px;
     }
 
         .upload-image {
@@ -70,15 +76,22 @@ h2 {
 
     #personal-information {
         position: relative;
-        width: 250px;
-        height: 200px;
+        width: 320px;
+        height: 120px;
+        background-color: turquoise;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         padding: 16px;
-        background-color: #ffffff;
-        border: 2px solid #cccccc;
-        box-shadow:0 2px 5px rgba(0,0,0,0.1);
-        margin-left: 64px;
         color: #000000;
+        border-radius: 6px;
+        overflow: hidden;
     }
+
+        #personal-information p {
+            width: 100%;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+            text-align: center;
+        }
 
         .information{
             display: block;
@@ -148,26 +161,42 @@ h2 {
     border-radius: 6px;
 }
 
-    .dog {
-        width: 200px;
-        height: 280px;
-        margin-bottom: 16px; 
-        background-color: #ffffff;
-        padding: 16px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
-        text-align: center; 
-        border-radius: 6px;
-    }
+.dog {
+    width: 200px;
+    height: 280px;
+    margin-bottom: 16px;
+    background-color: rgb(230, 230, 230);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+    border-radius: 6px;
+    overflow: hidden;
+    box-sizing: border-box;
+    /* background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); */
+}
 
     .dog:hover {
         cursor: pointer;
     }
 
     .dog-img {
-            width: 200px;
+            width: 100%;
             height: 180px;
-            margin-bottom: 16px;
             background-repeat: no-repeat;
             background-size: 100% auto;
             background-position: top center;
+    }
+
+    .dog-tag {
+        width: 100%;
+        height: 100px;
+        background-image: url("/Images/dog-tag.png");
+        background-repeat: no-repeat;
+        background-size: auto 130%;
+        background-position: center;
+        align-content: center;
+    }
+
+    .dog-tag p {
+        font-size: 1.2em;
+        font-weight: bold;
     }

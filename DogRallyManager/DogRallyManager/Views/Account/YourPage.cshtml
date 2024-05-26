@@ -18,7 +18,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <!-- <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> -->
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/board.css" />
     <link rel="stylesheet" href="~/css/chat.css" />
@@ -37,7 +36,7 @@
     <main id="main-your-page">
         <section id="account-information">
             <h2>Account Information</h2>
-            <div class="flex-container">
+            <div id="personal-flex" class="flex-container">
                 <div id="profile-picture" class="flex-item" alt="Profile picture or avatar."><label><input id="file-input" type="file" accept="image/*" /><div class="upload-image"></div></label></div>
                 <div id="personal-information" class="flex-item">
                     <p class="information" id="username">@User.Identity.Name</p>
@@ -65,27 +64,27 @@
                 <div id="dogs">
                     <div id="dog-one" class="dog">
                         <div class="dog-img" alt="Dog one." style="background-image: url('/images/Dogs/hund_1.png');"></div>
-                        <p>Name: Adele</p>
-                        <p>Race: Danish spitz</p>
-                        <p>Age: 13</p>
+                        <div class="dog-tag">
+                            <p>Adele</p>
+                        </div>
                     </div>
                     <div id="dog-two" class="dog">
                         <div class="dog-img" alt="Dog two." style="background-image: url('/images/Dogs/hund_2.png');"></div>
-                        <p>Name: Rex</p>
-                        <p>Race: German shephard</p>
-                        <p>Age: 7</p>
+                        <div class="dog-tag">
+                            <p>Rex</p>
+                        </div>
                     </div>
                     <div id="dog-three" class="dog">
                         <div class="dog-img" alt="Dog three." style="background-image: url('/images/Dogs/hund_3.png');"></div>
-                        <p>Navn: Tiny</p>
-                        <p>Race: German Rottweiler</p>
-                        <p>Age: 5</p>
+                        <div class="dog-tag">
+                            <p>Tiny</p>
+                        </div>
                     </div>
                     <div id="dog-four" class="dog">
                         <div class="dog-img" alt="Dog Four." style="background-image: url('/images/Dogs/Hund_4.png');"></div>
-                        <p>Navn: Smoky</p>
-                        <p>Race: Dalmatian</p>
-                        <p>Age: 5</p>
+                        <div class="dog-tag">
+                            <p>Smoky</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,19 +95,29 @@
         <p id="copyright">Copyright &copy; @DateTime.Now.Year Dog Rally Manager A/S. All rights reserved.</p>
     </footer>
 
-    <!-- Include Bootstrap JS files -->
     <script>include();</script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.querySelector('#file-input').addEventListener('change', function(event) {
+        window.onload = function () {
+            const storedImage = localStorage.getItem('profilePicture');
+            if (storedImage) {
+                document.getElementById('profile-picture').style.backgroundImage = `url(${storedImage})`;
+            }
+        };
+
+        // Event listener for the file input change event
+        document.querySelector('#file-input').addEventListener('change', function (event) {
             const file = event.target.files[0];
-                if (file) {
+            if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                document.getElementById('profile-picture').style.backgroundImage = `url(${e.target.result})`;
-            };
-            reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    const imageUrl = e.target.result;
+                    document.getElementById('profile-picture').style.backgroundImage = `url(${imageUrl})`;
+                    // Save the image data to local storage
+                    localStorage.setItem('profilePicture', imageUrl);
+                };
+                reader.readAsDataURL(file);
             }
         });
     </script>
