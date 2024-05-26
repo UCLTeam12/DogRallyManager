@@ -26,8 +26,4 @@
       <Folder Include="wwwroot\Images\Signs\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Include="wwwroot\Images\Puck.png" />
-    </ItemGroup>
-
 </Project>
