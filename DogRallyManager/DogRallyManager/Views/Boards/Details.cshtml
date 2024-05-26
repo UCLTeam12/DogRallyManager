@@ -14,6 +14,19 @@
     <link rel="stylesheet" href="~/css/chat.css">
     <script src="~/js/include.js"></script>
     <script src="~/js/toggleClass.js"></script>
+
+    <style>
+        #modal-search {
+            display: none;
+            width: 720px;
+            height: 512px;
+            z-index: 100;
+            position: absolute;
+            top: calc(50vh - 256px);
+            left: calc(50vw - 360px);
+            background-color: blue;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -101,8 +114,8 @@
         </ul>
 
         <!-- Button to Add User to Board -->
-        
-        <input type="button" id="add-user-btn" value="Add user to board"/>
+        <div id="modal-search"></div>
+        <div onclick="showHideModalSearch()">Open search modal</div>
     </footer>
 
 <!-- Including the chat on the board page. -->
@@ -222,6 +235,18 @@ It persists the state of the toggle switch by using the browsers storage. -->
                 updateBackgroundImage();
                 saveToggleState();
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.showHideModalSearch = function () {
+                var modalSearch = document.getElementById("modal-search");
+                if (modalSearch.style.display === "none" || modalSearch.style.display === "") {
+                    modalSearch.style.display = "block";
+                } else {
+                    modalSearch.style.display = "none";
+                }
+            };
         });
     </script>
 </body>
