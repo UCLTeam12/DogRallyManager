@@ -18,13 +18,6 @@
     <style>
         #modal-search {
             display: none;
-            width: 720px;
-            height: 512px;
-            z-index: 100;
-            position: absolute;
-            top: calc(50vh - 256px);
-            left: calc(50vw - 360px);
-            background-color: blue;
         }
     </style>
 </head>
@@ -106,16 +99,21 @@
 
         <!-- List of Associated Users -->
         <h3>List of associated users:</h3>
-        <ul>
+        <ul id="participatingUsersList">
             @foreach (var user in Model.ParticipatingUsers)
             {
                 <li>@user.UserName</li>
             }
         </ul>
 
+        <div onclick="showHideModalSearch()">
+            <p> Add user to board </p>
+        </div>
         <!-- Button to Add User to Board -->
-        <div id="modal-search"></div>
-        <div onclick="showHideModalSearch()">Open search modal</div>
+        <div id="modal-search">
+            @Html.Partial("~/Views/Components/Search.cshtml", Model.Id)
+        </div>
+        
     </footer>
 
 <!-- Including the chat on the board page. -->

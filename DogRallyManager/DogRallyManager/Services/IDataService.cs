@@ -8,6 +8,7 @@ namespace DogRallyManager.Services
 {
     public interface IDataService
     {
+        Task<bool> AddUserToBoardAsync(string username, int boardId);
         Task CreateMessageAsync(Message message);
         Task<List<Message>> GetMessagesForChatRoomAsync(int chatRoomId);
         Task<List<Message>> GetAllMessagesAsync();
