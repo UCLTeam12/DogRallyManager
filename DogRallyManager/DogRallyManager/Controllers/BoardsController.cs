@@ -56,7 +56,7 @@ public class BoardsController : Controller
         var user = await _userManager.GetUserAsync(User);
 
         var signList = new List<Sign>();
-        for (int i = 1; i < 300; i++)
+        for (int i = 1; i < 131; i++)
         {
             signList.Add(
 
