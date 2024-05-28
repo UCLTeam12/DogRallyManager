@@ -21,9 +21,17 @@
     </form>
     @foreach (var board in Model.BoardsList)
     {
-        <a href="/boards/details/@board.Id">
-            @board.Name
-        </a>
+        <div>
+            <a href="/boards/details/@board.Id">
+                @board.Name
+            </a>
+            <form action="/Boards/DeleteBoard" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="@board.Id" />
+                <input type="submit" value="Delete" />
+            </form>
+        </div>
+       
+        
     }
 </div>
 </body>
