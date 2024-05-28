@@ -1,6 +1,5 @@
 using DogRallyManager.Database.Models.Signs;
 using DogRallyManager.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DogRallyManager.Database.Models.Boards;
 
