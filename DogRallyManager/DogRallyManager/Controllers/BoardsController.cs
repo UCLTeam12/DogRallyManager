@@ -95,4 +95,24 @@ public class BoardsController : Controller
         };
         return View(pageModel);
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> DeleteBoard(int id)
+    {
+        var board = await _dbContext.Boards
+            .Include(b => b.Sign)
+            .Include(b => b.AssociatedChatRoom)
+            .Include(b => b.ParticipatingUsers)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (board == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Boards.Remove(board);
+        await _dbContext.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+    }
 }
