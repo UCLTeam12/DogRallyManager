@@ -111,6 +111,9 @@ main {
             background-color: rgb(255, 255, 255);
         }
 
+            .sign {
+            }
+
         #toggle-line-color {
             display: inline-block;
             height: calc(140px - 32px);

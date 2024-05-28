@@ -37,7 +37,7 @@
         <div id="signs">
             @foreach (var sign in Model.Signs)
             {
-                <div style="@(sign.IsPlaced() ? "position: absolute;" : "")top: @string.Format("{0}px", sign.PositionY);left: @string.Format("{0}px", sign.PositionX);z-index: 9"
+                <div style="@(sign.IsPlaced() ? "position: absolute;" : "") display:inline-block;top: @string.Format("{0}px", sign.PositionY);left: @string.Format("{0}px", sign.PositionX);z-index: 9"
                      class="sign"
                      id="@string.Format("sign-{0}", sign.Id)"
                      data-sign-id="@sign.Id">
