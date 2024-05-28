@@ -41,7 +41,7 @@
                 <div id="personal-information" class="flex-item">
                     <p class="information" id="username">@User.Identity.Name</p>
                     <p class="information "id="e-mail">@userEmail</p>
-                    <div class="edit"></div>
+                    <div id="edit-email" class="edit"></div>
                 </div>
             </div>
         </section>
@@ -120,6 +120,85 @@
                 reader.readAsDataURL(file);
             }
         });
+    </script>
+    <script>
+        document.getElementById('edit-email').addEventListener('click', function () {
+            editEmail();
+        });
+
+        function editEmail() {
+            var emailElement = document.getElementById('e-mail');
+            var editEmailButton = document.getElementById('edit-email');
+            var currentEmail = emailElement.innerText;
+
+            // Hide the edit button
+            editEmailButton.style.display = 'none';
+
+            // Create an input element
+            var inputElement = document.createElement('input');
+            inputElement.type = 'email';  // Set input type to email for automatic validation
+            inputElement.value = currentEmail;
+            inputElement.id = 'email-input';
+
+            // Replace the email text with the input element
+            emailElement.innerHTML = '';
+            emailElement.appendChild(inputElement);
+            inputElement.focus();
+
+            // Variable to track if the update should happen
+            var shouldUpdate = false;
+
+            // Handle the 'enter' key press
+            inputElement.addEventListener('keypress', function (event) {
+                if (event.key === 'Enter') {
+                    shouldUpdate = true;
+                    updateEmail(inputElement, shouldUpdate, currentEmail);
+                }
+            });
+
+            // Handle focus out
+            inputElement.addEventListener('blur', function () {
+                if (!shouldUpdate) {
+                    emailElement.innerText = currentEmail; // Revert to old email
+                    editEmailButton.style.display = ''; // Show the edit button
+                    inputElement.remove(); // Remove the input field
+                }
+            });
+        }
+
+        function updateEmail(inputElement, shouldUpdate, oldEmail) {
+            var newEmail = inputElement.value;
+
+            if (shouldUpdate) {
+                // Check if the new email is valid
+                if (!inputElement.checkValidity()) {
+                    alert('Please enter a valid email address.');
+                    inputElement.focus();
+                    return;
+                }
+
+                // Update the text and replace the input element
+                var emailElement = document.getElementById('e-mail');
+                emailElement.innerText = newEmail;
+
+                // Send the updated email to the server
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/YourController/UpdateEmail', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // Handle success response if needed
+                    }
+                };
+                xhr.send(JSON.stringify({ email: newEmail }));
+            }
+
+            // Show the edit button again
+            var editEmailButton = document.getElementById('edit-email');
+            editEmailButton.style.display = ''; // Revert to original display value
+
+            inputElement.remove(); // Remove the input field
+        }
     </script>
 </body>
 </html>
