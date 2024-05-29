@@ -194,9 +194,11 @@
 
             function updateBackgroundImage() {
                 if (toggleSwitch.checked) {
-                    targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-light-two.png")';
+                    targetDiv.style.filter = 'invert(1)';
+                    targetDiv.style.opacity = '0.7';
                 } else {
-                    targetDiv.style.backgroundImage = 'url("/Images/dog-rally-track-grass-dark-two.png")';
+                    targetDiv.style.filter = 'none';
+                    targetDiv.style.opacity = '0.6';
                 }
             }
 
