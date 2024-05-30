@@ -95,7 +95,7 @@ public class BoardsController : Controller
         };
         return View(pageModel);
     }
-    
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> DeleteBoard(int id)
     {
