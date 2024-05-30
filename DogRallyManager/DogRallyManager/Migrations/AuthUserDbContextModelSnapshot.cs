@@ -355,6 +355,14 @@ namespace DogRallyManager.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
 
                     b.HasDiscriminator().HasValue("RallyUserRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "495ad32f-2d1d-49b9-976c-f6e6d1755418",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("DogRallyManager.Entities.RallyUser", b =>
