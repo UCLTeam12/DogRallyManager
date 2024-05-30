@@ -1,6 +1,7 @@
 ﻿using DogRallyManager.Database.Models.Boards;
 using DogRallyManager.Database.Models.Signs;
 using DogRallyManager.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,16 @@ namespace DogRallyManager.DbContexts
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new SignsConfigureration());
+            builder.Entity<RallyUserRole>(x => x.HasData(new List<RallyUserRole>()
+            {
+                new RallyUserRole()
+                {
+                    Name = "Admin",
+                    Id = "495ad32f-2d1d-49b9-976c-f6e6d1755418",
+                    NormalizedName = "ADMIN",
+                }
+
+            }));
         }
     }
 }

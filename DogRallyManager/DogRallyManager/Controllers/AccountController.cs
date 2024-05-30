@@ -15,16 +15,19 @@ public class AccountController : Controller
     public RegisterUserVM _RegisterUserVM;
     public LoginUserVM _LoginUserVM;
     private readonly IDataService _dataService;
+    private readonly RoleManager<RallyUserRole> _roleManager;
 
     public AccountController(
         SignInManager<RallyUser> signManager,
         UserManager<RallyUser> userManager,
-        IDataService dataService
-    )
+        IDataService dataService,
+        RoleManager<RallyUserRole> roleManager
+        )
     {
         _signInManager = signManager;
         _userManager = userManager;
         _dataService = dataService;
+        _roleManager = roleManager;
     }
 
     public async Task<IActionResult> Index()
@@ -144,5 +147,18 @@ public class AccountController : Controller
             }
         }
         return View("register", RegisterUserVM);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> AssignAdmin ()
+    {
+        var getName = await _userManager.FindByNameAsync(User.Identity.Name);
+        if (getName == null)
+        {
+            return NotFound();
+        }
+
+        await _userManager.AddToRoleAsync(getName, "Admin");
+        return Ok();
     }
 }
